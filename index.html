@@ -66,9 +66,293 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
+    .stage-progress-bar { height: 100%; border-radius: 9999px; }
+    #stage1Bar { width: 100%; }
+    #stage2Bar { width: 94%; }
+    #stage3Bar { width: 71%; }
+    #stage4Bar { width: 56%; }
+    #overviewClearPlotsBar { width: 56%; }
+    #overviewProcessPlotsBar { width: 36%; }
+    #overviewReviewPlotsBar { width: 8%; }
   </style>
 </head>
 <body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-secondary-container selection:text-on-secondary-container">
+
+  <!-- ==================== 1. DEDICATED LOGIN PORTAL (INITIAL LANDING VIEW) ==================== -->
+  <div id="loginPortalView" class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#0b1c30] via-[#0f2742] to-[#081525] text-white relative selection:bg-secondary selection:text-on-secondary z-50">
+    <!-- Tricolor Header Stripe -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-[#ff9933] via-[#ffffff] to-[#138808]"></div>
+
+    <!-- Top Gov Bar -->
+    <header class="px-6 py-4 flex items-center justify-between border-b border-white/10 bg-black/25 backdrop-blur-md">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center font-bold shadow-md border border-white/10">
+          <span class="material-symbols-outlined text-[24px] text-secondary">terrain</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-headline font-bold text-lg text-white tracking-tight">E-Bhumi</span>
+            <span class="text-[10px] bg-secondary text-on-secondary px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">NIC Secure 256-Bit</span>
+          </div>
+          <span class="text-xs text-slate-300">National Land Acquisition & Cadastral Management Portal • Government of India</span>
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center gap-4 text-xs text-slate-300">
+        <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-secondary">verified</span> MoRTH Certified</span>
+        <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-secondary">shield</span> RFCTLARR 2013</span>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-8 my-4">
+      <div class="w-full max-w-3xl bg-surface-container-lowest text-on-surface rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+        
+        <!-- Header Banner Inside Card -->
+        <div class="bg-surface-container-low p-6 border-b border-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="text-[11px] uppercase tracking-wider text-secondary font-bold font-code-num flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-secondary inline-block animate-pulse"></span>
+              <span>Official Authentication Gateway</span>
+            </div>
+            <h1 class="font-headline font-bold text-xl text-on-surface mt-0.5">Select Your Portal Role & Sign In</h1>
+            <p class="text-xs text-on-surface-variant mt-1">Multi-tiered access control for Auditors, Field Officers, and Citizens</p>
+          </div>
+          <button onclick="openPermissionsModal()" class="self-start sm:self-auto bg-surface-container hover:bg-surface-container-high text-on-surface px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-surface-container transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[16px] text-primary">table_chart</span>
+            <span>View Access Levels</span>
+          </button>
+        </div>
+
+        <!-- 3 Persona Tabs -->
+        <div class="grid grid-cols-3 border-b border-surface-container bg-surface-container-lowest text-xs font-semibold">
+          <button id="loginTabAdmin" onclick="switchLoginRole('admin')" class="py-3.5 px-3 flex flex-col sm:flex-row items-center justify-center gap-2 border-b-2 border-primary text-primary bg-surface-container-low transition-all">
+            <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+            <span class="text-center font-bold">1. System Admin (Auditor)</span>
+          </button>
+          <button id="loginTabOfficer" onclick="switchLoginRole('officer')" class="py-3.5 px-3 flex flex-col sm:flex-row items-center justify-center gap-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface transition-all">
+            <span class="material-symbols-outlined text-[20px]">assignment_ind</span>
+            <span class="text-center font-bold">2. Field Officer</span>
+          </button>
+          <button id="loginTabClient" onclick="switchLoginRole('client')" class="py-3.5 px-3 flex flex-col sm:flex-row items-center justify-center gap-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface transition-all">
+            <span class="material-symbols-outlined text-[20px]">groups</span>
+            <span class="text-center font-bold">3. Client Portal</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: System Admin Content -->
+        <div id="loginContentAdmin" class="p-6 space-y-5">
+          <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary text-[24px]">gavel</span>
+            <div class="text-xs">
+              <div class="font-bold text-on-surface flex items-center gap-2">
+                <span>Special Land Acquisition Officer (CALA) & Government Auditor</span>
+                <span class="text-[10px] bg-primary text-on-primary px-2 py-0.5 rounded font-bold font-code-num">Full Access</span>
+              </div>
+              <p class="text-on-surface-variant mt-1 leading-relaxed">
+                Full authority to configure system settings, inspect financial ledger reports, authorize Class-3 DSC E-Sign Gazette awards, and disburse DBT compensation.
+              </p>
+            </div>
+          </div>
+
+          <form id="formLoginAdmin" onsubmit="event.preventDefault(); loginAs('admin');" class="space-y-4 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-on-surface mb-1">Official Govt Email / Username</label>
+                <input type="text" id="adminUsername" aria-label="Official Govt Email / Username" value="rajeshwar.rao.ias@ebhumi.gov.in" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              </div>
+              <div>
+                <label class="block font-semibold text-on-surface mb-1">Officer Passcode</label>
+                <input type="password" id="adminPassword" aria-label="Officer Passcode" value="GovtSecurity@2026" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-secondary-container/20 border border-secondary/30 rounded-lg">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+                <div>
+                  <div class="font-bold text-on-surface">Class-3 DSC Token Authorization</div>
+                  <div class="text-[11px] text-on-surface-variant font-code-num">Signer: Dr. Rajeshwar Rao (IAS) • Officer ID: LAO-094</div>
+                </div>
+              </div>
+              <span class="text-[10px] bg-secondary text-on-secondary px-2 py-0.5 rounded font-bold">CONNECTED</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+              <button type="submit" class="flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">login</span>
+                <span>Sign In as System Admin</span>
+              </button>
+              <button type="button" onclick="loginAs('admin')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">bolt</span>
+                <span>⚡ 1-Click Demo Login</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab 2: Field Officer Content -->
+        <div id="loginContentOfficer" class="p-6 space-y-5 hidden">
+          <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary text-[24px]">explore</span>
+            <div class="text-xs">
+              <div class="font-bold text-on-surface flex items-center gap-2">
+                <span>Field Acquisition Officer (SLAO-082) & Survey Patwari</span>
+                <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold font-code-num">Acquisition Agent</span>
+              </div>
+              <p class="text-on-surface-variant mt-1 leading-relaxed">
+                Field demarcations, DGPS vertex logging, and parcel inspections. Cash awards and Section 19 statutory approvals are <strong>View Only</strong> (CALA admin approval required). Macro financial audit reports restricted.
+              </p>
+            </div>
+          </div>
+
+          <form id="formLoginOfficer" onsubmit="event.preventDefault(); loginAs('officer');" class="space-y-4 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="officerIdInput" class="block font-semibold text-on-surface mb-1">Field Officer ID</label>
+                <input type="text" id="officerIdInput" value="SLAO-082" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              </div>
+              <div>
+                <label for="officerPinInput" class="block font-semibold text-on-surface mb-1">Field Demarcation PIN</label>
+                <input type="password" id="officerPinInput" aria-label="Field Demarcation PIN" value="8240" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-surface-container-low border border-surface-container rounded-lg">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[20px]">bluetooth_connected</span>
+                <div>
+                  <div class="font-bold text-on-surface">NavIC / Leica GS18 T GNSS Receiver</div>
+                  <div class="text-[11px] text-on-surface-variant font-code-num">CORS Network Station • Km 138 Base</div>
+                </div>
+              </div>
+              <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold">RTK FIXED</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+              <button type="submit" class="flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">login</span>
+                <span>Sign In as Field Officer</span>
+              </button>
+              <button type="button" onclick="loginAs('officer')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">bolt</span>
+                <span>⚡ 1-Click Demo Login</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab 3: Client Portal Content (Landowner vs Viewer) -->
+        <div id="loginContentClient" class="p-6 space-y-5 hidden">
+          <!-- Client Subtype Selector -->
+          <div class="flex items-center justify-center p-1 bg-surface-container-low rounded-xl border border-surface-container max-w-sm mx-auto">
+            <button id="btnClientSubLandowner" type="button" onclick="switchClientSubtype('landowner')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold bg-primary text-on-primary shadow-sm flex items-center justify-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[16px]">agriculture</span>
+              <span>Personal Landowner</span>
+            </button>
+            <button id="btnClientSubViewer" type="button" onclick="switchClientSubtype('viewer')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[16px]">visibility</span>
+              <span>Public Viewer</span>
+            </button>
+          </div>
+
+          <!-- Subtype 3A: Landowner -->
+          <div id="clientSubLandownerPanel" class="space-y-4 text-xs">
+            <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-[24px]">verified_user</span>
+              <div>
+                <div class="font-bold text-on-surface flex items-center gap-2">
+                  <span>Registered Landowner / Awardee Portal</span>
+                  <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold font-code-num">Personal Access</span>
+                </div>
+                <p class="text-on-surface-variant mt-1 leading-relaxed">
+                  View your personal survey plot (<span class="font-code-num font-semibold text-on-surface">#MH-NGP-4029</span>), verify Section 3A/19 gazette declaration, inspect RFCTLARR 2013 legal valuation calculation, and track DBT compensation transfer.
+                </p>
+              </div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); loginAs('landowner');" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="landownerAadhaar" class="block font-semibold text-on-surface mb-1">Aadhaar No / Survey Khasra No</label>
+                  <input id="landownerAadhaar" type="text" value="XXXX-XXXX-8492 (Survey 142/3A)" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                </div>
+                <div>
+                  <label for="landownerOtp" class="block font-semibold text-on-surface mb-1">Mobile OTP (Aadhaar Linked)</label>
+                  <input id="landownerOtp" type="text" value="4 8 2 9" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                <button type="submit" class="flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">login</span>
+                  <span>Sign In as Landowner</span>
+                </button>
+                <button type="button" onclick="loginAs('landowner')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">bolt</span>
+                  <span>⚡ 1-Click Demo Login</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Subtype 3B: Public Viewer -->
+          <div id="clientSubViewerPanel" class="space-y-4 text-xs hidden">
+            <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-3">
+              <span class="material-symbols-outlined text-secondary text-[24px]">visibility</span>
+              <div>
+                <div class="font-bold text-on-surface flex items-center gap-2">
+                  <span>Public Citizen & Open Cadastre Viewer</span>
+                  <span class="text-[10px] bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-bold font-code-num">Public View Only</span>
+                </div>
+                <p class="text-on-surface-variant mt-1 leading-relaxed">
+                  Open access to public highway route alignments, Google Satellite cadastral imagery, official gazette notices, and submission of public inquiries. Financial audit records and administrative actions are locked.
+                </p>
+              </div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); loginAs('viewer');" class="space-y-4">
+              <div>
+                <label for="citizenGuestContact" class="block font-semibold text-on-surface mb-1">Citizen Guest Email / Mobile Number</label>
+                <input id="citizenGuestContact" type="text" value="citizen.guest@ebhumi.gov.in" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                <button type="submit" class="flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">public</span>
+                  <span>Enter as Public Viewer</span>
+                </button>
+                <button type="button" onclick="loginAs('viewer')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">bolt</span>
+                  <span>⚡ 1-Click Demo Access</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Matrix Summary Footer in Card -->
+        <div class="p-4 bg-surface-container-low border-t border-surface-container flex items-center justify-between text-[11px] text-on-surface-variant">
+          <span class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+            <span>RFCTLARR Act 2013 & Bhoomi Standards Compliant</span>
+          </span>
+          <button onclick="openPermissionsModal()" class="text-secondary font-semibold hover:underline flex items-center gap-1">
+            <span>Compare All 4 Roles</span>
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Bottom Footer -->
+    <footer class="p-4 text-center text-xs text-slate-400 border-t border-white/10 bg-black/25">
+      <div>© 2026 Ministry of Road Transport and Highways (MoRTH), Government of India • National Land & Citizen Portal</div>
+    </footer>
+  </div>
+
+  <!-- ==================== 2. MAIN AUTHENTICATED PORTAL SHELL ==================== -->
+  <div id="mainAppShell" class="hidden min-h-screen flex flex-col">
 
   <!-- ==================== SIDEBAR ==================== -->
   <aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-r border-surface-container/60">
@@ -80,7 +364,6 @@
       <div class="flex flex-col min-w-0">
         <div class="flex items-center gap-1.5">
           <span class="font-headline font-bold text-base text-on-surface tracking-tight">E-Bhumi</span>
-          <span class="text-[10px] text-on-surface-variant font-code-num font-semibold">SIH 26016</span>
         </div>
         <span class="text-xs text-on-surface-variant truncate">National Land & Citizen Portal</span>
       </div>
@@ -104,7 +387,7 @@
       <a href="#parcels" data-nav-view="parcels" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
         <span class="material-symbols-outlined text-[20px]">grid_view</span>
         <span class="text-sm">Land Plots & Records</span>
-        <span class="ml-auto text-[11px] font-code-num bg-surface-container px-1.5 py-0.5 rounded">528</span>
+        <span id="sidebarParcelsCount" class="ml-auto text-[11px] font-code-num bg-surface-container px-1.5 py-0.5 rounded">528</span>
       </a>
       <a href="#gis" data-nav-view="gis" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
         <span class="material-symbols-outlined text-[20px]">map</span>
@@ -153,9 +436,12 @@
   <header class="fixed top-0 left-72 right-0 h-16 bg-surface/95 backdrop-blur-xl border-b border-surface-container/80 z-40 flex items-center justify-between px-6">
     <!-- Left: Project Selector & Search -->
     <div class="flex items-center gap-3 flex-1 max-w-2xl">
-      <div onclick="switchView('projects')" class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg border border-surface-container min-w-0 max-w-xs cursor-pointer hover:bg-surface-container transition-colors" title="Switch Highway Corridor Project">
-        <span class="text-xs font-semibold text-on-surface truncate">NH-44 Express Corridor Expansion - Packag...</span>
-        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+      <!-- Project Selector in Top Header -->
+      <div class="relative min-w-0 w-72">
+        <select id="headerProjectSelect" class="w-full bg-surface-container-low pl-3 pr-8 py-1.5 rounded-lg border border-surface-container text-xs font-semibold text-on-surface cursor-pointer hover:bg-surface-container transition-colors appearance-none focus:outline-none focus:ring-1 focus:ring-primary truncate" title="Switch Corridor Project">
+          <!-- Populated dynamically by app.js -->
+        </select>
+        <span class="material-symbols-outlined text-[16px] text-on-surface-variant absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
       </div>
 
       <!-- Quick Search Bar -->
@@ -197,14 +483,42 @@
         <span class="material-symbols-outlined text-[18px]">help_outline</span>
       </button>
 
-      <!-- Officer Profile -->
-      <div class="flex items-center gap-2 pl-2 border-l border-surface-container">
-        <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs shadow-sm">
-          RR
-        </div>
-        <div class="hidden md:flex flex-col text-left text-xs leading-tight">
-          <span class="font-bold text-on-surface">Dr. Rajeshwar Rao</span>
-          <span class="text-[10px] text-on-surface-variant font-code-num">Officer ID: LAO-094</span>
+      <!-- Officer Profile with Interactive Dropdown & Logout -->
+      <div id="headerProfileContainer" class="relative">
+        <button id="btnHeaderProfile" onclick="toggleProfileDropdown()" class="flex items-center gap-2 pl-2 border-l border-surface-container hover:bg-surface-container-low p-1.5 rounded-lg transition-colors text-left cursor-pointer focus:outline-none" title="User Account & Role Profile">
+          <div id="headerUserAvatar" class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs shadow-sm">
+            RR
+          </div>
+          <div class="hidden md:flex flex-col text-left text-xs leading-tight">
+            <div class="flex items-center gap-1.5">
+              <span id="headerOfficerName" class="font-bold text-on-surface">Dr. Rajeshwar Rao (IAS)</span>
+              <span id="headerRoleBadge" class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container">Admin</span>
+            </div>
+            <span id="headerOfficerRole" class="text-[10px] text-on-surface-variant font-code-num">Officer ID: LAO-094</span>
+          </div>
+          <span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_drop_down</span>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="headerProfileDropdown" class="hidden absolute right-0 mt-2 w-72 bg-surface-container-lowest rounded-xl shadow-2xl border border-surface-container overflow-hidden z-50">
+          <div class="p-3 bg-surface-container-low border-b border-surface-container">
+            <div class="text-[10px] uppercase font-code-num text-on-surface-variant font-semibold">Active Session Profile</div>
+            <div id="profileDropdownName" class="font-bold text-xs text-on-surface mt-0.5">Dr. Rajeshwar Rao (IAS)</div>
+            <div id="profileDropdownRole" class="text-[11px] text-secondary font-semibold">System Admin (Auditor)</div>
+          </div>
+          <div class="p-2 text-xs space-y-1">
+            <button onclick="openPermissionsModal()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-surface-container text-on-surface flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+                <span>View Access Permissions</span>
+              </span>
+              <span class="text-[10px] font-code-num text-secondary font-bold">Matrix</span>
+            </button>
+            <button onclick="logout()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-error-container/40 text-error flex items-center gap-2 font-semibold">
+              <span class="material-symbols-outlined text-[18px]">logout</span>
+              <span>Sign Out / Switch Role</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -220,22 +534,22 @@
       <section class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container/80 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6">
         <div class="flex flex-col gap-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap text-xs">
-            <span class="bg-primary text-on-primary px-2 py-0.5 rounded font-semibold text-[11px]">National Highway Project</span>
+            <span id="overviewProjectCategory" class="bg-primary text-on-primary px-2 py-0.5 rounded font-semibold text-[11px]">National Highway Project</span>
             <span class="bg-secondary-container text-on-secondary-container font-semibold px-2 py-0.5 rounded flex items-center gap-1 text-[11px]">
               <span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block animate-pulse"></span>
               LIVE GOVERNMENT PORTAL (Bhoomi Records Connected)
             </span>
           </div>
-          <div class="text-xs text-on-surface-variant font-medium mt-0.5">Nagpur Rural District</div>
-          <h1 class="font-headline text-2xl text-on-surface tracking-tight font-bold">
+          <div id="overviewProjectDistrict" class="text-xs text-on-surface-variant font-medium mt-0.5">Nagpur Rural District</div>
+          <h1 id="overviewProjectTitle" class="font-headline text-2xl text-on-surface tracking-tight font-bold">
             NH-44 Express Corridor Expansion — Package 4B
           </h1>
           <p class="text-xs text-on-surface-variant flex items-center gap-2 flex-wrap mt-0.5">
-            <span>Sector: Nagpur — Hinganghat Highway Route</span>
+            <span id="overviewProjectSector">Sector: Nagpur — Hinganghat Highway Route</span>
             <span class="text-outline-variant">•</span>
-            <span>Land Acquisition Notification: Section 3A Public Notice</span>
+            <span id="overviewProjectNotification">Land Acquisition Notification: Section 3A Public Notice</span>
             <span class="text-outline-variant">•</span>
-            <span class="font-code-num text-on-surface font-semibold">Distance Marker: Km 114 to Km 168</span>
+            <span id="overviewProjectMarker" class="font-code-num text-on-surface font-semibold">Distance Marker: Km 114 to Km 168</span>
           </p>
         </div>
 
@@ -267,14 +581,14 @@
         <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">STAGE 01 • INITIAL PHASE</span>
-            <span class="font-code-num text-xs font-semibold text-secondary flex items-center gap-1">
+            <span id="stage1StatusBadge" class="font-code-num text-xs font-semibold text-secondary flex items-center gap-1">
               <span class="material-symbols-outlined text-[14px]">check_circle</span> 100% Completed
             </span>
           </div>
           <div class="font-headline font-bold text-xs text-on-surface">Stage 01: Project Planning & Social Impact Assessment</div>
-          <div class="text-[11px] text-on-surface-variant mt-1">Public hearing and social impact report approved</div>
+          <div id="stage1Desc" class="text-[11px] text-on-surface-variant mt-1">Public hearing and social impact report approved</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-secondary h-full rounded-full" style="width: 100%"></div>
+            <div id="stage1Bar" class="bg-secondary h-full w-full rounded-full"></div>
           </div>
         </div>
 
@@ -282,14 +596,14 @@
         <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">STAGE 02 • FIELD SURVEY</span>
-            <span class="font-code-num text-xs font-semibold text-primary flex items-center gap-1">
+            <span id="stage2StatusBadge" class="font-code-num text-xs font-semibold text-primary flex items-center gap-1">
               94% Active
             </span>
           </div>
           <div class="font-headline font-bold text-xs text-on-surface">Stage 02: Land Plots & GPS Map Tagging</div>
-          <div class="text-[11px] text-on-surface-variant mt-1">494 of 528 plot boundaries mapped</div>
+          <div id="stage2Desc" class="text-[11px] text-on-surface-variant mt-1">494 of 528 plot boundaries mapped</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-primary h-full rounded-full" style="width: 94%"></div>
+            <div id="stage2Bar" class="bg-primary h-full rounded-full" style="width: 94%"></div>
           </div>
         </div>
 
@@ -297,14 +611,14 @@
         <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">STAGE 03 • LEGAL APPROVALS</span>
-            <span class="font-code-num text-xs font-semibold text-on-surface-variant flex items-center gap-1">
+            <span id="stage3StatusBadge" class="font-code-num text-xs font-semibold text-on-surface-variant flex items-center gap-1">
               71% In Progress
             </span>
           </div>
           <div class="font-headline font-bold text-xs text-on-surface">Stage 03: Official Land Notices & Legal Approvals</div>
-          <div class="text-[11px] text-on-surface-variant mt-1">Notices issued; remainder in final review</div>
+          <div id="stage3Desc" class="text-[11px] text-on-surface-variant mt-1">Notices issued; remainder in final review</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-slate-500 h-full rounded-full" style="width: 71%"></div>
+            <div id="stage3Bar" class="bg-slate-500 h-full rounded-full" style="width: 71%"></div>
           </div>
         </div>
 
@@ -312,20 +626,20 @@
         <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1.5">
             <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">STAGE 04 • DIRECT PAYMENT</span>
-            <span class="font-code-num text-xs font-semibold text-secondary flex items-center gap-1">
+            <span id="stage4StatusBadge" class="font-code-num text-xs font-semibold text-secondary flex items-center gap-1">
               56% Paid
             </span>
           </div>
           <div class="font-headline font-bold text-xs text-on-surface">Stage 04: Compensation Paid Directly to Bank Accounts</div>
-          <div class="text-[11px] text-on-surface-variant mt-1">₹362.50 Cr transferred to landowners via DBT</div>
+          <div id="stage4Desc" class="text-[11px] text-on-surface-variant mt-1">₹362.50 Cr transferred to landowners via DBT</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div class="bg-secondary h-full rounded-full" style="width: 56%"></div>
+            <div id="stage4Bar" class="bg-secondary h-full rounded-full" style="width: 56%"></div>
           </div>
         </div>
       </section>
 
       <!-- Horizontal Milestone Stepper Rail (Matching Screenshot) -->
-      <section class="bg-surface-container-lowest p-3 rounded-xl shadow-sm border border-surface-container/80 flex items-center justify-between gap-2 overflow-x-auto text-xs">
+      <section id="overviewMilestoneStepper" class="bg-surface-container-lowest p-3 rounded-xl shadow-sm border border-surface-container/80 flex items-center justify-between gap-2 overflow-x-auto text-xs">
         <div class="flex items-center gap-2 shrink-0">
           <span class="w-5 h-5 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-[10px]">✓</span>
           <div>
@@ -378,10 +692,10 @@
         <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">TOTAL LAND REQUIRED / ACQUIRED</div>
           <div class="my-2">
-            <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">1,018.58 <span class="text-base text-on-surface-variant font-normal">Ha</span></div>
+            <div class="font-headline text-3xl font-bold text-on-surface tracking-tight"><span id="overviewAcquiredHa">1,018.58</span> <span class="text-base text-on-surface-variant font-normal">Ha</span></div>
             <div class="flex items-center gap-2 mt-1">
-              <span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[11px] font-bold">60.4% Acquired</span>
-              <span class="text-xs text-on-surface-variant">Target: 1,687 Ha</span>
+              <span id="overviewAcquiredPercent" class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[11px] font-bold">60.4% Acquired</span>
+              <span id="overviewTargetHa" class="text-xs text-on-surface-variant">Target: 1,687 Ha</span>
             </div>
           </div>
           <div class="text-xs text-secondary font-semibold">Live from cadastral register</div>
@@ -391,19 +705,19 @@
         <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">TOTAL MEASURED & MARKED PLOTS</div>
           <div class="my-2">
-            <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">528 <span class="text-base text-on-surface-variant font-normal">Plots</span></div>
+            <div class="font-headline text-3xl font-bold text-on-surface tracking-tight"><span id="overviewTotalPlots">528</span> <span class="text-base text-on-surface-variant font-normal">Plots</span></div>
             <div class="text-xs text-on-surface-variant mt-1 flex items-center gap-1.5 flex-wrap font-medium">
-              <span class="font-code-num text-secondary font-bold">295 Clear</span>
+              <span id="overviewClearPlots" class="font-code-num text-secondary font-bold">295 Clear</span>
               <span>•</span>
-              <span class="font-code-num text-on-surface font-bold">188 In Process</span>
+              <span id="overviewProcessPlots" class="font-code-num text-on-surface font-bold">188 In Process</span>
               <span>•</span>
-              <span class="font-code-num text-error font-bold">45 Under Review</span>
+              <span id="overviewReviewPlots" class="font-code-num text-error font-bold">45 Under Review</span>
             </div>
           </div>
           <div class="w-full bg-surface-container-high h-2 rounded-full flex overflow-hidden">
-            <div class="bg-secondary h-full" style="width: 56%"></div>
-            <div class="bg-primary h-full" style="width: 36%"></div>
-            <div class="bg-error h-full" style="width: 8%"></div>
+            <div id="overviewClearPlotsBar" class="bg-secondary h-full" style="width: 56%"></div>
+            <div id="overviewProcessPlotsBar" class="bg-primary h-full" style="width: 36%"></div>
+            <div id="overviewReviewPlotsBar" class="bg-error h-full" style="width: 8%"></div>
           </div>
         </div>
 
@@ -411,12 +725,12 @@
         <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">COMPENSATION PAID TO BANK ACCOUNTS (DBT)</div>
           <div class="my-2">
-            <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">₹362.50 Cr</div>
-            <div class="text-xs text-on-surface-variant mt-1">Approved Compensation Fund: <span class="font-code-num font-semibold text-on-surface">₹620.00 Cr</span></div>
+            <div id="overviewDisbursedCr" class="font-headline text-3xl font-bold text-on-surface tracking-tight">₹362.50 Cr</div>
+            <div class="text-xs text-on-surface-variant mt-1">Approved Compensation Fund: <span id="overviewEscrowCr" class="font-code-num font-semibold text-on-surface">₹620.00 Cr</span></div>
           </div>
           <div class="flex items-center justify-between text-xs font-code-num">
-            <span class="text-secondary font-semibold">295 Landowners Credited</span>
-            <span class="text-on-surface-variant">58.5% Fund Released</span>
+            <span id="overviewDisbursedLandowners" class="text-secondary font-semibold">295 Landowners Credited</span>
+            <span id="overviewDisbursedPercent" class="text-on-surface-variant">58.5% Fund Released</span>
           </div>
         </div>
 
@@ -424,12 +738,12 @@
         <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
           <div class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">PROJECT TIMELINE STATUS</div>
           <div class="my-2">
-            <div class="font-headline text-3xl font-bold text-secondary tracking-tight">+18 Days</div>
-            <div class="text-xs text-on-surface-variant mt-1">Ahead of Government Target Schedule</div>
+            <div id="overviewTimelineStatus" class="font-headline text-3xl font-bold text-secondary tracking-tight">+18 Days</div>
+            <div id="overviewTimelineText" class="text-xs text-on-surface-variant mt-1">Ahead of Government Target Schedule</div>
           </div>
           <div class="flex items-center justify-between text-xs font-code-num">
             <span class="text-on-surface-variant">Average Processing: 42 Days / Plot</span>
-            <span class="text-secondary bg-secondary-container px-2 py-0.5 rounded font-bold">ON SCHEDULE</span>
+            <span id="overviewStatusBadge" class="text-secondary bg-secondary-container px-2 py-0.5 rounded font-bold">ON SCHEDULE</span>
           </div>
         </div>
       </section>
@@ -460,7 +774,7 @@
             <div class="flex items-center gap-2">
               <div class="bg-surface-container-highest px-2.5 py-1 rounded font-code-num font-semibold text-on-surface flex items-center gap-1">
                 <span class="material-symbols-outlined text-[14px] text-secondary">pin_drop</span>
-                <span>20.8980° N, 79.0265° E</span>
+                <span id="overviewMapCoordsText">20.8980° N, 79.0265° E</span>
               </div>
               <button id="btn-map-center" class="p-1.5 rounded bg-surface-container-lowest hover:bg-surface-container-high transition-colors" title="Center View">
                 <span class="material-symbols-outlined text-[18px]">my_location</span>
@@ -767,7 +1081,7 @@
 
         <!-- Project File Upload Dropzone Banner -->
         <div id="projectUploadDropzone" class="border-2 border-dashed border-outline-variant hover:border-primary p-6 rounded-xl text-center bg-surface-container-low/50 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors mb-6">
-          <input type="file" id="projectFileInput" accept=".geojson,.kml,.shp,.csv,.json" class="hidden">
+          <input type="file" id="projectFileInput" accept=".geojson,.kml,.shp,.csv,.json" aria-label="Upload project boundary file" class="hidden">
           <div class="w-12 h-12 rounded-full bg-surface-container-high text-secondary flex items-center justify-center">
             <span class="material-symbols-outlined text-[28px]">folder_zip</span>
           </div>
@@ -823,9 +1137,9 @@
           <!-- Map Toolbar HUD -->
           <div class="absolute top-3 left-3 z-10 flex items-center gap-2 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-md border border-surface-container text-xs">
             <span class="material-symbols-outlined text-[16px] text-secondary">explore</span>
-            <span class="font-code-num font-semibold text-on-surface">20.8980° N, 79.0265° E</span>
+            <span id="dedicatedMapCoordsText" class="font-code-num font-semibold text-on-surface">20.8980° N, 79.0265° E</span>
             <span class="text-outline-variant">•</span>
-            <span class="text-on-surface-variant">Nagpur Rural — Highway Corridor 4B</span>
+            <span id="dedicatedMapLocationSub" class="text-on-surface-variant">Nagpur Rural — Highway Corridor 4B</span>
           </div>
 
           <!-- Floating Map Zoom/Center Controls -->
@@ -914,7 +1228,7 @@
           <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold font-code-num">DSC Key Active</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container">
             <div class="text-[10px] uppercase text-on-surface-variant font-code-num font-semibold">Pending Digital Signatures</div>
             <div class="font-headline text-2xl font-bold text-error mt-1 badge-pending-approvals">6</div>
@@ -924,11 +1238,6 @@
             <div class="text-[10px] uppercase text-on-surface-variant font-code-num font-semibold">Legal Compliance</div>
             <div class="font-headline text-2xl font-bold text-secondary mt-1">100%</div>
             <p class="text-xs text-on-surface-variant mt-1">Fair Compensation Act 2013 adhered</p>
-          </div>
-          <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container">
-            <div class="text-[10px] uppercase text-on-surface-variant font-code-num font-semibold">Security Audit Ledger</div>
-            <div class="font-headline text-2xl font-bold text-on-surface mt-1">SHA-256</div>
-            <p class="text-xs text-on-surface-variant mt-1">Government NIC-eSign verification</p>
           </div>
         </div>
 
@@ -1067,7 +1376,7 @@
         <p class="text-xs text-on-surface-variant mb-6">Detailed corridor acquisition milestone metrics and SLAO benchmark reports</p>
         <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container text-xs">
           <p class="font-semibold text-on-surface mb-1">Project Milestone Status: <span class="text-secondary font-bold">+18 Days Ahead of Schedule</span></p>
-          <p class="text-on-surface-variant">All 528 plots are tracked under the Smart India Hackathon (SIH-26016) monitoring pipeline.</p>
+          <p class="text-on-surface-variant">All 528 plots are tracked under the National Cadastral Land Acquisition monitoring pipeline.</p>
           <button onclick="showToast('Generating official progress dossier...')" class="mt-3 bg-primary text-on-primary px-3.5 py-1.5 rounded-lg font-semibold">
             Generate Comprehensive PDF Report
           </button>
@@ -1214,26 +1523,26 @@
       </div>
       <form id="formNewProject" class="p-6 space-y-4 text-xs">
         <div>
-          <label class="block font-semibold text-on-surface mb-1">Project Highway Corridor</label>
+          <label for="projInputTitle" class="block font-semibold text-on-surface mb-1">Project Highway Corridor</label>
           <input id="projInputTitle" type="text" required value="NH-53 Bypass Expansion — Package 2A" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-on-surface mb-1">Section 3A Public Notice No.</label>
+            <label for="projInputNotice" class="block font-semibold text-on-surface mb-1">Section 3A Public Notice No.</label>
             <input id="projInputNotice" type="text" required value="S.O. 2045(E)" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
           </div>
           <div>
-            <label class="block font-semibold text-on-surface mb-1">Target Land (Hectares)</label>
+            <label for="projInputTarget" class="block font-semibold text-on-surface mb-1">Target Land (Hectares)</label>
             <input id="projInputTarget" type="number" step="0.1" required value="640" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
           </div>
         </div>
         <div>
-          <label class="block font-semibold text-on-surface mb-1">Route Alignment Corridor</label>
+          <label for="projInputCorridor" class="block font-semibold text-on-surface mb-1">Route Alignment Corridor</label>
           <input id="projInputCorridor" type="text" value="Nagpur — Bhandara Highway Link" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
         </div>
         <div>
-          <label class="block font-semibold text-on-surface mb-1">Attach Boundary File (Optional)</label>
-          <input type="file" accept=".geojson,.kml,.shp,.csv" class="w-full p-1.5 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          <label for="projBoundaryFileInput" class="block font-semibold text-on-surface mb-1">Attach Boundary File (Optional)</label>
+          <input id="projBoundaryFileInput" type="file" accept=".geojson,.kml,.shp,.csv" class="w-full p-1.5 rounded-lg bg-surface-container-low border border-surface-container text-xs">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="document.getElementById('modalNewProject').classList.add('hidden')" class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-semibold">Cancel</button>
@@ -1318,6 +1627,134 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+  </div> <!-- /#mainAppShell -->
+
+  <!-- ==================== MODAL: PERMISSIONS MATRIX (EXACT REPLICA OF COMPARISON TABLE) ==================== -->
+  <div id="modalPermissionsMatrix" class="fixed inset-0 bg-primary/60 backdrop-blur-sm z-[100] flex items-center justify-center hidden p-4">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl border border-surface-container w-full max-w-4xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 bg-surface-container-low border-b border-surface-container flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[22px]">admin_panel_settings</span>
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-base text-on-surface">Role-Based Access Control (RBAC) Permissions Matrix</h3>
+            <p class="text-xs text-on-surface-variant">Direct comparison of operational privileges across all portal user classifications</p>
+          </div>
+        </div>
+        <button onclick="closePermissionsModal()" class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body / Table -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <div class="overflow-x-auto border border-surface-container rounded-xl">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-low text-on-surface border-b border-surface-container">
+                <th class="py-3 px-4 font-bold text-xs">Feature / Action</th>
+                <th class="py-3 px-3 font-bold text-xs text-center border-l border-surface-container bg-surface-container-high/40">1. System Admin</th>
+                <th class="py-3 px-3 font-bold text-xs text-center border-l border-surface-container">2. Acquisition Agent<br><span class="font-normal text-[10px] text-on-surface-variant">(Field Officer)</span></th>
+                <th class="py-3 px-3 font-bold text-xs text-center border-l border-surface-container">3. Private/Corporate Owner</th>
+                <th class="py-3 px-3 font-bold text-xs text-center border-l border-surface-container">4. Personal Landowner</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-surface-container font-sans text-xs">
+              <!-- Row 1 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">System Settings & User Management</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">View Financial Reports & All Deals</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">View/Edit Assigned Properties & Leads</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="hover:bg-surface-container-low/50 bg-amber-50/20">
+                <td class="py-3 px-4 font-semibold text-on-surface">Approve Cash Offers & Contracts</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-amber-700 bg-amber-50">⚠️ View Only</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">Submit Bulk Land Portfolios (CSV)</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container text-rose-500 font-medium">❌ No</td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">Submit Single Property Details</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-4 font-semibold text-on-surface">View Own Transaction Status & Offers</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700 bg-emerald-50/50">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-emerald-700">Full</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-indigo-700 bg-indigo-50">Full (Own Only)</td>
+                <td class="py-3 px-3 text-center border-l border-surface-container font-semibold text-indigo-700 bg-indigo-50">Full (Own Only)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-2.5 text-[11px] text-on-surface-variant">
+          <span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">info</span>
+          <div>
+            <strong>Public Citizen / Viewer Mode:</strong> Restricted to Read-Only GIS cadastral view, published official Section 3A/19 gazette notifications, and citizen inquiry/feedback submission. All financial compensation disbursement, land acquisition award authorizations, and administrative configurations remain strictly confidential.
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer with Quick Switch -->
+      <div class="p-4 bg-surface-container-low border-t border-surface-container flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-on-surface text-[11px] uppercase tracking-wider">Quick Switch To:</span>
+          <button onclick="closePermissionsModal(); loginAs('admin');" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">shield</span> Admin
+          </button>
+          <button onclick="closePermissionsModal(); loginAs('officer');" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">explore</span> Field Officer
+          </button>
+          <button onclick="closePermissionsModal(); loginAs('landowner');" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">agriculture</span> Landowner
+          </button>
+          <button onclick="closePermissionsModal(); loginAs('viewer');" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">visibility</span> Viewer
+          </button>
+        </div>
+        <button onclick="closePermissionsModal()" class="px-4 py-1.5 rounded-lg bg-primary text-on-primary font-semibold">
+          Close Matrix
+        </button>
+      </div>
+
     </div>
   </div>
 
