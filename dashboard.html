@@ -1,822 +1,2110 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><title>E-Bhumi - Enterprise Land Acquisition &amp; GIS Portal</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-dim":"#cbdbf5","on-tertiary":"#ffffff","on-error":"#ffffff","primary":"#000000","primary-fixed-dim":"#bec6e0","secondary-fixed":"#85f8c4","on-secondary":"#ffffff","surface-container":"#e5eeff","on-primary":"#ffffff","outline":"#76777d","on-surface":"#0b1c30","inverse-primary":"#bec6e0","on-primary-fixed":"#131b2e","on-secondary-container":"#00714e","tertiary-fixed":"#cce5ff","on-error-container":"#93000a","on-tertiary-container":"#188ace","on-primary-fixed-variant":"#3f465c","on-secondary-fixed":"#002114","secondary-fixed-dim":"#68dba9","error":"#ba1a1a","inverse-surface":"#213145","surface-container-high":"#dce9ff","secondary-container":"#82f5c1","secondary":"#006c4a","tertiary-container":"#001d31","tertiary-fixed-dim":"#93ccff","background":"#f8f9ff","surface-container-lowest":"#ffffff","surface":"#f8f9ff","on-primary-container":"#7c839b","surface-tint":"#565e74","tertiary":"#000000","outline-variant":"#c6c6cd","surface-bright":"#f8f9ff","on-surface-variant":"#45464d","surface-container-low":"#eff4ff","primary-fixed":"#dae2fd","surface-container-highest":"#d3e4fe","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004b73","surface-variant":"#d3e4fe","error-container":"#ffdad6","inverse-on-surface":"#eaf1ff","on-secondary-fixed-variant":"#005137","on-tertiary-fixed":"#001d31","primary-container":"#131b2e"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xl":"1.5rem","margin-desktop":"1.5rem","space-md":"0.75rem","space-xs":"0.25rem","space-2xs":"0.125rem","space-3xl":"3rem","space-lg":"1rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter-mobile":"0.5rem","gutter-desktop":"1rem","space-2xl":"2rem"},"fontFamily":{"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"body-md":["Inter"],"code-num":["Inter"],"headline-xl":["Plus Jakarta Sans"],"title-md":["Inter"],"label-md":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"label-sm":["Inter"],"body-lg":["Inter"]},"fontSize":{"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-num":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}],"headline-xl":["28px",{"lineHeight":"36px","letterSpacing":"-0.015em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"500"}],"body-lg":["15px",{"lineHeight":"22px","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface-container-low"><img alt="E-Bhumi Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WgXb3-ZrrG5uplDS8sUnzilSqPMTCNme0eedDarqSZXRYfzNdlsbrMB2uqgGhjvEr9ImVjeVshaM-a7C4-QGHXwFP_oZdW-0wVrdI0OIxd3RF6AbImHWGiDuUTHuuNfRvIT4t5RIEoj9-9GZZlgCIC7RznlJHEaLrcBE1BQFuuYZTuIV4Tw0dZXfprvrwippGkNM-o607ZY07BOijMiSCz88_JBomrzgMeqR0c5Ywlh_4E2OVE6I0djYWK"><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md font-semibold text-on-surface tracking-tight truncate">E-Bhumi</span><span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-space-xs py-space-2xs rounded-DEFAULT uppercase tracking-wider font-code-num text-code-num">SIH 26016</span></div><span class="font-label-sm text-label-sm text-on-surface-variant truncate">National Cadastral Land Portal</span></div></div><div class="px-space-md py-space-xs bg-surface-container-lowest"><span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num text-code-num px-space-xs">Operations &amp; Cadastre</span></div><nav class="flex-1 px-space-md py-space-xs space-y-space-2xs overflow-y-auto" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">account_tree</span><span class="font-body-md text-body-md">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="land-parcels" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-body-md text-body-md">Land Parcels</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="gis-map-view" href="#"><span class="material-symbols-outlined text-[20px]">map</span><span class="font-body-md text-body-md">GIS Map View</span><span class="ml-auto font-code-num text-code-num text-on-secondary-container bg-secondary-container px-space-xs py-space-2xs rounded-DEFAULT">LIVE</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="workflows-and-approvals" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span class="font-body-md text-body-md">Workflows &amp; Approvals</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="field-survey-and-forms" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-md text-body-md">Field Survey &amp; Forms</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="documents-repository" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span class="font-body-md text-body-md">Documents Repository</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-and-analytics" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span class="font-body-md text-body-md">Reports &amp; Analytics</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="public-grievances-portal" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span class="font-body-md text-body-md">Public Grievances Portal</span></a></nav><div class="p-space-md bg-surface-container-low"><div class="bg-surface-container-lowest p-space-sm rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-code-num text-code-num">Spatial Datum</span><span class="font-code-num text-code-num text-secondary font-semibold">EPSG:4326</span></div><div class="flex items-center justify-between mt-space-2xs"><span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-code-num text-code-num">Sync Engine</span><span class="font-code-num text-code-num text-on-surface">NIC-SLAO 2.4</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-lg flex-1 max-w-3xl"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-lg min-w-0 max-w-sm"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">alt_route</span><span class="font-body-sm text-body-sm font-semibold text-on-surface truncate">NH-44 Express Corridor Expansion - Package 4B</span><span class="material-symbols-outlined text-[18px] text-on-surface-variant ml-space-xs">expand_more</span></div><div class="flex-1 relative"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">search</span><input class="w-full bg-surface-container-lowest pl-9 pr-space-md py-space-xs text-on-surface placeholder:text-on-surface-variant rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container shadow-[0_1px_8px_rgba(0,0,0,0.04)]" placeholder="Search Khasra/Gata No, UTM coords, PIN code, or award ID..." type="text"></div></div><div class="flex items-center gap-space-md"><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-high text-on-surface px-space-md py-space-xs rounded-full"><span class="material-symbols-outlined text-[16px] text-secondary">shield</span><span class="font-label-sm text-label-sm font-semibold truncate">Project Director / IAS - Special Land Acquisition Officer</span></div><button class="relative p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button class="p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_1px_8px_rgba(0,0,0,0.04)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1rE44O-xkh8sL1TG1AAGZ5ULrVJEXsChbLBEsAlt7d6Q1wllIRSQ8oP0OVE5VQ4Gg_loDH9l__s6k9yCLWcCd6PG5pHg6Gpr36BNFwpPMnEZO66pmAXUtN-uUqdpFQUFgz8BL8ycrkNYGJGj6RaAdZyluZ5ljeeJaPELjKxqc-ueXhRfxZ1G64ZWH45QKJWdxxVoVCKnJAVMVIqpSekx2ku0t1ozaNT_OrxdGLdOg1hscuDZi8--eiQ"><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Dr. Rajeshwar Rao</span><span class="font-label-sm text-label-sm text-on-surface-variant font-code-num text-code-num leading-tight">SLAO-NHAI-094</span></div></div></div></header><main class="relative pt-16 w-full px-margin-desktop bg-surface min-h-screen"><div class="flex flex-col w-full">
-<!-- Top Context Header & Workflow Milestones Rail -->
-<section class="mb-space-lg flex flex-col gap-space-md">
-<!-- Executive Banner -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-lg">
-<div class="flex flex-col gap-space-2xs min-w-0">
-<div class="flex items-center gap-space-xs flex-wrap">
-<span class="font-code-num text-code-num bg-primary-container text-on-primary-container px-space-xs py-space-2xs rounded font-semibold uppercase tracking-wider">SIH-26016 Model Engine</span>
-<span class="font-label-sm text-label-sm bg-secondary-container text-on-secondary-container font-semibold px-space-xs py-space-2xs rounded flex items-center gap-space-2xs">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block animate-pulse"></span>
-            LIVE SYNCHRONIZATION (NIC-Bhoomi Hub)
-          </span>
-<span class="font-code-num text-code-num text-on-surface-variant font-medium">EPSG:4326 Datum • Zone 43N</span>
-</div>
-<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-semibold mt-space-2xs">
-          NH-44 Express Corridor Expansion — Package 4B
-        </h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-space-xs flex-wrap">
-<span>Sector: Nagpur – Hinganghat – Hyderabad Inter-State Link</span>
-<span class="text-outline-variant">•</span>
-<span>CALA Notification: S.O. 1842(E) / Sec 3A RFCTLARR 2013</span>
-<span class="text-outline-variant">•</span>
-<span class="font-code-num text-code-num text-on-surface font-medium">Chainage 114+400 to 168+900</span>
-</p>
-</div>
-<!-- Quick Actions Group -->
-<div class="flex items-center gap-space-xs flex-wrap self-stretch xl:self-auto justify-start xl:justify-end">
-<button class="bg-primary hover:bg-surface-container-highest hover:text-on-surface text-on-primary px-space-md py-space-xs rounded font-label-md text-label-md flex items-center gap-space-xs transition-colors shadow-sm">
-<span class="material-symbols-outlined text-[18px]">add_circle</span>
-<span>New Acquisition Project</span>
-</button>
-<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-label-md text-label-md flex items-center gap-space-xs transition-colors">
-<span class="material-symbols-outlined text-[18px]">upload_file</span>
-<span>Bulk GeoJSON / CSV</span>
-</button>
-<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-label-md text-label-md flex items-center gap-space-xs transition-colors relative">
-<span class="material-symbols-outlined text-[18px]">pending_actions</span>
-<span>Pending Approvals</span>
-<span class="w-5 h-5 rounded-full bg-error text-on-error font-code-num text-label-sm flex items-center justify-center font-bold">14</span>
-</button>
-<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-label-md text-label-md flex items-center gap-space-xs transition-colors">
-<span class="material-symbols-outlined text-[18px]">print</span>
-<span>Gazette Report</span>
-</button>
-</div>
-</div>
-<!-- 4 SIH Model Primary Stages -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
-<!-- Stage 1 -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Stage 01 • Legal Intake</span>
-<span class="font-code-num text-code-num font-semibold text-secondary flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> 100%
-          </span>
-</div>
-<div class="font-title-md text-title-md font-semibold text-on-surface">Planning &amp; SIA Study</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Expert committee clearance S.O. 412 ratified</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-space-sm overflow-hidden">
-<div class="bg-secondary h-full rounded-full" style="width: 100%"></div>
-</div>
-</div>
-<!-- Stage 2 -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Stage 02 • Survey &amp; GIS</span>
-<span class="font-code-num text-code-num font-semibold text-on-tertiary-container flex items-center gap-space-2xs">
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-ping"></span> 78% Active
-          </span>
-</div>
-<div class="font-title-md text-title-md font-semibold text-on-surface">Parcels &amp; Geo-Tagging</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">412 of 528 Khasra demarcated via DGPS</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-space-sm overflow-hidden">
-<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
-</div>
-</div>
-<!-- Stage 3 -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Stage 03 • Statutory</span>
-<span class="font-code-num text-code-num font-semibold text-on-surface flex items-center gap-space-2xs">
-            64% In-Review
-          </span>
-</div>
-<div class="font-title-md text-title-md font-semibold text-on-surface">Sec 11 &amp; 19 Notifications</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">34 Gazette awards notified; 18 pending SLAO</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-space-sm overflow-hidden">
-<div class="bg-surface-tint h-full rounded-full" style="width: 64%"></div>
-</div>
-</div>
-<!-- Stage 4 -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Stage 04 • Settlement</span>
-<span class="font-code-num text-code-num font-semibold text-secondary flex items-center gap-space-2xs">
-            52% Disbursed
-          </span>
-</div>
-<div class="font-title-md text-title-md font-semibold text-on-surface">Digital DBT Disbursal</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">₹482.40 Cr transferred via PFMS escrow</div>
-<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-space-sm overflow-hidden">
-<div class="bg-secondary h-full rounded-full" style="width: 52%"></div>
-</div>
-</div>
-</div>
-<!-- Micro-Step Milestone Ribbon -->
-<div class="bg-surface-container-low p-space-md rounded-xl flex items-center justify-between overflow-x-auto gap-space-md">
-<!-- Step 1 -->
-<div class="flex items-center gap-space-xs shrink-0">
-<span class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-code-num text-[11px] font-bold">✓</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Data Intake</span>
-<span class="font-label-sm text-label-sm text-secondary font-code-num">RoR 7/12 Synced</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant text-[16px] shrink-0">arrow_forward</span>
-<!-- Step 2 -->
-<div class="flex items-center gap-space-xs shrink-0">
-<span class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-code-num text-[11px] font-bold">✓</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Geo-Tagging</span>
-<span class="font-label-sm text-label-sm text-secondary font-code-num">CORS DGPS Lock</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant text-[16px] shrink-0">arrow_forward</span>
-<!-- Step 3 (Active) -->
-<div class="flex items-center gap-space-xs shrink-0 bg-surface-container-lowest px-space-sm py-space-2xs rounded-lg shadow-sm">
-<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-code-num text-[11px] font-bold animate-pulse">3</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Joint Measurement (JMS)</span>
-<span class="font-label-sm text-label-sm text-primary font-code-num font-semibold">18 Plots Ongoing</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant text-[16px] shrink-0">arrow_forward</span>
-<!-- Step 4 -->
-<div class="flex items-center gap-space-xs shrink-0 opacity-80">
-<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-code-num text-[11px] font-semibold">4</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Valuation &amp; 2.5x Formula</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">CALA Circle Rate</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant text-[16px] shrink-0">arrow_forward</span>
-<!-- Step 5 -->
-<div class="flex items-center gap-space-xs shrink-0 opacity-80">
-<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-code-num text-[11px] font-semibold">5</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Direct DBT Disbursal</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Aadhaar PFMS Bridge</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant text-[16px] shrink-0">arrow_forward</span>
-<!-- Step 6 -->
-<div class="flex items-center gap-space-xs shrink-0 opacity-80">
-<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-code-num text-[11px] font-semibold">6</span>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Grievance Audit</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Fast-track CALA Bench</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Core KPI Metric Cards -->
-<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
-<!-- Metric 1: Total Acquisition Area -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Corridor Land Footprint</span>
-<span class="p-space-xs rounded bg-surface-container text-on-surface">
-<span class="material-symbols-outlined text-[18px]">crop_free</span>
-</span>
-</div>
-<div class="my-space-sm">
-<div class="font-display-lg text-display-lg text-on-surface tracking-tight font-bold font-headline-lg">1,420.85 <span class="font-title-md text-title-md text-on-surface-variant font-normal">Ha</span></div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs flex items-center gap-space-xs">
-<span class="font-code-num text-code-num bg-secondary-container text-on-secondary-container px-space-xs py-space-2xs rounded font-semibold">84.2% Acquired</span>
-<span>Target: 1,687.00 Ha</span>
-</div>
-</div>
-<!-- Mini Sparkline inline SVG -->
-<div class="pt-space-xs flex items-center justify-between">
-<span class="font-code-num text-label-sm text-secondary font-semibold">+68.4 Ha this week</span>
-<svg class="w-24 h-6 text-secondary" fill="none" viewBox="0 0 100 24">
-<path d="M0 20 L20 18 L40 14 L60 15 L80 8 L100 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-</div>
-</div>
-<!-- Metric 2: Land Parcels Cadastral Breakdown -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Total Demarcated Plots</span>
-<span class="p-space-xs rounded bg-surface-container text-on-surface">
-<span class="material-symbols-outlined text-[18px]">layers</span>
-</span>
-</div>
-<div class="my-space-sm">
-<div class="font-display-lg text-display-lg text-on-surface tracking-tight font-bold font-headline-lg">528 <span class="font-title-md text-title-md text-on-surface-variant font-normal">Plots</span></div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs flex items-center gap-space-xs flex-wrap">
-<span class="font-code-num text-label-sm text-secondary font-semibold">326 Clear</span>
-<span class="text-outline-variant">•</span>
-<span class="font-code-num text-label-sm text-on-surface font-semibold">98 Valued</span>
-<span class="text-outline-variant">•</span>
-<span class="font-code-num text-label-sm text-error font-semibold">74 Disputed</span>
-<span class="text-outline-variant">•</span>
-<span class="font-code-num text-label-sm text-on-surface-variant">30 Pend.</span>
-</div>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full flex overflow-hidden">
-<div class="bg-secondary h-full" style="width: 61.7%"></div>
-<div class="bg-tertiary-fixed-dim h-full" style="width: 18.5%"></div>
-<div class="bg-error h-full" style="width: 14.0%"></div>
-<div class="bg-outline-variant h-full" style="width: 5.8%"></div>
-</div>
-</div>
-<!-- Metric 3: Compensation Disbursed (PFMS) -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">PFMS / DBT Disbursal</span>
-<span class="p-space-xs rounded bg-surface-container text-on-surface">
-<span class="material-symbols-outlined text-[18px]">account_balance</span>
-</span>
-</div>
-<div class="my-space-sm">
-<div class="font-display-lg text-display-lg text-on-surface tracking-tight font-bold font-headline-lg">₹482.40 <span class="font-title-md text-title-md text-on-surface-variant font-normal">Cr</span></div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">
-<span>Sanctioned Escrow: </span><span class="font-code-num text-code-num font-semibold text-on-surface">₹620.00 Cr</span>
-</div>
-</div>
-<div class="flex items-center justify-between font-label-sm text-label-sm">
-<span class="text-secondary font-semibold font-code-num">892 Farmers Credited</span>
-<span class="text-on-surface-variant font-code-num">77.8% Fund Released</span>
-</div>
-</div>
-<!-- Metric 4: Timeline Adherence -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-code-num">Statutory Timeline</span>
-<span class="p-space-xs rounded bg-surface-container text-on-surface">
-<span class="material-symbols-outlined text-[18px]">pace</span>
-</span>
-</div>
-<div class="my-space-sm">
-<div class="font-display-lg text-display-lg text-secondary tracking-tight font-bold font-headline-lg">+18 Days</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">
-<span>Ahead of MoRTH Target Schedule</span>
-</div>
-</div>
-<div class="flex items-center justify-between font-label-sm text-label-sm">
-<span class="text-on-surface-variant font-code-num">Avg Cycle: 42 Days / Parcel</span>
-<span class="font-code-num text-label-sm text-secondary bg-secondary-container px-space-xs py-space-2xs rounded">BENCHMARK PASS</span>
-</div>
-</div>
-</section>
-<!-- Split Pane Workspace: Left GIS Map View (60%) & Right Workflow Tasks (40%) -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
-<!-- Left Pane: GIS Cadastral Map Canvas (7 Cols Desktop) -->
-<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col relative min-h-[580px]">
-<!-- Map Top Toolbar HUD -->
-<div class="p-space-sm bg-surface-container-low flex items-center justify-between gap-space-xs flex-wrap z-10">
-<div class="flex items-center gap-space-xs">
-<div class="bg-surface-container-lowest px-space-sm py-space-2xs rounded font-label-sm text-label-sm font-semibold flex items-center gap-space-xs shadow-sm">
-<span class="material-symbols-outlined text-[16px] text-secondary">satellite_alt</span>
-<span>Drone Ortho 5cm/px</span>
-</div>
-<div class="bg-surface-container-lowest px-space-sm py-space-2xs rounded font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-secondary"></span>
-<span>Khasra Cadastre Overlay</span>
-</div>
-<div class="bg-surface-container-lowest px-space-sm py-space-2xs rounded font-label-sm text-label-sm text-on-surface-variant hidden sm:flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span>RoW Buffer (60m)</span>
-</div>
-</div>
-<!-- Coordinates HUD -->
-<div class="flex items-center gap-space-xs">
-<div class="bg-surface-container-highest px-space-sm py-space-2xs rounded font-code-num text-code-num font-semibold text-on-surface flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[14px]">pin_drop</span>
-<span>21.1458° N, 79.0882° E</span>
-</div>
-<button class="p-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors" title="Measurement Tool">
-<span class="material-symbols-outlined text-[18px]">straighten</span>
-</button>
-<button class="p-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors" title="Toggle Split Satellite/Vector">
-<span class="material-symbols-outlined text-[18px]">vertical_split</span>
-</button>
-<button class="p-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors" title="Export GeoPDF">
-<span class="material-symbols-outlined text-[18px]">download</span>
-</button>
-</div>
-</div>
-<!-- Vector GIS Map Rendering Simulator with Cadastral Geometry -->
-<div class="relative flex-1 w-full bg-surface-container-high overflow-hidden">
-<!-- Underlaying Stylized Satellite / Cadastral Vector Canvas -->
-<div class="absolute inset-0 bg-[#e3ecf8] flex items-center justify-center" data-location="Nagpur, Maharashtra, India">
-<!-- Interactive Polygons (SVG Cadastral Layer) -->
-<svg class="w-full h-full object-cover" preserveAspectRatio="none" viewBox="0 0 800 500">
-<!-- Road Alignment Buffer Ribbon -->
-<polygon fill="#cbd5e1" fill-opacity="0.35" points="0,210 800,160 800,280 0,330"></polygon>
-<line stroke="#0b1c30" stroke-dasharray="12 6" stroke-width="4" x1="0" x2="800" y1="270" y2="220"></line>
-<line stroke="#006c4a" stroke-dasharray="4 4" stroke-width="2" x1="0" x2="800" y1="240" y2="190"></line>
-<line stroke="#006c4a" stroke-dasharray="4 4" stroke-width="2" x1="0" x2="800" y1="300" y2="250"></line>
-<!-- Parcel A: Acquired & Compensated (Green) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#82f5c1" fill-opacity="0.65" points="60,120 190,100 220,230 80,245" stroke="#006c4a" stroke-width="2"></polygon>
-<text fill="#002114" font-family="Inter" font-size="11" font-weight="600" x="110" y="180">#MH-NGP-4028</text>
-<text fill="#005137" font-family="Inter" font-size="9" x="120" y="196">Acquired (1.8 Ha)</text>
-<!-- Parcel B: Active Inspector Target (Amber) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#fde68a" fill-opacity="0.75" id="activeParcelPoly" points="225,95 380,80 410,215 230,228" stroke="#92400e" stroke-dasharray="6 3" stroke-width="3"></polygon>
-<text fill="#78350f" font-family="Inter" font-size="12" font-weight="700" x="260" y="150">#MH-NGP-4029</text>
-<text fill="#92400e" font-family="Inter" font-size="10" font-weight="600" x="270" y="168">Sec 19 Award • 2.85 Ha</text>
-<!-- Parcel C: Surveyed / JMS Ongoing (Blue) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#cce5ff" fill-opacity="0.6" points="385,78 510,65 540,205 415,214" stroke="#188ace" stroke-width="2"></polygon>
-<text fill="#001d31" font-family="Inter" font-size="11" font-weight="600" x="430" y="140">#MH-NGP-4030</text>
-<text fill="#004b73" font-family="Inter" font-size="9" x="440" y="156">JMS Lock (3.1 Ha)</text>
-<!-- Parcel D: Disputed / Boundary Overlap (Red) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#ffdad6" fill-opacity="0.75" points="515,64 660,50 680,195 545,204" stroke="#ba1a1a" stroke-width="2.5"></polygon>
-<text fill="#93000a" font-family="Inter" font-size="11" font-weight="700" x="560" y="130">#MH-NGP-4031</text>
-<text fill="#ba1a1a" font-family="Inter" font-size="9" font-weight="600" x="565" y="146">Dispute Ch. 142+200</text>
-<!-- Parcel E: Acquired (Green) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#82f5c1" fill-opacity="0.6" points="100,265 240,250 260,390 120,410" stroke="#006c4a" stroke-width="2"></polygon>
-<text fill="#002114" font-family="Inter" font-size="11" font-weight="600" x="150" y="330">#MH-NGP-4032</text>
-<text fill="#005137" font-family="Inter" font-size="9" x="160" y="346">Disbursed (2.1 Ha)</text>
-<!-- Parcel F: Under Valuation (Amber) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#fde68a" fill-opacity="0.6" points="250,248 420,230 450,370 270,388" stroke="#92400e" stroke-width="2"></polygon>
-<text fill="#78350f" font-family="Inter" font-size="11" font-weight="600" x="310" y="310">#MH-NGP-4033</text>
-<text fill="#92400e" font-family="Inter" font-size="9" x="320" y="326">Valuation Matrix</text>
-<!-- Parcel G: Pending Intake (Grey/Blue) -->
-<polygon class="cursor-pointer hover:fill-opacity-90 transition-all" fill="#eff4ff" fill-opacity="0.75" points="430,228 590,210 610,350 460,368" stroke="#76777d" stroke-dasharray="4 2" stroke-width="1.5"></polygon>
-<text fill="#45464d" font-family="Inter" font-size="11" font-weight="600" x="490" y="290">#MH-NGP-4034</text>
-<text fill="#76777d" font-family="Inter" font-size="9" x="500" y="306">SIA Notice Intended</text>
-<!-- Geo Pins & Vertex Points -->
-<circle cx="225" cy="95" fill="#ba1a1a" r="4"></circle>
-<circle cx="380" cy="80" fill="#ba1a1a" r="4"></circle>
-<circle cx="410" cy="215" fill="#ba1a1a" r="4"></circle>
-<circle cx="230" cy="228" fill="#ba1a1a" r="4"></circle>
-</svg>
-</div>
-<!-- Floating GIS On-Screen Tools (Top Right) -->
-<div class="absolute top-space-md right-space-md flex flex-col gap-space-2xs z-20">
-<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high flex items-center justify-center shadow-md transition-colors" title="Zoom In">
-<span class="material-symbols-outlined text-[18px]">add</span>
-</button>
-<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high flex items-center justify-center shadow-md transition-colors" title="Zoom Out">
-<span class="material-symbols-outlined text-[18px]">remove</span>
-</button>
-<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high flex items-center justify-center shadow-md transition-colors" title="Center Alignment">
-<span class="material-symbols-outlined text-[18px]">my_location</span>
-</button>
-<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high flex items-center justify-center shadow-md transition-colors" title="Toggle 3D Terrain">
-<span class="material-symbols-outlined text-[18px]">terrain</span>
-</button>
-</div>
-<!-- Floating Active Parcel Inspector Card (Bottom-Left Anchor) -->
-<div class="absolute bottom-space-md left-space-md right-space-md sm:right-auto sm:max-w-md bg-surface-container-lowest/95 backdrop-blur-md p-space-md rounded-xl shadow-lg z-20">
-<div class="flex items-start justify-between gap-space-sm mb-space-xs">
-<div>
-<div class="flex items-center gap-space-xs">
-<span class="font-code-num text-code-num font-bold text-on-surface">#MH-NGP-4029</span>
-<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface px-space-xs py-space-2xs rounded">Survey 142/3A</span>
-<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed font-semibold px-space-xs py-space-2xs rounded">RoR Verified</span>
-</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Mouza Umred • Nagpur District • Ch. 138+620</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-code-num px-space-xs py-space-2xs rounded">2.85 Ha</span>
-</div>
-<div class="grid grid-cols-2 gap-space-xs py-space-xs my-space-xs bg-surface-container-low p-space-xs rounded-lg">
-<div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Primary Titleholder</div>
-<div class="font-label-md text-label-md font-semibold text-on-surface truncate">Shri Rameshwar Patil</div>
-<div class="font-code-num text-[10px] text-secondary">Aadhaar Linked • Verified</div>
-</div>
-<div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Computed Award (2.5x)</div>
-<div class="font-title-md text-title-md font-bold text-on-surface">₹ 1,42,50,000</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Sec 19 Issued</div>
-</div>
-</div>
-<div class="flex items-center gap-space-xs mt-space-xs">
-<button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md py-space-xs px-space-sm rounded transition-colors text-center">
-              View 7/12 RoR
-            </button>
-<button class="flex-1 bg-secondary hover:bg-on-secondary-container text-on-secondary font-label-md text-label-md py-space-xs px-space-sm rounded transition-colors text-center font-semibold">
-              Approve Award
-            </button>
-<button class="bg-primary hover:bg-surface-container-highest hover:text-on-surface text-on-primary p-space-xs rounded transition-colors" title="Disburse DBT Escrow">
-<span class="material-symbols-outlined text-[18px]">payments</span>
-</button>
-</div>
-</div>
-<!-- Bottom Geospatial Status Bar -->
-<div class="absolute bottom-0 left-0 right-0 bg-inverse-surface/90 backdrop-blur-md px-space-md py-space-2xs text-inverse-on-surface flex items-center justify-between font-code-num text-[11px] z-10">
-<div class="flex items-center gap-space-md">
-<span>Scale 1:2,500</span>
-<span class="hidden md:inline">Grid: WGS 84 / UTM 43N</span>
-<span class="hidden sm:inline">Active Layer: Vector Cadastral Rev 4.2</span>
-</div>
-<div class="flex items-center gap-space-xs text-secondary-container">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
-<span>Survey of India (SOI) Spatial Sync Active</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Pane: Statutory Approvals & Fast-Track Actions (5 Cols Desktop) -->
-<div class="lg:col-span-5 flex flex-col gap-space-md">
-<!-- Role Authority Context Card -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-headline-sm">
-<span class="material-symbols-outlined">gavel</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-code-num">Authorized Seat</span>
-<span class="font-title-md text-title-md font-bold text-on-surface leading-tight">CALA / Special LAO Bench</span>
-<span class="font-code-num text-[11px] text-secondary font-semibold">Competent Authority Land Acquisition (NHAI)</span>
-</div>
-</div>
-<span class="font-label-sm text-label-sm bg-surface-container-high px-space-sm py-space-2xs rounded-full text-on-surface font-code-num">DSC Key Active</span>
-</div>
-<!-- Urgent Statutory Approval Pipeline -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex-1 flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-sm">
-<div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-primary text-[20px]">assignment_turned_in</span>
-<h2 class="font-title-md text-title-md font-semibold text-on-surface">Urgent Approval Queue</h2>
-</div>
-<span class="font-code-num text-code-num bg-surface-container-high text-on-surface px-space-xs py-space-2xs rounded">3 High Priority</span>
-</div>
-<div class="space-y-space-sm">
-<!-- Queue Item 1 -->
-<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex flex-col gap-space-xs">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="font-label-sm text-label-sm bg-error-container text-on-error-container font-semibold px-space-xs py-space-2xs rounded">Sec 19 Declaration</span>
-<span class="font-code-num text-label-sm text-on-surface-variant font-medium">42 Parcels (Umred Tahsil)</span>
-</div>
-<span class="font-code-num text-label-sm text-on-surface font-semibold">₹ 38.60 Cr Total</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface leading-snug">
-              Final Gazette Award schedule ready for CALA digital authorization. Multiplier formula 2.5x calculated with solatium.
-            </p>
-<div class="flex items-center justify-between mt-space-2xs pt-space-2xs">
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Due in 48 hrs</span>
-<div class="flex items-center gap-space-xs">
-<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface px-space-xs py-space-2xs">Inspect Matrix</button>
-<button class="font-label-sm text-label-sm bg-primary hover:bg-surface-container-highest hover:text-on-surface text-on-primary font-semibold px-space-sm py-space-2xs rounded transition-colors flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[14px]">edit_document</span>
-<span>Review &amp; E-Sign</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Queue Item 2 -->
-<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex flex-col gap-space-xs">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface font-semibold px-space-xs py-space-2xs rounded">Joint Survey (JMS)</span>
-<span class="font-code-num text-label-sm text-on-surface-variant font-medium">Patwari Field Batch #4</span>
-</div>
-<span class="font-code-num text-label-sm text-secondary font-semibold">18 DGPS Markers</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface leading-snug">
-              Ground demarcation boundary markers uploaded with photographic geotags. Zero encroachments logged.
-            </p>
-<div class="flex items-center justify-between mt-space-2xs pt-space-2xs">
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Submitted 3h ago</span>
-<button class="font-label-sm text-label-sm bg-secondary hover:bg-on-secondary-container text-on-secondary font-semibold px-space-sm py-space-2xs rounded transition-colors flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[14px]">check</span>
-<span>Verify GPS Bounds</span>
-</button>
-</div>
-</div>
-<!-- Queue Item 3 -->
-<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex flex-col gap-space-xs">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-space-xs">
-<span class="font-label-sm text-label-sm bg-error-container text-on-error-container font-semibold px-space-xs py-space-2xs rounded">Grievance Appeal</span>
-<span class="font-code-num text-label-sm text-error font-medium">#GR-2024-88</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Ch. 142+200</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface leading-snug">
-              Boundary overlap objection lodged by co-owner regarding partition of Khasra 144/2. CALA mediation required.
-            </p>
-<div class="flex items-center justify-between mt-space-2xs pt-space-2xs">
-<span class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Hearing: 24 Oct 2024</span>
-<button class="font-label-sm text-label-sm bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-semibold px-space-sm py-space-2xs rounded transition-colors flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[14px]">person_pin</span>
-<span>Assign Field SLAO</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Live Digital Audit Hash Ribbon -->
-<div class="mt-space-md p-space-xs bg-surface-container-high rounded-lg flex items-center justify-between font-code-num text-[11px] text-on-surface-variant">
-<div class="flex items-center gap-space-2xs truncate">
-<span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span>
-<span class="truncate">SHA-256 Ledger: 9f82...c10b • NIC-eSign v2.1 Compliant</span>
-</div>
-<span class="shrink-0 font-semibold text-on-surface">Time: 14:32:08 IST</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Bottom Land Parcels Data Table & Filter Tray -->
-<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg mb-space-2xl">
-<!-- Header Controls & Tabs -->
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-md">
-<div>
-<h2 class="font-title-md text-title-md font-bold text-on-surface">Cadastral Parcels Master Register</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Dynamic register of Khasra plots under Section 3A / 3D notification</p>
-</div>
-<!-- Quick Action Group -->
-<div class="flex items-center gap-space-xs flex-wrap">
-<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-sm py-space-xs rounded font-label-md text-label-md flex items-center gap-space-2xs transition-colors">
-<span class="material-symbols-outlined text-[16px]">file_download</span>
-<span>Bulk GeoJSON</span>
-</button>
-<button class="bg-primary hover:bg-surface-container-highest hover:text-on-surface text-on-primary px-space-sm py-space-xs rounded font-label-md text-label-md flex items-center gap-space-2xs transition-colors">
-<span class="material-symbols-outlined text-[16px]">summarize</span>
-<span>Generate Compensation Matrix</span>
-</button>
-</div>
-</div>
-<!-- Filter Tray Tabs -->
-<div class="flex items-center gap-space-xs overflow-x-auto pb-space-xs mb-space-md">
-<button class="bg-primary text-on-primary px-space-md py-space-xs rounded-lg font-label-md text-label-md font-semibold shrink-0">
-        All Parcels (528)
-      </button>
-<button class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-space-md py-space-xs rounded-lg font-label-md text-label-md font-semibold shrink-0">
-        Pending JMS Survey (34)
-      </button>
-<button class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-space-md py-space-xs rounded-lg font-label-md text-label-md font-semibold shrink-0">
-        Under Valuation (42)
-      </button>
-<button class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-space-md py-space-xs rounded-lg font-label-md text-label-md font-semibold shrink-0">
-        Ready for Award / DBT (88)
-      </button>
-<button class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-space-md py-space-xs rounded-lg font-label-md text-label-md font-semibold shrink-0 flex items-center gap-space-2xs">
-<span class="w-2 h-2 rounded-full bg-error"></span>
-<span>Grievances / Objections (12)</span>
-</button>
-</div>
-<!-- Data Table Container -->
-<div class="w-full overflow-x-auto">
-<table class="w-full text-left font-body-sm text-body-sm">
-<thead>
-<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider font-code-num">
-<th class="py-space-xs px-space-sm">Parcel &amp; Khasra</th>
-<th class="py-space-xs px-space-sm">Mouza / Tehsil</th>
-<th class="py-space-xs px-space-sm text-right">Acquisition Area</th>
-<th class="py-space-xs px-space-sm">Classification</th>
-<th class="py-space-xs px-space-sm">Registered Titleholder(s)</th>
-<th class="py-space-xs px-space-sm text-right">Award Valuation (₹)</th>
-<th class="py-space-xs px-space-sm">DBT Direct Transfer</th>
-<th class="py-space-xs px-space-sm">Acquisition Milestone</th>
-<th class="py-space-xs px-space-sm text-center">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y-0">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container transition-colors">
-<td class="py-space-sm px-space-sm">
-<div class="font-code-num text-code-num font-semibold text-on-surface">#MH-NGP-4028</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Survey No. 141/2</div>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-semibold text-on-surface">Umred</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Nagpur Rural</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-semibold text-on-surface">
-              1.800 Ha
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface">Irrigated Agri</span>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-medium text-on-surface">Devidas G. Nimje</div>
-<div class="font-label-sm text-label-sm text-secondary font-code-num">Aadhaar Linked ✓</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              ₹ 92,40,000
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-secondary-container text-on-secondary-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold flex items-center gap-space-2xs w-fit">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Paid via PFMS
-              </span>
-</td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-secondary-container text-on-secondary-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold">
-                Clear &amp; Possessed
-              </span>
-</td>
-<td class="py-space-sm px-space-sm text-center">
-<div class="flex items-center justify-center gap-space-2xs">
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Locate on GIS">
-<span class="material-symbols-outlined text-[18px]">travel_explore</span>
-</button>
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Download 7/12 RoR">
-<span class="material-symbols-outlined text-[18px]">download</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 2 (Active Target) -->
-<tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
-<td class="py-space-sm px-space-sm">
-<div class="font-code-num text-code-num font-bold text-primary">#MH-NGP-4029</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Survey No. 142/3A</div>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-semibold text-on-surface">Umred</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Nagpur Rural</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              2.850 Ha
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface">Multi-Crop Agri</span>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-medium text-on-surface">Rameshwar Patil &amp; 2 Others</div>
-<div class="font-label-sm text-label-sm text-secondary font-code-num">RoR Clear ✓</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              ₹ 1,42,50,000
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-tertiary-fixed text-on-tertiary-fixed font-semibold px-space-xs py-space-2xs rounded font-label-sm text-label-sm flex items-center gap-space-2xs w-fit">
-<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container animate-pulse"></span> Escrow Ready
-              </span>
-</td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-primary-container text-on-primary px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold">
-                Sec 19 Issued
-              </span>
-</td>
-<td class="py-space-sm px-space-sm text-center">
-<div class="flex items-center justify-center gap-space-2xs">
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Locate on GIS">
-<span class="material-symbols-outlined text-[18px]">travel_explore</span>
-</button>
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Approve &amp; E-Sign">
-<span class="material-symbols-outlined text-[18px]">draw</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container transition-colors">
-<td class="py-space-sm px-space-sm">
-<div class="font-code-num text-code-num font-semibold text-on-surface">#MH-NGP-4030</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Survey No. 143/1</div>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-semibold text-on-surface">Bhiwapur</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Nagpur Rural</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-semibold text-on-surface">
-              3.100 Ha
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface">Semi-Dry Fallow</span>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-medium text-on-surface">Smt. Sunita M. Barapatre</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant font-code-num">Karta Verified</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              ₹ 1,12,00,000
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high text-on-surface-variant px-space-xs py-space-2xs rounded font-label-sm text-label-sm w-fit">
-                Pending SLAO
-              </span>
-</td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container text-on-surface px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold">
-                JMS Locked
-              </span>
-</td>
-<td class="py-space-sm px-space-sm text-center">
-<div class="flex items-center justify-center gap-space-2xs">
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Locate on GIS">
-<span class="material-symbols-outlined text-[18px]">travel_explore</span>
-</button>
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Inspection Record">
-<span class="material-symbols-outlined text-[18px]">visibility</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 4 (Disputed) -->
-<tr class="hover:bg-surface-container transition-colors">
-<td class="py-space-sm px-space-sm">
-<div class="font-code-num text-code-num font-semibold text-error">#MH-NGP-4031</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Survey No. 144/2</div>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-semibold text-on-surface">Bhiwapur</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Nagpur Rural</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-semibold text-on-surface">
-              1.450 Ha
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface">Orchard Land</span>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-medium text-on-surface">Ganesh K. Thakre &amp; Anr</div>
-<div class="font-label-sm text-label-sm text-error font-code-num">Title Injunction Filed</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              ₹ 86,20,000
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-error-container text-on-error-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold w-fit">
-                Disbursement Hold
-              </span>
-</td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-error-container text-on-error-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold">
-                Grievance Mediation
-              </span>
-</td>
-<td class="py-space-sm px-space-sm text-center">
-<div class="flex items-center justify-center gap-space-2xs">
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Locate on GIS">
-<span class="material-symbols-outlined text-[18px]">travel_explore</span>
-</button>
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-error" title="View Appeal Dossier">
-<span class="material-symbols-outlined text-[18px]">gavel</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 5 -->
-<tr class="hover:bg-surface-container transition-colors">
-<td class="py-space-sm px-space-sm">
-<div class="font-code-num text-code-num font-semibold text-on-surface">#MH-NGP-4032</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Survey No. 145/1B</div>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-semibold text-on-surface">Umred</div>
-<div class="font-label-sm text-label-sm text-on-surface-variant">Nagpur Rural</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-semibold text-on-surface">
-              2.100 Ha
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-surface-container-high px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface">Homestead Adjacent</span>
-</td>
-<td class="py-space-sm px-space-sm">
-<div class="font-label-md text-label-md font-medium text-on-surface">Chandrakant Deshmukh</div>
-<div class="font-label-sm text-label-sm text-secondary font-code-num">DBT Verified ✓</div>
-</td>
-<td class="py-space-sm px-space-sm text-right font-code-num text-code-num font-bold text-on-surface">
-              ₹ 1,18,00,000
-            </td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-secondary-container text-on-secondary-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold flex items-center gap-space-2xs w-fit">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Disbursed
-              </span>
-</td>
-<td class="py-space-sm px-space-sm">
-<span class="bg-secondary-container text-on-secondary-container px-space-xs py-space-2xs rounded font-label-sm text-label-sm font-semibold">
-                Possession Taken
-              </span>
-</td>
-<td class="py-space-sm px-space-sm text-center">
-<div class="flex items-center justify-center gap-space-2xs">
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Locate on GIS">
-<span class="material-symbols-outlined text-[18px]">travel_explore</span>
-</button>
-<button class="p-space-2xs rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Download Voucher">
-<span class="material-symbols-outlined text-[18px]">receipt_long</span>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Table Pagination & Cadastral Totals Footer -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm mt-space-md pt-space-sm bg-surface-container-low p-space-sm rounded-lg font-body-sm text-body-sm text-on-surface-variant">
-<div class="flex items-center gap-space-xs">
-<span>Showing <strong class="text-on-surface font-semibold">1 to 5</strong> of <strong class="text-on-surface font-semibold">528</strong> Khasra records</span>
-<span class="text-outline-variant">•</span>
-<span class="font-code-num text-label-sm">Active Filter: All Cadastral Plots</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm font-semibold">
-          Previous
+/**
+ * E-Bhumi - National Land & Citizen Portal
+ * Application Controller, Interactive Google Satellite GIS Engine & Workflow Manager
+ * RFCTLARR Act 2013 Compliant Cadastral Land Acquisition System
+ */
+
+// --- USER PROFILES & RBAC ACCESS DEFINITIONS (MATCHING IMAGE SPECIFICATION) ---
+const USER_PROFILES = {
+  admin: {
+    id: 'admin-01',
+    roleKey: 'admin',
+    name: 'Dr. Rajeshwar Rao (IAS)',
+    officerId: 'LAO-094',
+    designation: 'Competent Authority & Special Land Acquisition Officer (CALA)',
+    badge: 'System Admin (Auditor)',
+    badgeClass: 'bg-primary text-on-primary',
+    avatarText: 'RR',
+    avatarBg: 'bg-primary text-on-primary',
+    permissions: {
+      settings: 'Full',
+      financialReports: 'Full',
+      assignedProperties: 'Full',
+      approveOffers: 'Full',
+      submitBulkCSV: 'Full',
+      submitSingleProp: 'Full',
+      viewOwnTxn: 'Full'
+    }
+  },
+  officer: {
+    id: 'officer-01',
+    roleKey: 'officer',
+    name: 'Shri Vikram K. Deshmukh',
+    officerId: 'SLAO-082',
+    designation: 'Senior Acquisition Agent & Survey Patwari',
+    badge: 'Field Officer (Acquisition Agent)',
+    badgeClass: 'bg-secondary-container text-on-secondary-container',
+    avatarText: 'VD',
+    avatarBg: 'bg-secondary-container text-secondary',
+    permissions: {
+      settings: 'No',
+      financialReports: 'No',
+      assignedProperties: 'Full',
+      approveOffers: 'View Only',
+      submitBulkCSV: 'Full',
+      submitSingleProp: 'Full',
+      viewOwnTxn: 'Full'
+    }
+  },
+  landowner: {
+    id: 'landowner-01',
+    roleKey: 'landowner',
+    name: 'Rameshwar Patil',
+    officerId: 'Khasra #142/3A',
+    designation: 'Registered Landowner • Survey Plot #MH-NGP-4029',
+    badge: 'Client (Personal Landowner)',
+    badgeClass: 'bg-emerald-100 text-emerald-800 font-bold',
+    avatarText: 'RP',
+    avatarBg: 'bg-emerald-700 text-white',
+    permissions: {
+      settings: 'No',
+      financialReports: 'No',
+      assignedProperties: 'Own Only',
+      approveOffers: 'No',
+      submitBulkCSV: 'No',
+      submitSingleProp: 'Full',
+      viewOwnTxn: 'Full (Own Only)'
+    }
+  },
+  viewer: {
+    id: 'viewer-01',
+    roleKey: 'viewer',
+    name: 'Public Citizen (Guest)',
+    officerId: 'Guest Access',
+    designation: 'Public Cadastral & Gazette Notice Viewer',
+    badge: 'Client (Public Viewer)',
+    badgeClass: 'bg-surface-container-high text-on-surface font-bold',
+    avatarText: 'PV',
+    avatarBg: 'bg-surface-container-highest text-on-surface',
+    permissions: {
+      settings: 'No',
+      financialReports: 'No',
+      assignedProperties: 'No',
+      approveOffers: 'No',
+      submitBulkCSV: 'No',
+      submitSingleProp: 'View Only',
+      viewOwnTxn: 'View Only'
+    }
+  }
+};
+
+// --- APPLICATION STATE ---
+const AppState = {
+  isLoggedIn: false,
+  currentUser: null,
+  loginTab: 'admin',
+  clientSubtype: 'landowner',
+  currentView: 'overview',
+  activeProjectId: 'PKG-4B',
+  activeParcelId: 'MH-NGP-4029',
+  pendingApprovalsCount: 6,
+  overviewMap: null,
+  dedicatedMap: null,
+  overviewPolygons: [],
+  dedicatedPolygons: [],
+  googleMapsLoaded: false,
+  projects: [
+    {
+      id: 'PKG-4B',
+      title: 'NH-44 Express Corridor Expansion — Package 4B',
+      category: 'National Highway Project',
+      corridor: 'Nagpur — Hinganghat Highway Route',
+      notification: 'S.O. 1842(E) / Section 3A Public Notice',
+      district: 'Nagpur Rural District',
+      marker: 'Km 114 to Km 168',
+      targetHa: 1687,
+      acquiredHa: 1018.58,
+      percent: 60.4,
+      totalPlots: 528,
+      clearPlots: 295,
+      processPlots: 188,
+      reviewPlots: 45,
+      escrowCr: 620.00,
+      disbursedCr: 362.50,
+      disbursedLandowners: 295,
+      disbursedPercent: 58.5,
+      status: 'ACTIVE CORRIDOR',
+      statusClass: 'bg-secondary-container text-on-secondary-container',
+      timelineStatus: '+18 Days',
+      timelineText: 'Ahead of Government Target Schedule',
+      timelineBadge: 'ON SCHEDULE',
+      incharge: 'Dr. Rajeshwar Rao (IAS) - Special Land Acquisition Officer',
+      stage1: { percent: 100, status: '100% Completed', desc: 'Public hearing and social impact report approved' },
+      stage2: { percent: 94, status: '94% Active', desc: '494 of 528 plot boundaries mapped' },
+      stage3: { percent: 71, status: '71% In Progress', desc: 'Notices issued; remainder in final review' },
+      stage4: { percent: 56, status: '56% Paid', desc: '₹362.50 Cr transferred to landowners via DBT' },
+      activeStep: 3,
+      centerCoords: { lat: 20.8980, lng: 79.0265 },
+      coordsText: '20.8980° N, 79.0265° E'
+    },
+    {
+      id: 'PKG-2A',
+      title: 'NH-53 Bypass Expansion — Package 2A',
+      category: 'National Highway Bypass',
+      corridor: 'Nagpur — Bhandara Highway Link',
+      notification: 'S.O. 2045(E) / Section 3A Public Notice',
+      district: 'Bhandara & Nagpur East',
+      marker: 'Km 42 to Km 98',
+      targetHa: 640,
+      acquiredHa: 412.00,
+      percent: 64.3,
+      totalPlots: 284,
+      clearPlots: 190,
+      processPlots: 82,
+      reviewPlots: 12,
+      escrowCr: 280.00,
+      disbursedCr: 178.40,
+      disbursedLandowners: 190,
+      disbursedPercent: 63.7,
+      status: 'FIELD SURVEY ACTIVE',
+      statusClass: 'bg-surface-container-high text-on-surface',
+      timelineStatus: '+6 Days',
+      timelineText: 'Joint Survey Cadastre Completed',
+      timelineBadge: 'FIELD ACTIVE',
+      incharge: 'Shri V. K. Deshmukh (SLAO-082)',
+      stage1: { percent: 100, status: '100% Completed', desc: 'Section 3A Gazette notifications published' },
+      stage2: { percent: 85, status: '85% Active', desc: '241 of 284 plot boundaries demarcated' },
+      stage3: { percent: 68, status: '68% In Progress', desc: 'Section 3D hearings underway in Bhandara' },
+      stage4: { percent: 64, status: '64% Paid', desc: '₹178.40 Cr compensation released via DBT' },
+      activeStep: 2,
+      centerCoords: { lat: 21.1680, lng: 79.6540 },
+      coordsText: '21.1680° N, 79.6540° E'
+    },
+    {
+      id: 'FEEDER-01',
+      title: 'Samruddhi Mahamarg Feeder Link — Phase 1',
+      category: 'Expressway Connector Link',
+      corridor: 'Wardha — Butibori Expressway Connector',
+      notification: 'S.O. 1190(E) / Section 3D Final Award',
+      district: 'Wardha & Butibori Rural',
+      marker: 'Km 0 to Km 34',
+      targetHa: 820,
+      acquiredHa: 740.00,
+      percent: 90.2,
+      totalPlots: 390,
+      clearPlots: 355,
+      processPlots: 31,
+      reviewPlots: 4,
+      escrowCr: 410.00,
+      disbursedCr: 382.10,
+      disbursedLandowners: 355,
+      disbursedPercent: 93.2,
+      status: 'FINAL DISBURSAL (90%)',
+      statusClass: 'bg-secondary-container text-on-secondary-container',
+      timelineStatus: '+24 Days',
+      timelineText: 'Final Stage: 90% Compensation Disbursed',
+      timelineBadge: 'NEAR COMPLETION',
+      incharge: 'Smt. Anjali Sharma (CALA / SDM)',
+      stage1: { percent: 100, status: '100% Completed', desc: 'Corridor master alignment finalized' },
+      stage2: { percent: 100, status: '100% Completed', desc: 'All 390 plots demarcated with DGPS' },
+      stage3: { percent: 98, status: '98% Approved', desc: 'Section 19 Final Awards proclaimed' },
+      stage4: { percent: 93, status: '93% Paid', desc: '₹382.10 Cr disbursed to 355 landowners' },
+      activeStep: 5,
+      centerCoords: { lat: 20.7450, lng: 78.6020 },
+      coordsText: '20.7450° N, 78.6020° E'
+    }
+  ],
+  parcels: [
+    {
+      id: 'MH-NGP-4028',
+      surveyNo: '141/2',
+      mouza: 'Umred',
+      tehsil: 'Nagpur Rural',
+      areaHa: 1.800,
+      classification: 'Irrigated Agriculture',
+      owner: 'Devidas G. Nimje',
+      aadhaarLinked: true,
+      awardValuation: 9240000,
+      dbtStatus: 'Paid via Bank Transfer (PFMS)',
+      status: 'Plot Acquired & Demarcated',
+      stage: 'disbursed',
+      statusColor: 'secondary',
+      circleRate: 1800000,
+      multiplier: 2.5,
+      solatium: 4500000,
+      interest: 840000,
+      assetsValuation: 1200000,
+      chainage: 'Km 137.80',
+      coordinates: '20.8950° N, 79.0220° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8950, lng: 79.0210 },
+        { lat: 20.8970, lng: 79.0225 },
+        { lat: 20.8962, lng: 79.0245 },
+        { lat: 20.8942, lng: 79.0230 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4029',
+      surveyNo: '142/3A',
+      mouza: 'Umred',
+      tehsil: 'Nagpur Rural',
+      areaHa: 2.850,
+      classification: 'Multi-Crop Farmland',
+      owner: 'Rameshwar Patil & 2 Others',
+      aadhaarLinked: true,
+      awardValuation: 14250000,
+      dbtStatus: 'Government Escrow Ready',
+      status: 'Section 19 Gazette Issued',
+      stage: 'award_ready',
+      statusColor: 'primary-container',
+      circleRate: 2000000,
+      multiplier: 2.5,
+      solatium: 5700000,
+      interest: 1350000,
+      assetsValuation: 1500000,
+      chainage: 'Km 138.62',
+      coordinates: '20.8980° N, 79.0255° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8970, lng: 79.0225 },
+        { lat: 20.8995, lng: 79.0245 },
+        { lat: 20.8985, lng: 79.0275 },
+        { lat: 20.8962, lng: 79.0245 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4030',
+      surveyNo: '143/1',
+      mouza: 'Bhiwapur',
+      tehsil: 'Nagpur Rural',
+      areaHa: 3.100,
+      classification: 'Semi-Dry Farm Plot',
+      owner: 'Smt. Sunita M. Barapatre',
+      aadhaarLinked: true,
+      awardValuation: 11200000,
+      dbtStatus: 'Under Officer Review',
+      status: 'Joint Survey Completed',
+      stage: 'surveyed',
+      statusColor: 'tertiary-fixed-dim',
+      circleRate: 1500000,
+      multiplier: 2.5,
+      solatium: 4650000,
+      interest: 950000,
+      assetsValuation: 950000,
+      chainage: 'Km 139.40',
+      coordinates: '20.9010° N, 79.0285° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8995, lng: 79.0245 },
+        { lat: 20.9020, lng: 79.0270 },
+        { lat: 20.9010, lng: 79.0305 },
+        { lat: 20.8985, lng: 79.0275 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4031',
+      surveyNo: '144/2',
+      mouza: 'Bhiwapur',
+      tehsil: 'Nagpur Rural',
+      areaHa: 1.450,
+      classification: 'Fruit Orchard Plot',
+      owner: 'Ganesh K. Thakre & Co-sharer',
+      aadhaarLinked: false,
+      awardValuation: 8620000,
+      dbtStatus: 'Payment on Hold',
+      status: 'Citizen Inquiry & Dispute Mediation',
+      stage: 'disputed',
+      statusColor: 'error',
+      circleRate: 2200000,
+      multiplier: 2.5,
+      solatium: 3190000,
+      interest: 740000,
+      assetsValuation: 1500000,
+      chainage: 'Km 142.20',
+      coordinates: '20.9035° N, 79.0320° E',
+      disputeReason: 'Boundary partition objection filed regarding inheritance of Survey No. 144/2.',
+      bounds: [
+        { lat: 20.9020, lng: 79.0270 },
+        { lat: 20.9045, lng: 79.0298 },
+        { lat: 20.9035, lng: 79.0335 },
+        { lat: 20.9010, lng: 79.0305 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4032',
+      surveyNo: '145/1B',
+      mouza: 'Umred',
+      tehsil: 'Nagpur Rural',
+      areaHa: 2.100,
+      classification: 'Residential Boundary Plot',
+      owner: 'Chandrakant Deshmukh',
+      aadhaarLinked: true,
+      awardValuation: 11800000,
+      dbtStatus: 'Paid via Bank Transfer (PFMS)',
+      status: 'Plot Handed Over to Highway Authority',
+      stage: 'disbursed',
+      statusColor: 'secondary',
+      circleRate: 1900000,
+      multiplier: 2.5,
+      solatium: 3990000,
+      interest: 1120000,
+      assetsValuation: 2700000,
+      chainage: 'Km 143.15',
+      coordinates: '20.8935° N, 79.0245° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8935, lng: 79.0235 },
+        { lat: 20.8955, lng: 79.0255 },
+        { lat: 20.8945, lng: 79.0285 },
+        { lat: 20.8925, lng: 79.0260 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4033',
+      surveyNo: '146/4',
+      mouza: 'Kuhi',
+      tehsil: 'Nagpur Rural',
+      areaHa: 1.950,
+      classification: 'Highway Frontage Plot',
+      owner: 'Vitthalrao S. Gaikwad',
+      aadhaarLinked: true,
+      awardValuation: 13500000,
+      dbtStatus: 'Valuation Finalization',
+      status: 'Price Calculation Underway',
+      stage: 'valuation',
+      statusColor: 'amber-600',
+      circleRate: 2400000,
+      multiplier: 2.5,
+      solatium: 4680000,
+      interest: 1200000,
+      assetsValuation: 2940000,
+      chainage: 'Km 144.80',
+      coordinates: '20.8955° N, 79.0270° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8955, lng: 79.0255 },
+        { lat: 20.8978, lng: 79.0280 },
+        { lat: 20.8968, lng: 79.0310 },
+        { lat: 20.8945, lng: 79.0285 }
+      ]
+    },
+    {
+      id: 'MH-NGP-4034',
+      surveyNo: '148/2',
+      mouza: 'Kuhi',
+      tehsil: 'Nagpur Rural',
+      areaHa: 2.400,
+      classification: 'Dry Crop Farmland',
+      owner: 'Babu Rao Shinde & 4 Family Members',
+      aadhaarLinked: false,
+      awardValuation: 9800000,
+      dbtStatus: 'Initial Notice Stage',
+      status: 'Section 3A Notice Issued',
+      stage: 'pending_survey',
+      statusColor: 'outline',
+      circleRate: 1600000,
+      multiplier: 2.5,
+      solatium: 3840000,
+      interest: 880000,
+      assetsValuation: 1240000,
+      chainage: 'Km 146.20',
+      coordinates: '20.8978° N, 79.0295° E',
+      disputeReason: null,
+      bounds: [
+        { lat: 20.8978, lng: 79.0280 },
+        { lat: 20.9002, lng: 79.0305 },
+        { lat: 20.8992, lng: 79.0335 },
+        { lat: 20.8968, lng: 79.0310 }
+      ]
+    }
+  ],
+  activeFilter: 'all',
+  searchQuery: '',
+  surveyWaypoints: [
+    { pt: 1, lat: '20.898012', lng: '79.025510', elev: '284.60m', acc: '±1.4 cm', time: '14:22:10' },
+    { pt: 2, lat: '20.898304', lng: '79.025845', elev: '284.75m', acc: '±1.6 cm', time: '14:24:35' },
+    { pt: 3, lat: '20.897980', lng: '79.026120', elev: '284.68m', acc: '±1.5 cm', time: '14:27:02' }
+  ],
+  isMobileFrame: false
+};
+
+// --- INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+  initAuthPortal();
+  initNavigation();
+  initGoogleSatelliteMaps();
+  initSvgMapFallback();
+  initProjectsModule();
+  populateHeaderProjectSelector();
+  selectProject(AppState.activeProjectId, false);
+  initParcelsTable();
+  initApprovalQueue();
+  initSurveyModule();
+  initModals();
+  updatePendingBadge();
+});
+
+// --- ROLE-BASED AUTHENTICATION & LOGIN PORTAL CONTROLLER ---
+function initAuthPortal() {
+  switchLoginRole('admin');
+  switchClientSubtype('landowner');
+
+  const loginPortal = document.getElementById('loginPortalView');
+  const mainShell = document.getElementById('mainAppShell');
+
+  if (loginPortal && !AppState.isLoggedIn) {
+    loginPortal.classList.remove('hidden');
+  }
+  if (mainShell && !AppState.isLoggedIn) {
+    mainShell.classList.add('hidden');
+  }
+
+  // Close profile dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    const container = document.getElementById('headerProfileContainer');
+    const dropdown = document.getElementById('headerProfileDropdown');
+    if (container && dropdown && !container.contains(e.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+}
+
+function switchLoginRole(role) {
+  AppState.loginTab = role;
+
+  const tabs = [
+    { id: 'loginTabAdmin', key: 'admin' },
+    { id: 'loginTabOfficer', key: 'officer' },
+    { id: 'loginTabClient', key: 'client' }
+  ];
+
+  tabs.forEach(tab => {
+    const btn = document.getElementById(tab.id);
+    if (!btn) return;
+    if (tab.key === role) {
+      btn.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold bg-primary text-on-primary shadow-sm flex items-center justify-center gap-2 transition-all';
+    } else {
+      btn.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center justify-center gap-2 transition-all';
+    }
+  });
+
+  const panels = [
+    { id: 'loginContentAdmin', key: 'admin' },
+    { id: 'loginContentOfficer', key: 'officer' },
+    { id: 'loginContentClient', key: 'client' }
+  ];
+
+  panels.forEach(p => {
+    const el = document.getElementById(p.id);
+    if (!el) return;
+    if (p.key === role) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
+}
+
+function switchClientSubtype(subtype) {
+  AppState.clientSubtype = subtype;
+
+  const btnLandowner = document.getElementById('btnClientSubLandowner');
+  const btnViewer = document.getElementById('btnClientSubViewer');
+  const panelLandowner = document.getElementById('clientSubLandownerPanel');
+  const panelViewer = document.getElementById('clientSubViewerPanel');
+
+  if (subtype === 'landowner') {
+    if (btnLandowner) btnLandowner.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold bg-primary text-on-primary shadow-sm flex items-center justify-center gap-1.5 transition-all';
+    if (btnViewer) btnViewer.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 transition-all';
+    if (panelLandowner) panelLandowner.classList.remove('hidden');
+    if (panelViewer) panelViewer.classList.add('hidden');
+  } else {
+    if (btnViewer) btnViewer.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold bg-primary text-on-primary shadow-sm flex items-center justify-center gap-1.5 transition-all';
+    if (btnLandowner) btnLandowner.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 transition-all';
+    if (panelLandowner) panelLandowner.classList.add('hidden');
+    if (panelViewer) panelViewer.classList.remove('hidden');
+  }
+}
+
+function loginAs(role, subtype) {
+  let targetKey = role;
+  if (role === 'client') {
+    targetKey = subtype || AppState.clientSubtype || 'landowner';
+  }
+  const user = USER_PROFILES[targetKey] || USER_PROFILES.admin;
+  AppState.currentUser = user;
+  AppState.isLoggedIn = true;
+
+  // Reveal main dashboard & hide login view
+  const loginPortal = document.getElementById('loginPortalView');
+  const mainShell = document.getElementById('mainAppShell');
+
+  if (loginPortal) loginPortal.classList.add('hidden');
+  if (mainShell) mainShell.classList.remove('hidden');
+
+  // Update Header user widget
+  updateHeaderUserProfile(user);
+
+  // Apply Role-Based Access Control (enforcing comparison table rules)
+  applyRolePermissions(targetKey);
+
+  // Trigger Google Maps resize to ensure crisp map rendering inside newly revealed container
+  setTimeout(() => {
+    if (AppState.overviewMap && window.google && google.maps) {
+      google.maps.event.trigger(AppState.overviewMap, 'resize');
+      AppState.overviewMap.setCenter({ lat: 20.8980, lng: 79.0265 });
+    }
+    if (AppState.dedicatedMap && window.google && google.maps) {
+      google.maps.event.trigger(AppState.dedicatedMap, 'resize');
+      AppState.dedicatedMap.setCenter({ lat: 20.8980, lng: 79.0265 });
+    }
+  }, 100);
+
+  showToast(`✓ Logged in as ${user.name} [${user.badge}]`);
+
+  // Navigate to appropriate starting view
+  if (targetKey === 'landowner') {
+    switchView('parcels');
+    selectParcel('MH-NGP-4029');
+  } else {
+    switchView('overview');
+  }
+}
+
+function logout() {
+  AppState.isLoggedIn = false;
+  AppState.currentUser = null;
+
+  const loginPortal = document.getElementById('loginPortalView');
+  const mainShell = document.getElementById('mainAppShell');
+  const profileDropdown = document.getElementById('headerProfileDropdown');
+
+  if (profileDropdown) profileDropdown.classList.add('hidden');
+  if (mainShell) mainShell.classList.add('hidden');
+  if (loginPortal) loginPortal.classList.remove('hidden');
+
+  // Reset to Overview
+  switchView('overview');
+
+  showToast('Signed out of session. Returned to Login Portal.');
+}
+
+function toggleProfileDropdown() {
+  const dd = document.getElementById('headerProfileDropdown');
+  if (dd) {
+    dd.classList.toggle('hidden');
+  }
+}
+
+function openPermissionsModal() {
+  const modal = document.getElementById('modalPermissionsMatrix');
+  if (modal) modal.classList.remove('hidden');
+  const dd = document.getElementById('headerProfileDropdown');
+  if (dd) dd.classList.add('hidden');
+}
+
+function closePermissionsModal() {
+  const modal = document.getElementById('modalPermissionsMatrix');
+  if (modal) modal.classList.add('hidden');
+}
+
+function updateHeaderUserProfile(user) {
+  const avatar = document.getElementById('headerUserAvatar');
+  const name = document.getElementById('headerOfficerName');
+  const badge = document.getElementById('headerRoleBadge');
+  const role = document.getElementById('headerOfficerRole');
+  const ddName = document.getElementById('profileDropdownName');
+  const ddRole = document.getElementById('profileDropdownRole');
+
+  if (avatar) {
+    avatar.textContent = user.avatarText;
+    avatar.className = `w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm ${user.avatarBg}`;
+  }
+  if (name) name.textContent = user.name;
+  if (badge) {
+    badge.textContent = user.roleKey.toUpperCase();
+    badge.className = `text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${user.badgeClass}`;
+  }
+  if (role) role.textContent = user.officerId ? `ID: ${user.officerId}` : user.designation;
+  if (ddName) ddName.textContent = user.name;
+  if (ddRole) ddRole.textContent = user.badge;
+}
+
+function applyRolePermissions(roleKey) {
+  const user = AppState.currentUser || USER_PROFILES[roleKey] || USER_PROFILES.admin;
+  const isAdmin = (roleKey === 'admin');
+  const isOfficer = (roleKey === 'officer');
+  const isLandowner = (roleKey === 'landowner');
+  const isViewer = (roleKey === 'viewer');
+
+  // 1. System Settings & Financial Reports (Admin ONLY)
+  const navReports = document.querySelector('[data-nav-view="reports"]');
+  if (navReports) {
+    navReports.style.display = isAdmin ? 'flex' : 'none';
+  }
+
+  // 2. Workflows & Approvals (Admin: Full, Field Officer: ⚠️ View Only, Landowner/Viewer: Hidden)
+  const navWorkflows = document.querySelector('[data-nav-view="workflows"]');
+  if (navWorkflows) {
+    navWorkflows.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
+  }
+
+  // Update E-Sign buttons in approval queue
+  const esignButtons = document.querySelectorAll('[data-queue-action="esign"]');
+  esignButtons.forEach(btn => {
+    if (isOfficer) {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">visibility</span><span>⚠️ View Only</span>';
+      btn.className = 'px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-semibold text-xs flex items-center gap-1 cursor-not-allowed';
+      btn.title = 'View Only: Competent Authority (CALA / Admin) Approval Required';
+    } else {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">draw</span><span>Review & E-Sign</span>';
+      btn.className = 'px-3 py-1.5 rounded-lg bg-primary text-on-primary font-semibold text-xs hover:bg-primary-container transition-colors flex items-center gap-1 shadow-sm';
+      btn.title = 'Authorize Section 19 with Class-3 DSC';
+    }
+  });
+
+  // 3. Field Survey Tab (Admin & Officer only)
+  const navSurvey = document.querySelector('[data-nav-view="survey"]');
+  if (navSurvey) {
+    navSurvey.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
+  }
+
+  // 4. Submit Bulk Land Portfolios (CSV / Boundary File) (Admin & Officer only)
+  const bulkControls = [
+    document.getElementById('btnBulkUpload'),
+    document.getElementById('btnNewProject'),
+    document.getElementById('btnNewAcqProject'),
+    document.getElementById('btnNewProjectTab')
+  ];
+  bulkControls.forEach(el => {
+    if (el) el.style.display = (isAdmin || isOfficer) ? '' : 'none';
+  });
+
+  // 5. Pending approvals badge in header
+  const pendingHeaderBtn = document.querySelector('button[title="Statutory Approvals Queue"]');
+  if (pendingHeaderBtn) {
+    pendingHeaderBtn.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
+  }
+
+  // 6. Land Parcels Table Filtering
+  renderParcelsTable();
+
+  // 7. Inject Contextual Role Banner on Overview Dashboard
+  renderOverviewRoleBanner(user);
+}
+
+function renderOverviewRoleBanner(user) {
+  let banner = document.getElementById('overviewRoleBannerContainer');
+  const overviewView = document.getElementById('view-overview');
+  if (!overviewView) return;
+
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'overviewRoleBannerContainer';
+    overviewView.insertBefore(banner, overviewView.firstChild);
+  }
+
+  if (user.roleKey === 'admin') {
+    banner.innerHTML = `
+      <div class="p-3.5 bg-primary-container/20 border border-primary-container/40 rounded-xl flex items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+          </div>
+          <div>
+            <div class="font-bold text-on-surface flex items-center gap-2">
+              <span>System Admin (Auditor) Mode</span>
+              <span class="text-[10px] bg-primary text-on-primary px-2 py-0.5 rounded font-bold uppercase">Full Permissions</span>
+            </div>
+            <div class="text-on-surface-variant text-[11px] mt-0.5">
+              Authorized for Section 19 Digital Signatures, ₹620 Cr Escrow Disbursals, Corridor Settings & System Audit.
+            </div>
+          </div>
+        </div>
+        <button onclick="openPermissionsModal()" class="text-secondary font-semibold hover:underline shrink-0 flex items-center gap-1 text-[11px]">
+          <span>View Matrix</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
         </button>
-<span class="px-space-sm py-space-2xs rounded bg-primary text-on-primary font-code-num text-label-sm font-bold">1</span>
-<button class="px-space-sm py-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-code-num text-label-sm font-medium">2</button>
-<button class="px-space-sm py-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-code-num text-label-sm font-medium">3</button>
-<span class="px-space-xs text-on-surface-variant">...</span>
-<button class="px-space-sm py-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-code-num text-label-sm font-medium">106</button>
-<button class="px-space-sm py-space-2xs rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm font-semibold">
-          Next
+      </div>
+    `;
+  } else if (user.roleKey === 'officer') {
+    banner.innerHTML = `
+      <div class="p-3.5 bg-secondary-container/30 border border-secondary/40 rounded-xl flex items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-secondary text-on-secondary flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">explore</span>
+          </div>
+          <div>
+            <div class="font-bold text-on-surface flex items-center gap-2">
+              <span>Field Acquisition Officer (SLAO-082) Active Mode</span>
+              <span class="text-[10px] bg-secondary text-on-secondary px-2 py-0.5 rounded font-bold uppercase">Acquisition Agent</span>
+            </div>
+            <div class="text-on-surface-variant text-[11px] mt-0.5">
+              DGPS Survey & Vertex Demarcation active. Cash award approvals: <strong class="text-amber-800">⚠️ View Only</strong> (CALA Admin Required). Macro financial audit reports restricted.
+            </div>
+          </div>
+        </div>
+        <button onclick="openPermissionsModal()" class="text-secondary font-semibold hover:underline shrink-0 flex items-center gap-1 text-[11px]">
+          <span>View Matrix</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
         </button>
-</div>
-</div>
-</section>
-<!-- Inline Micro-Interactions Script -->
-<script>
-    // Interactive SVG parcel selection demonstration
-    document.addEventListener('DOMContentLoaded', () => {
-      const activePoly = document.getElementById('activeParcelPoly');
-      if (activePoly) {
-        activePoly.addEventListener('click', () => {
-          activePoly.setAttribute('stroke', '#000000');
-          setTimeout(() => {
-            activePoly.setAttribute('stroke', '#92400e');
-          }, 800);
-        });
+      </div>
+    `;
+  } else if (user.roleKey === 'landowner') {
+    banner.innerHTML = `
+      <div class="p-3.5 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">agriculture</span>
+          </div>
+          <div>
+            <div class="font-bold text-emerald-900 flex items-center gap-2">
+              <span>Personal Landowner Awardee: Rameshwar Patil</span>
+              <span class="text-[10px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-bold uppercase">Own Holding Only</span>
+            </div>
+            <div class="text-emerald-800 text-[11px] mt-0.5">
+              Showing Survey Plot <strong>#MH-NGP-4029</strong> (Khasra 142/3A). Award Compensation: <strong>₹ 1,42,50,000</strong> (Escrow Ready). PFMS DBT direct bank transfer scheduled.
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="selectParcel('MH-NGP-4029'); switchView('parcels');" class="bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1 text-[11px] shadow-sm">
+            <span>View My Land Dossier</span>
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </button>
+          <button onclick="openPermissionsModal()" class="text-emerald-900 font-semibold hover:underline text-[11px]">
+            Matrix
+          </button>
+        </div>
+      </div>
+    `;
+  } else if (user.roleKey === 'viewer') {
+    banner.innerHTML = `
+      <div class="p-3.5 bg-surface-container-low border border-surface-container rounded-xl flex items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+          </div>
+          <div>
+            <div class="font-bold text-on-surface flex items-center gap-2">
+              <span>Public Citizen & Open Cadastre View Mode</span>
+              <span class="text-[10px] bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-bold uppercase">Public View Only</span>
+            </div>
+            <div class="text-on-surface-variant text-[11px] mt-0.5">
+              Public corridor alignment maps & official gazette notices are viewable. Compensation amounts and internal administrative decisions are protected.
+            </div>
+          </div>
+        </div>
+        <button onclick="openPermissionsModal()" class="text-secondary font-semibold hover:underline shrink-0 flex items-center gap-1 text-[11px]">
+          <span>View Matrix</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </button>
+      </div>
+    `;
+  }
+}
+
+// --- GOOGLE SATELLITE MAP ENGINE (SUPPORTING BOTH OVERVIEW & DEDICATED GIS MAP) ---
+function initGoogleSatelliteMaps() {
+  const centerCoords = { lat: 20.8980, lng: 79.0265 }; // Nagpur Rural Highway corridor
+
+  if (typeof google !== 'undefined' && google.maps) {
+    try {
+      // 1. Overview Map
+      const overviewContainer = document.getElementById('googleMapContainer');
+      if (overviewContainer) {
+        AppState.overviewMap = createGoogleMapInstance(overviewContainer, centerCoords, 16, AppState.overviewPolygons);
+      }
+
+      // 2. Dedicated Full-Height Interactive Map View
+      const dedicatedContainer = document.getElementById('dedicatedGoogleMap');
+      if (dedicatedContainer) {
+        AppState.dedicatedMap = createGoogleMapInstance(dedicatedContainer, centerCoords, 16, AppState.dedicatedPolygons);
+      }
+
+      AppState.googleMapsLoaded = true;
+
+      // Update status indicators
+      document.querySelectorAll('.map-satellite-status').forEach(el => {
+        el.textContent = 'Google Maps Satellite View Active';
+        el.className = 'w-2 h-2 rounded-full bg-secondary inline-block animate-pulse';
+      });
+
+      // Hide fallback SVG on overview
+      const fallbackSvg = document.getElementById('gisMapSvgContainer');
+      if (fallbackSvg) fallbackSvg.classList.add('hidden');
+      if (overviewContainer) overviewContainer.classList.remove('hidden');
+
+    } catch (e) {
+      console.warn('Google Maps initialization fallback to SVG canvas:', e);
+      activateSvgFallback();
+    }
+  } else {
+    activateSvgFallback();
+  }
+
+  // Setup Overview Map Controls
+  bindMapControls(AppState.overviewMap, 'btnMapSatellite', 'btnMapHybrid', 'btnMapTerrain', 'btn-map-zoom-in', 'btn-map-zoom-out', 'btn-map-center');
+
+  // Setup Dedicated Map View Controls
+  bindMapControls(AppState.dedicatedMap, 'btnDedicatedSatellite', 'btnDedicatedHybrid', 'btnDedicatedTerrain', 'btn-dedicated-zoom-in', 'btn-dedicated-zoom-out', 'btn-dedicated-center');
+}
+
+function createGoogleMapInstance(container, center, zoom, polygonArray) {
+  const map = new google.maps.Map(container, {
+    center: center,
+    zoom: zoom,
+    mapTypeId: google.maps.MapTypeId.SATELLITE,
+    tilt: 0,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    zoomControl: false,
+    styles: [
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }
+    ]
+  });
+
+  // Draw Highway Alignment Ribbon
+  const highwayRoute = [
+    { lat: 20.8930, lng: 79.0200 },
+    { lat: 20.8955, lng: 79.0235 },
+    { lat: 20.8980, lng: 79.0265 },
+    { lat: 20.9015, lng: 79.0305 },
+    { lat: 20.9050, lng: 79.0345 }
+  ];
+
+  new google.maps.Polyline({
+    path: highwayRoute,
+    geodesic: true,
+    strokeColor: '#fde047',
+    strokeOpacity: 0.9,
+    strokeWeight: 4,
+    map: map
+  });
+
+  // Draw Land Plot Polygons
+  AppState.parcels.forEach(parcel => {
+    if (!parcel.bounds) return;
+
+    let fillColor = '#82f5c1';
+    let strokeColor = '#006c4a';
+
+    if (parcel.id === 'MH-NGP-4029') {
+      fillColor = '#fde68a';
+      strokeColor = '#92400e';
+    } else if (parcel.stage === 'disputed') {
+      fillColor = '#ffdad6';
+      strokeColor = '#ba1a1a';
+    } else if (parcel.stage === 'surveyed') {
+      fillColor = '#cce5ff';
+      strokeColor = '#188ace';
+    } else if (parcel.stage === 'valuation') {
+      fillColor = '#fde68a';
+      strokeColor = '#92400e';
+    }
+
+    const poly = new google.maps.Polygon({
+      paths: parcel.bounds,
+      strokeColor: strokeColor,
+      strokeOpacity: 0.95,
+      strokeWeight: parcel.id === AppState.activeParcelId ? 4 : 2,
+      fillColor: fillColor,
+      fillOpacity: parcel.id === AppState.activeParcelId ? 0.65 : 0.45,
+      map: map,
+      clickable: true
+    });
+
+    poly.addListener('click', () => {
+      selectParcel(parcel.id);
+    });
+
+    poly.addListener('mouseover', () => {
+      poly.setOptions({ fillOpacity: 0.8 });
+    });
+
+    poly.addListener('mouseout', () => {
+      poly.setOptions({ fillOpacity: parcel.id === AppState.activeParcelId ? 0.65 : 0.45 });
+    });
+
+    // Centroid Marker with label
+    new google.maps.Marker({
+      position: {
+        lat: (parcel.bounds[0].lat + parcel.bounds[2].lat) / 2,
+        lng: (parcel.bounds[0].lng + parcel.bounds[2].lng) / 2
+      },
+      map: map,
+      label: {
+        text: `#${parcel.id.replace('MH-NGP-', '')}`,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: '11px'
+      },
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 14,
+        fillColor: strokeColor,
+        fillOpacity: 0.95,
+        strokeWeight: 1,
+        strokeColor: '#ffffff'
+      },
+      title: `Plot #${parcel.id} - ${parcel.owner}`
+    });
+
+    polygonArray.push({ id: parcel.id, polygon: poly });
+  });
+
+  return map;
+}
+
+function bindMapControls(mapInstance, satBtnId, hybridBtnId, terrainBtnId, zoomInId, zoomOutId, centerId) {
+  const btnSat = document.getElementById(satBtnId);
+  const btnHybrid = document.getElementById(hybridBtnId);
+  const btnTerrain = document.getElementById(terrainBtnId);
+  const btnZoomIn = document.getElementById(zoomInId);
+  const btnZoomOut = document.getElementById(zoomOutId);
+  const btnCenter = document.getElementById(centerId);
+
+  if (btnSat) {
+    btnSat.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) activeMap.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+      setActiveMapBtn(btnSat);
+      showToast('Switched to High-Resolution Satellite View');
+    });
+  }
+
+  if (btnHybrid) {
+    btnHybrid.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) activeMap.setMapTypeId(google.maps.MapTypeId.HYBRID);
+      setActiveMapBtn(btnHybrid);
+      showToast('Switched to Satellite + Highway Labels (Hybrid View)');
+    });
+  }
+
+  if (btnTerrain) {
+    btnTerrain.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) activeMap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+      setActiveMapBtn(btnTerrain);
+      showToast('Switched to Cadastral Street Map View');
+    });
+  }
+
+  if (btnZoomIn) {
+    btnZoomIn.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) activeMap.setZoom(activeMap.getZoom() + 1);
+    });
+  }
+
+  if (btnZoomOut) {
+    btnZoomOut.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) activeMap.setZoom(activeMap.getZoom() - 1);
+    });
+  }
+
+  if (btnCenter) {
+    btnCenter.addEventListener('click', () => {
+      const activeMap = mapInstance || AppState.overviewMap || AppState.dedicatedMap;
+      if (activeMap) {
+        activeMap.setCenter({ lat: 20.8980, lng: 79.0265 });
+        activeMap.setZoom(16);
+      }
+      showToast('Map centered on Nagpur Rural corridor (Km 138.62)');
+    });
+  }
+}
+
+function setActiveMapBtn(activeBtn) {
+  const parent = activeBtn.parentElement;
+  if (!parent) return;
+  parent.querySelectorAll('button').forEach(btn => {
+    btn.classList.remove('bg-primary', 'text-on-primary');
+    btn.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+  });
+  activeBtn.classList.add('bg-primary', 'text-on-primary');
+  activeBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+}
+
+function activateSvgFallback() {
+  const mapContainer = document.getElementById('googleMapContainer');
+  const fallbackSvg = document.getElementById('gisMapSvgContainer');
+  if (mapContainer) mapContainer.classList.add('hidden');
+  if (fallbackSvg) fallbackSvg.classList.remove('hidden');
+  document.querySelectorAll('.map-satellite-status').forEach(el => {
+    el.textContent = 'High-Precision Vector Cadastre Active';
+  });
+}
+
+function initSvgMapFallback() {
+  const polygonMap = {
+    'poly-4028': 'MH-NGP-4028',
+    'activeParcelPoly': 'MH-NGP-4029',
+    'poly-4029': 'MH-NGP-4029',
+    'poly-4030': 'MH-NGP-4030',
+    'poly-4031': 'MH-NGP-4031',
+    'poly-4032': 'MH-NGP-4032',
+    'poly-4033': 'MH-NGP-4033',
+    'poly-4034': 'MH-NGP-4034'
+  };
+
+  Object.keys(polygonMap).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('click', () => {
+        selectParcel(polygonMap[id]);
+      });
+      el.addEventListener('mouseenter', () => {
+        el.style.filter = 'brightness(1.15) drop-shadow(0 0 6px rgba(0,0,0,0.3))';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.filter = 'none';
+      });
+    }
+  });
+}
+
+// --- NAVIGATION & VIEWS CONTROLLER (ZERO COLOR BLEEDING) ---
+function initNavigation() {
+  const navLinks = document.querySelectorAll('[data-nav-view]');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetView = link.getAttribute('data-nav-view');
+      switchView(targetView);
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '') || 'overview';
+    switchView(hash);
+  });
+
+  if (window.location.hash) {
+    switchView(window.location.hash.replace('#', ''));
+  }
+}
+
+function switchView(viewName) {
+  // Role-based route protection
+  if (AppState.currentUser) {
+    const roleKey = AppState.currentUser.roleKey;
+    if (viewName === 'reports' && roleKey !== 'admin') {
+      showToast('Access Restricted: Financial reports are confidential to System Admin.');
+      if (AppState.currentView !== 'overview') switchView('overview');
+      return;
+    }
+    if (viewName === 'workflows' && (roleKey === 'landowner' || roleKey === 'viewer')) {
+      showToast('Access Restricted: Statutory approvals are restricted to official acquisition personnel.');
+      if (AppState.currentView !== 'overview') switchView('overview');
+      return;
+    }
+    if (viewName === 'survey' && (roleKey === 'landowner' || roleKey === 'viewer')) {
+      showToast('Access Restricted: Field Demarcation is restricted to authorized survey officers.');
+      if (AppState.currentView !== 'overview') switchView('overview');
+      return;
+    }
+  }
+
+  AppState.currentView = viewName;
+  window.location.hash = viewName;
+
+  // STRICT TAB HIGHLIGHTING: ONLY THE SINGLE SELECTED TAB GETS HIGHLIGHTED
+  document.querySelectorAll('[data-nav-view]').forEach(item => {
+    const target = item.getAttribute('data-nav-view');
+    const isCurrent = (target === viewName);
+
+    // Remove ALL possible active and inactive styles completely
+    item.classList.remove(
+      'bg-primary', 'bg-primary-container',
+      'text-on-primary', 'text-on-primary-container',
+      'text-on-surface-variant',
+      'hover:bg-surface-container-high', 'hover:text-on-surface',
+      'font-semibold'
+    );
+
+    if (isCurrent) {
+      // Solid dark active style exactly like the reference design
+      item.classList.add('bg-primary', 'text-on-primary', 'font-semibold');
+    } else {
+      // Clean inactive style
+      item.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high', 'hover:text-on-surface');
+    }
+  });
+
+  // Map view containers
+  const views = {
+    overview: document.getElementById('view-overview'),
+    projects: document.getElementById('view-projects'),
+    parcels: document.getElementById('view-parcels'),
+    gis: document.getElementById('view-gis'),
+    workflows: document.getElementById('view-workflows'),
+    survey: document.getElementById('view-survey'),
+    documents: document.getElementById('view-documents'),
+    reports: document.getElementById('view-reports'),
+    complaints: document.getElementById('view-complaints')
+  };
+
+  Object.keys(views).forEach(key => {
+    if (views[key]) {
+      if (key === viewName) {
+        views[key].classList.remove('hidden');
+      } else {
+        views[key].classList.add('hidden');
+      }
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Trigger Google Maps resize when switching views
+  setTimeout(() => {
+    if (viewName === 'overview' && AppState.overviewMap) {
+      google.maps.event.trigger(AppState.overviewMap, 'resize');
+      AppState.overviewMap.setCenter({ lat: 20.8980, lng: 79.0265 });
+    } else if (viewName === 'gis' && AppState.dedicatedMap) {
+      google.maps.event.trigger(AppState.dedicatedMap, 'resize');
+      AppState.dedicatedMap.setCenter({ lat: 20.8980, lng: 79.0265 });
+    }
+  }, 100);
+}
+
+// --- PROJECTS MODULE & SELECTION ENGINE ---
+function initProjectsModule() {
+  populateHeaderProjectSelector();
+  renderProjectsList();
+
+  // Header Dropdown Change Event
+  const headerSelect = document.getElementById('headerProjectSelect');
+  if (headerSelect) {
+    headerSelect.addEventListener('change', (e) => {
+      selectProject(e.target.value, false);
+    });
+  }
+
+  // New Project Form in Projects Tab
+  const formNewProj = document.getElementById('formNewProject');
+  if (formNewProj) {
+    formNewProj.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const titleInput = document.getElementById('projInputTitle');
+      const corridorInput = document.getElementById('projInputCorridor');
+      const noticeInput = document.getElementById('projInputNotice');
+      const targetInput = document.getElementById('projInputTarget');
+
+      const targetVal = targetInput ? parseFloat(targetInput.value) || 500 : 500;
+      const totalPlotsCalc = Math.round(targetVal * 0.35) || 120;
+
+      const newProj = {
+        id: 'PKG-' + (AppState.projects.length + 1) + 'A',
+        title: titleInput ? titleInput.value : 'New Highway Corridor Project',
+        category: 'National Highway Project',
+        corridor: corridorInput ? corridorInput.value : 'Inter-State Expressway Expansion',
+        notification: noticeInput ? noticeInput.value : 'S.O. 2480(E) / Section 3A Public Notice',
+        district: 'Nagpur & Wardha Rural',
+        marker: 'Km 0 to Km 54',
+        targetHa: targetVal,
+        acquiredHa: 0,
+        percent: 0,
+        totalPlots: totalPlotsCalc,
+        clearPlots: 0,
+        processPlots: Math.round(totalPlotsCalc * 0.4),
+        reviewPlots: Math.round(totalPlotsCalc * 0.6),
+        escrowCr: parseFloat((targetVal * 0.35).toFixed(2)),
+        disbursedCr: 0.00,
+        disbursedLandowners: 0,
+        disbursedPercent: 0,
+        status: 'JUST INITIALIZED',
+        statusClass: 'bg-surface-container text-on-surface',
+        timelineStatus: '+0 Days',
+        timelineText: 'Section 3A Notice Published — Survey Initializing',
+        timelineBadge: 'NEW PROJECT',
+        incharge: 'Special Land Acquisition Officer (CALA)',
+        stage1: { percent: 100, status: '100% Done', desc: 'Notification gazetted' },
+        stage2: { percent: 15, status: '15% Initiated', desc: 'Survey teams deployed' },
+        stage3: { percent: 0, status: '0% Pending', desc: 'Awaiting survey records' },
+        stage4: { percent: 0, status: '0% Pending', desc: 'Valuation in progress' },
+        activeStep: 1,
+        centerCoords: { lat: 20.9100, lng: 79.0500 },
+        coordsText: '20.9100° N, 79.0500° E'
+      };
+
+      AppState.projects.unshift(newProj);
+      populateHeaderProjectSelector();
+      selectProject(newProj.id, true);
+
+      const modal = document.getElementById('modalNewProject');
+      if (modal) modal.classList.add('hidden');
+      formNewProj.reset();
+
+      showToast(`✓ New Project "${newProj.title}" registered & active in Dashboard!`);
+    });
+  }
+
+  // Upload Project File Dropzone & Input
+  const fileInput = document.getElementById('projectFileInput');
+  const uploadDropzone = document.getElementById('projectUploadDropzone');
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleProjectFileUpload(e.target.files[0]);
       }
     });
-  </script>
-</div></main></div></body></html>
+  }
+
+  if (uploadDropzone) {
+    uploadDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadDropzone.classList.add('border-primary', 'bg-surface-container-high');
+    });
+
+    uploadDropzone.addEventListener('dragleave', () => {
+      uploadDropzone.classList.remove('border-primary', 'bg-surface-container-high');
+    });
+
+    uploadDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadDropzone.classList.remove('border-primary', 'bg-surface-container-high');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleProjectFileUpload(e.dataTransfer.files[0]);
+      }
+    });
+  }
+}
+
+function handleProjectFileUpload(file) {
+  const fileName = file.name;
+  showToast(`Parsing ${fileName} (GeoJSON / Spatial Cadastre)...`);
+
+  setTimeout(() => {
+    const importedProj = {
+      id: 'IMP-' + Math.floor(Math.random() * 900 + 100),
+      title: fileName.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ').toUpperCase() + ' Corridor',
+      category: 'Imported Spatial GIS Alignment',
+      corridor: 'Imported Route Alignment',
+      notification: 'S.O. Verified / GeoJSON Spatial File',
+      district: 'Maharashtra Cadastre Zone',
+      marker: 'Km 00+000 to Km 64+200',
+      targetHa: 845.2,
+      acquiredHa: 512.4,
+      percent: 60.6,
+      totalPlots: 312,
+      clearPlots: 198,
+      processPlots: 96,
+      reviewPlots: 18,
+      escrowCr: 340.00,
+      disbursedCr: 210.50,
+      disbursedLandowners: 198,
+      disbursedPercent: 61.9,
+      status: 'IMPORTED FROM FILE',
+      statusClass: 'bg-secondary-container text-on-secondary-container',
+      timelineStatus: '+14 Days',
+      timelineText: 'Cadastral Boundaries Ingested from GeoJSON',
+      timelineBadge: 'IMPORTED',
+      incharge: 'Dr. Rajeshwar Rao (SLAO)',
+      stage1: { percent: 100, status: '100% Imported', desc: 'Spatial GIS layer verified' },
+      stage2: { percent: 80, status: '80% Geotagged', desc: '249 of 312 boundaries synced' },
+      stage3: { percent: 65, status: '65% In Process', desc: 'Award valuation draft prepared' },
+      stage4: { percent: 62, status: '62% Paid', desc: '₹210.50 Cr scheduled via DBT' },
+      activeStep: 3,
+      centerCoords: { lat: 20.8980, lng: 79.0265 },
+      coordsText: '20.8980° N, 79.0265° E'
+    };
+
+    AppState.projects.unshift(importedProj);
+    populateHeaderProjectSelector();
+    selectProject(importedProj.id, true);
+
+    const modal = document.getElementById('modalBulkUpload');
+    if (modal) modal.classList.add('hidden');
+
+    showToast(`✓ Successfully imported ${fileName} & opened in Dashboard!`);
+  }, 1200);
+}
+
+function populateHeaderProjectSelector() {
+  const select = document.getElementById('headerProjectSelect');
+  if (!select) return;
+
+  select.innerHTML = '';
+  AppState.projects.forEach(proj => {
+    const opt = document.createElement('option');
+    opt.value = proj.id;
+    opt.textContent = `${proj.id} • ${proj.title}`;
+    if (proj.id === AppState.activeProjectId) {
+      opt.selected = true;
+    }
+    select.appendChild(opt);
+  });
+}
+
+function selectProject(projectId, andSwitchToOverview = true) {
+  const proj = AppState.projects.find(p => p.id === projectId);
+  if (!proj) return;
+
+  AppState.activeProjectId = proj.id;
+
+  // 1. Sync Header Select Dropdown
+  const headerSelect = document.getElementById('headerProjectSelect');
+  if (headerSelect && headerSelect.value !== proj.id) {
+    headerSelect.value = proj.id;
+  }
+
+  // 2. Update Overview UI elements with this project's data
+  updateOverviewUI(proj);
+
+  // 3. Update active card highlighting in Projects tab
+  renderProjectsList();
+
+  // 4. Pan Google Maps to corridor coordinates if loaded
+  if (proj.centerCoords) {
+    if (AppState.overviewMap) {
+      AppState.overviewMap.panTo(proj.centerCoords);
+    }
+    if (AppState.dedicatedMap) {
+      AppState.dedicatedMap.panTo(proj.centerCoords);
+    }
+  }
+
+  // 5. Update coordinates HUD in map toolbars
+  if (proj.coordsText) {
+    const ovCoords = document.getElementById('overviewMapCoordsText');
+    if (ovCoords) ovCoords.textContent = proj.coordsText;
+    const dedCoords = document.getElementById('dedicatedMapCoordsText');
+    if (dedCoords) dedCoords.textContent = proj.coordsText;
+    const dedSub = document.getElementById('dedicatedMapLocationSub');
+    if (dedSub) dedSub.textContent = `${proj.district} — ${proj.title}`;
+  }
+
+  // 6. Navigate to overview view if requested
+  if (andSwitchToOverview) {
+    switchView('overview');
+  }
+
+  showToast(`✓ Switched Dashboard to ${proj.title}`);
+}
+
+function updateOverviewUI(proj) {
+  if (!proj) return;
+
+  // Banner Details
+  const cat = document.getElementById('overviewProjectCategory');
+  if (cat) cat.textContent = proj.category || 'National Highway Project';
+
+  const dist = document.getElementById('overviewProjectDistrict');
+  if (dist) dist.textContent = proj.district || 'Highway Acquisition Zone';
+
+  const title = document.getElementById('overviewProjectTitle');
+  if (title) title.textContent = proj.title;
+
+  const sector = document.getElementById('overviewProjectSector');
+  if (sector) sector.textContent = `Sector: ${proj.corridor}`;
+
+  const notif = document.getElementById('overviewProjectNotification');
+  if (notif) notif.textContent = `Land Acquisition Notification: ${proj.notification}`;
+
+  const marker = document.getElementById('overviewProjectMarker');
+  if (marker) marker.textContent = `Distance Marker: ${proj.marker}`;
+
+  const officerName = document.getElementById('headerOfficerName');
+  if (officerName && proj.incharge) {
+    officerName.textContent = proj.incharge.split(' - ')[0] || proj.incharge;
+  }
+
+  // 4 Stages Progress & Description
+  const s1 = proj.stage1 || { percent: 100, status: '100% Completed', desc: 'Public hearing and social impact report approved' };
+  const s1Badge = document.getElementById('stage1StatusBadge');
+  if (s1Badge) s1Badge.innerHTML = `<span class="material-symbols-outlined text-[14px]">check_circle</span> ${s1.status}`;
+  const s1Desc = document.getElementById('stage1Desc');
+  if (s1Desc) s1Desc.textContent = s1.desc;
+  const s1Bar = document.getElementById('stage1Bar');
+  if (s1Bar) s1Bar.style.width = `${s1.percent}%`;
+
+  const s2 = proj.stage2 || { percent: Math.round((proj.percent || 60) * 1.5), status: `${Math.round((proj.percent || 60) * 1.5)}% Active`, desc: `${proj.clearPlots + proj.processPlots} of ${proj.totalPlots} plot boundaries mapped` };
+  const s2Badge = document.getElementById('stage2StatusBadge');
+  if (s2Badge) s2Badge.textContent = s2.status;
+  const s2Desc = document.getElementById('stage2Desc');
+  if (s2Desc) s2Desc.textContent = s2.desc;
+  const s2Bar = document.getElementById('stage2Bar');
+  if (s2Bar) s2Bar.style.width = `${s2.percent}%`;
+
+  const s3 = proj.stage3 || { percent: Math.round((proj.percent || 60) * 1.1), status: `${Math.round((proj.percent || 60) * 1.1)}% In Progress`, desc: 'Notices issued; remainder in final review' };
+  const s3Badge = document.getElementById('stage3StatusBadge');
+  if (s3Badge) s3Badge.textContent = s3.status;
+  const s3Desc = document.getElementById('stage3Desc');
+  if (s3Desc) s3Desc.textContent = s3.desc;
+  const s3Bar = document.getElementById('stage3Bar');
+  if (s3Bar) s3Bar.style.width = `${s3.percent}%`;
+
+  const s4Percent = proj.stage4 ? proj.stage4.percent : Math.round(((proj.disbursedCr || 0) / (proj.escrowCr || 1)) * 100);
+  const s4 = proj.stage4 || { percent: s4Percent, status: `${s4Percent}% Paid`, desc: `₹${proj.disbursedCr} Cr transferred to landowners via DBT` };
+  const s4Badge = document.getElementById('stage4StatusBadge');
+  if (s4Badge) s4Badge.textContent = s4.status;
+  const s4Desc = document.getElementById('stage4Desc');
+  if (s4Desc) s4Desc.textContent = s4.desc;
+  const s4Bar = document.getElementById('stage4Bar');
+  if (s4Bar) s4Bar.style.width = `${s4.percent}%`;
+
+  // Milestone Stepper Active State
+  const activeStepCalc = proj.activeStep || (proj.percent > 85 ? 5 : proj.percent > 65 ? 4 : proj.percent > 40 ? 3 : proj.percent > 15 ? 2 : 1);
+  updateStepperRail(activeStepCalc);
+
+  // KPI Metrics Row
+  // Card 1: Land Required / Acquired
+  const acqHa = document.getElementById('overviewAcquiredHa');
+  if (acqHa) acqHa.textContent = Number(proj.acquiredHa).toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+  const acqPct = document.getElementById('overviewAcquiredPercent');
+  if (acqPct) acqPct.textContent = `${proj.percent.toFixed(1)}% Acquired`;
+  const tgtHa = document.getElementById('overviewTargetHa');
+  if (tgtHa) tgtHa.textContent = `Target: ${Number(proj.targetHa).toLocaleString('en-IN')} Ha`;
+
+  // Card 2: Plots Breakdown
+  const totPlots = document.getElementById('overviewTotalPlots');
+  if (totPlots) totPlots.textContent = proj.totalPlots;
+  const sbParcels = document.getElementById('sidebarParcelsCount');
+  if (sbParcels) sbParcels.textContent = proj.totalPlots;
+  const clrPlots = document.getElementById('overviewClearPlots');
+  if (clrPlots) clrPlots.textContent = `${proj.clearPlots} Clear`;
+  const prcPlots = document.getElementById('overviewProcessPlots');
+  if (prcPlots) prcPlots.textContent = `${proj.processPlots} In Process`;
+  const revPlots = document.getElementById('overviewReviewPlots');
+  if (revPlots) revPlots.textContent = `${proj.reviewPlots} Under Review`;
+
+  const clrBar = document.getElementById('overviewClearPlotsBar');
+  const prcBar = document.getElementById('overviewProcessPlotsBar');
+  const revBar = document.getElementById('overviewReviewPlotsBar');
+  const tot = proj.totalPlots || 1;
+  if (clrBar) clrBar.style.width = `${(proj.clearPlots / tot) * 100}%`;
+  if (prcBar) prcBar.style.width = `${(proj.processPlots / tot) * 100}%`;
+  if (revBar) revBar.style.width = `${(proj.reviewPlots / tot) * 100}%`;
+
+  // Card 3: Funds / Disbursed DBT
+  const disbCr = document.getElementById('overviewDisbursedCr');
+  if (disbCr) disbCr.textContent = `₹${Number(proj.disbursedCr).toFixed(2)} Cr`;
+  const escCr = document.getElementById('overviewEscrowCr');
+  if (escCr) escCr.textContent = `₹${Number(proj.escrowCr).toFixed(2)} Cr`;
+  const disbOwners = document.getElementById('overviewDisbursedLandowners');
+  if (disbOwners) disbOwners.textContent = `${proj.disbursedLandowners || proj.clearPlots} Landowners Credited`;
+  const disbPct = document.getElementById('overviewDisbursedPercent');
+  const fundRelPct = proj.disbursedPercent || ((proj.disbursedCr / (proj.escrowCr || 1)) * 100);
+  if (disbPct) disbPct.textContent = `${fundRelPct.toFixed(1)}% Fund Released`;
+
+  // Card 4: Timeline & Status Badge
+  const timeStat = document.getElementById('overviewTimelineStatus');
+  if (timeStat) timeStat.textContent = proj.timelineStatus || '+18 Days';
+  const timeText = document.getElementById('overviewTimelineText');
+  if (timeText) timeText.textContent = proj.timelineText || 'Ahead of Government Target Schedule';
+  const statBadge = document.getElementById('overviewStatusBadge');
+  if (statBadge) {
+    statBadge.textContent = proj.timelineBadge || proj.status;
+    statBadge.className = `px-2 py-0.5 rounded font-bold ${proj.statusClass || 'bg-secondary-container text-on-secondary-container'}`;
+  }
+}
+
+function updateStepperRail(activeStep) {
+  const container = document.getElementById('overviewMilestoneStepper');
+  if (!container) return;
+
+  const steps = [
+    { num: 1, title: '1. Land Records Linked', sub: '7/12 Records Synced' },
+    { num: 2, title: '2. GPS Map Location Tagging', sub: 'GPS Coordinates Locked' },
+    { num: 3, title: '3. Joint Land Survey & Measurement', sub: 'Boundary Cadastre' },
+    { num: 4, title: '4. Compensation Price Calculation', sub: 'RFCTLARR 2.5x Formula' },
+    { num: 5, title: '5. Direct Payment to Bank Accounts', sub: 'Aadhaar DBT Disbursal' }
+  ];
+
+  let html = '';
+  steps.forEach((step, idx) => {
+    const isPast = step.num < activeStep;
+    const isCurrent = step.num === activeStep;
+
+    if (isCurrent) {
+      html += `
+        <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg border border-surface-container shadow-sm shrink-0">
+          <span class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">${step.num}</span>
+          <div>
+            <div class="font-bold text-on-surface">${step.title}</div>
+            <div class="text-[10px] text-secondary font-semibold">Active Milestone</div>
+          </div>
+        </div>
+      `;
+    } else if (isPast) {
+      html += `
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="w-5 h-5 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-[10px]">✓</span>
+          <div>
+            <div class="font-semibold text-on-surface">${step.title}</div>
+            <div class="text-[10px] text-on-surface-variant">${step.sub}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="flex items-center gap-2 shrink-0 opacity-60">
+          <span class="w-5 h-5 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-[10px]">${step.num}</span>
+          <div>
+            <div class="font-semibold text-on-surface">${step.title}</div>
+            <div class="text-[10px] text-on-surface-variant">${step.sub}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (idx < steps.length - 1) {
+      html += `<span class="text-outline-variant">→</span>`;
+    }
+  });
+
+  container.innerHTML = html;
+}
+
+function renderProjectsList() {
+  const container = document.getElementById('projectsListContainer');
+  if (!container) return;
+
+  const countBadge = document.getElementById('activeProjectsCount');
+  if (countBadge) countBadge.textContent = AppState.projects.length;
+
+  container.innerHTML = '';
+
+  AppState.projects.forEach(proj => {
+    const isActive = (proj.id === AppState.activeProjectId);
+    const card = document.createElement('div');
+    card.className = `bg-surface-container-lowest p-6 rounded-xl shadow-sm border ${isActive ? 'border-primary ring-2 ring-primary/40 shadow-md' : 'border-surface-container/80'} flex flex-col justify-between gap-4 hover:shadow-md transition-all`;
+    card.innerHTML = `
+      <div>
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-headline font-bold text-base text-on-surface cursor-pointer hover:text-primary transition-colors" onclick="selectProject('${proj.id}', true)">${proj.title}</span>
+              <span class="font-code-num text-[10px] font-bold px-2 py-0.5 rounded ${proj.statusClass}">${proj.status}</span>
+              ${isActive ? '<span class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block animate-pulse"></span> Active in Overview</span>' : ''}
+            </div>
+            <div class="text-xs text-on-surface-variant mt-1">${proj.corridor} • ${proj.district}</div>
+            <div class="text-[11px] text-on-surface-variant font-code-num mt-0.5">${proj.notification} • ${proj.marker}</div>
+          </div>
+          <span class="font-code-num text-xs bg-surface-container text-on-surface px-2 py-1 rounded font-bold">
+            ${proj.percent.toFixed(1)}% Acquired
+          </span>
+        </div>
+
+        <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden my-3">
+          <div class="bg-secondary h-full rounded-full" style="width: ${proj.percent}%"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-container-low p-3 rounded-lg text-xs">
+          <div>
+            <span class="text-on-surface-variant text-[10px] uppercase font-code-num">Target Land</span>
+            <div class="font-bold font-code-num text-on-surface">${Number(proj.targetHa).toLocaleString('en-IN')} Ha</div>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] uppercase font-code-num">Acquired Land</span>
+            <div class="font-bold font-code-num text-secondary">${Number(proj.acquiredHa).toLocaleString('en-IN')} Ha</div>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] uppercase font-code-num">Measured Plots</span>
+            <div class="font-bold font-code-num text-on-surface">${proj.totalPlots} Plots</div>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] uppercase font-code-num">Escrow Fund</span>
+            <div class="font-bold font-code-num text-on-surface">₹${Number(proj.escrowCr).toFixed(2)} Cr</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-surface-container text-xs">
+        <span class="text-[11px] text-on-surface-variant truncate">Officer: ${proj.incharge}</span>
+        <div class="flex items-center gap-2">
+          <button onclick="selectProject('${proj.id}', true)" class="${isActive ? 'bg-secondary text-on-secondary' : 'bg-primary hover:bg-primary-container text-on-primary'} px-3.5 py-1.5 rounded-lg font-semibold flex items-center gap-1 transition-colors shadow-sm">
+            <span>${isActive ? 'Viewing in Overview' : 'Open Dashboard'}</span>
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </button>
+          <button onclick="selectProject('${proj.id}', false); switchView('gis');" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1 transition-colors">
+            <span class="material-symbols-outlined text-[14px]">map</span>
+            <span>View Map</span>
+          </button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// --- PARCEL SELECTION & DOSSIER ---
+function selectParcel(parcelId) {
+  AppState.activeParcelId = parcelId;
+  const parcel = AppState.parcels.find(p => p.id === parcelId);
+  if (!parcel) return;
+
+  // Pan Google Maps if loaded
+  if (parcel.bounds && parcel.bounds[0]) {
+    if (AppState.overviewMap) AppState.overviewMap.panTo(parcel.bounds[0]);
+    if (AppState.dedicatedMap) AppState.dedicatedMap.panTo(parcel.bounds[0]);
+
+    [AppState.overviewPolygons, AppState.dedicatedPolygons].forEach(polyList => {
+      polyList.forEach(item => {
+        if (item.id === parcelId) {
+          item.polygon.setOptions({ strokeWeight: 4, strokeColor: '#fde047' });
+        } else {
+          item.polygon.setOptions({ strokeWeight: 2 });
+        }
+      });
+    });
+  }
+
+  // Update floating inspector card on overview
+  const cardId = document.getElementById('inspector-parcel-id');
+  const cardSurvey = document.getElementById('inspector-survey-no');
+  const cardOwner = document.getElementById('inspector-owner');
+  const cardValuation = document.getElementById('inspector-valuation');
+  const cardArea = document.getElementById('inspector-area');
+  const cardStatus = document.getElementById('inspector-status');
+  const cardMouza = document.getElementById('inspector-mouza');
+
+  if (cardId) cardId.textContent = `#${parcel.id}`;
+  if (cardSurvey) cardSurvey.textContent = `Survey ${parcel.surveyNo}`;
+  if (cardOwner) cardOwner.textContent = parcel.owner;
+  if (cardValuation) cardValuation.textContent = `₹ ${parcel.awardValuation.toLocaleString('en-IN')}`;
+  if (cardArea) cardArea.textContent = `${parcel.areaHa.toFixed(3)} Ha`;
+  if (cardStatus) cardStatus.textContent = parcel.status;
+  if (cardMouza) cardMouza.textContent = `Mouza ${parcel.mouza} • Nagpur District • Ch. ${parcel.chainage}`;
+
+  // Update dedicated map inspector card
+  const dedId = document.getElementById('dedicated-parcel-id');
+  const dedSurvey = document.getElementById('dedicated-survey-no');
+  const dedOwner = document.getElementById('dedicated-owner');
+  const dedValuation = document.getElementById('dedicated-valuation');
+  const dedArea = document.getElementById('dedicated-area');
+
+  if (dedId) dedId.textContent = `#${parcel.id}`;
+  if (dedSurvey) dedSurvey.textContent = `Survey ${parcel.surveyNo} • Mouza ${parcel.mouza}`;
+  if (dedOwner) dedOwner.textContent = parcel.owner;
+  if (dedValuation) dedValuation.textContent = `₹ ${parcel.awardValuation.toLocaleString('en-IN')}`;
+  if (dedArea) dedArea.textContent = `${parcel.areaHa.toFixed(3)} Ha`;
+
+  // Highlight row in table
+  document.querySelectorAll('[data-parcel-row]').forEach(tr => {
+    if (tr.getAttribute('data-parcel-row') === parcelId) {
+      tr.classList.add('bg-surface-container-high', 'border-l-4', 'border-primary');
+    } else {
+      tr.classList.remove('bg-surface-container-high', 'border-l-4', 'border-primary');
+    }
+  });
+
+  openParcelDossier(parcel);
+}
+
+function openParcelDossier(parcel) {
+  const drawer = document.getElementById('parcelDossierDrawer');
+  if (!drawer) return;
+
+  document.getElementById('dossier-id').textContent = `#${parcel.id}`;
+  document.getElementById('dossier-survey').textContent = `Survey No. ${parcel.surveyNo} • Mouza ${parcel.mouza}, ${parcel.tehsil}`;
+  document.getElementById('dossier-owner').textContent = parcel.owner;
+  document.getElementById('dossier-aadhaar').textContent = parcel.aadhaarLinked ? 'Aadhaar Verified ✓' : 'Aadhaar Pending ⚠';
+  document.getElementById('dossier-aadhaar').className = parcel.aadhaarLinked ? 'font-code-num text-label-sm text-secondary font-semibold' : 'font-code-num text-label-sm text-error font-semibold';
+  
+  document.getElementById('dossier-area').textContent = `${parcel.areaHa} Hectares (${(parcel.areaHa * 2.471).toFixed(2)} Acres)`;
+  document.getElementById('dossier-class').textContent = parcel.classification;
+  document.getElementById('dossier-chainage').textContent = `${parcel.chainage}`;
+  document.getElementById('dossier-coords').textContent = parcel.coordinates;
+
+  // Breakdown formula (2.5x Multiplier)
+  const baseValue = parcel.circleRate * parcel.areaHa;
+  const multiplierValue = baseValue * parcel.multiplier;
+  document.getElementById('dossier-base-rate').textContent = `₹ ${parcel.circleRate.toLocaleString('en-IN')} / Ha`;
+  document.getElementById('dossier-multiplier').textContent = `${parcel.multiplier}x Multiplier (Rural Land Section 26)`;
+  document.getElementById('dossier-market-val').textContent = `₹ ${multiplierValue.toLocaleString('en-IN')}`;
+  document.getElementById('dossier-solatium').textContent = `₹ ${parcel.solatium.toLocaleString('en-IN')} (100% Solatium Section 30)`;
+  document.getElementById('dossier-interest').textContent = `₹ ${parcel.interest.toLocaleString('en-IN')} (12% Addl. Interest)`;
+  document.getElementById('dossier-assets').textContent = `₹ ${parcel.assetsValuation.toLocaleString('en-IN')}`;
+  document.getElementById('dossier-total').textContent = `₹ ${parcel.awardValuation.toLocaleString('en-IN')}`;
+
+  const disputeBox = document.getElementById('dossier-dispute-box');
+  if (disputeBox) {
+    if (parcel.disputeReason) {
+      disputeBox.classList.remove('hidden');
+      document.getElementById('dossier-dispute-text').textContent = parcel.disputeReason;
+    } else {
+      disputeBox.classList.add('hidden');
+    }
+  }
+
+  drawer.classList.remove('translate-x-full');
+}
+
+function closeParcelDossier() {
+  const drawer = document.getElementById('parcelDossierDrawer');
+  if (drawer) {
+    drawer.classList.add('translate-x-full');
+  }
+}
+
+// --- LAND PLOTS & RECORDS TABLE ---
+function initParcelsTable() {
+  renderParcelsTable();
+
+  const searchInput = document.getElementById('parcelSearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      AppState.searchQuery = e.target.value.toLowerCase().trim();
+      renderParcelsTable();
+    });
+  }
+
+  const filterTabs = document.querySelectorAll('[data-parcel-filter]');
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => {
+        t.classList.remove('bg-primary', 'text-on-primary');
+        t.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+      });
+      tab.classList.add('bg-primary', 'text-on-primary');
+      tab.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+
+      AppState.activeFilter = tab.getAttribute('data-parcel-filter');
+      renderParcelsTable();
+    });
+  });
+}
+
+function renderParcelsTable() {
+  const tbody = document.getElementById('parcelsTableBody');
+  if (!tbody) return;
+
+  const isLandowner = (AppState.currentUser && AppState.currentUser.roleKey === 'landowner');
+  const isViewer = (AppState.currentUser && AppState.currentUser.roleKey === 'viewer');
+
+  const countBadge = document.getElementById('sidebarParcelsCount');
+  if (countBadge) {
+    countBadge.textContent = isLandowner ? '1 (Own Holding)' : '528';
+  }
+
+  const filtered = AppState.parcels.filter(p => {
+    // Landowner only sees own registered plot (Matrix Row 3 & 7)
+    if (isLandowner) {
+      if (p.id !== 'MH-NGP-4029') return false;
+    }
+
+    if (AppState.activeFilter !== 'all') {
+      if (AppState.activeFilter === 'disputed' && p.stage !== 'disputed') return false;
+      if (AppState.activeFilter === 'award_ready' && p.stage !== 'award_ready') return false;
+      if (AppState.activeFilter === 'surveyed' && p.stage !== 'surveyed') return false;
+      if (AppState.activeFilter === 'valuation' && p.stage !== 'valuation') return false;
+      if (AppState.activeFilter === 'disbursed' && p.stage !== 'disbursed') return false;
+    }
+
+    if (AppState.searchQuery) {
+      const q = AppState.searchQuery;
+      return p.id.toLowerCase().includes(q) ||
+             p.surveyNo.toLowerCase().includes(q) ||
+             p.owner.toLowerCase().includes(q) ||
+             p.mouza.toLowerCase().includes(q) ||
+             p.classification.toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  tbody.innerHTML = '';
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="py-6 text-center text-on-surface-variant">
+          <span class="material-symbols-outlined text-[36px] text-outline">search_off</span>
+          <div class="mt-1 font-semibold text-xs">No land plots found matching your search.</div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  filtered.forEach(parcel => {
+    const tr = document.createElement('tr');
+    tr.setAttribute('data-parcel-row', parcel.id);
+    tr.className = `hover:bg-surface-container transition-colors cursor-pointer ${parcel.id === AppState.activeParcelId ? 'bg-surface-container-low font-medium' : ''}`;
+
+    tr.innerHTML = `
+      <td class="py-2.5 px-3">
+        <div class="font-code-num text-xs font-bold text-on-surface">#${parcel.id}</div>
+        <div class="text-[11px] text-on-surface-variant">Survey No. ${parcel.surveyNo}</div>
+      </td>
+      <td class="py-2.5 px-3">
+        <div class="font-semibold text-xs text-on-surface">${parcel.mouza}</div>
+        <div class="text-[11px] text-on-surface-variant">${parcel.tehsil}</div>
+      </td>
+      <td class="py-2.5 px-3 text-right font-code-num text-xs font-semibold text-on-surface">
+        ${parcel.areaHa.toFixed(3)} Ha
+      </td>
+      <td class="py-2.5 px-3">
+        <span class="bg-surface-container-high px-2 py-0.5 rounded text-[11px] text-on-surface">
+          ${parcel.classification}
+        </span>
+      </td>
+      <td class="py-2.5 px-3">
+        <div class="font-medium text-xs text-on-surface">${parcel.owner}</div>
+        <div class="text-[10px] ${parcel.aadhaarLinked ? 'text-secondary font-code-num' : 'text-error font-code-num'}">
+          ${parcel.aadhaarLinked ? 'Aadhaar Verified ✓' : 'Aadhaar Pending ⚠'}
+        </div>
+      </td>
+      <td class="py-2.5 px-3 text-right font-code-num text-xs font-bold text-on-surface">
+        ₹ ${parcel.awardValuation.toLocaleString('en-IN')}
+      </td>
+      <td class="py-2.5 px-3">
+        <span class="bg-${parcel.statusColor === 'secondary' ? 'secondary-container text-on-secondary-container' : parcel.statusColor === 'error' ? 'error-container text-on-error-container' : 'surface-container text-on-surface'} px-2 py-0.5 rounded text-[10px] font-semibold flex items-center gap-1 w-fit">
+          <span class="w-1.5 h-1.5 rounded-full ${parcel.statusColor === 'secondary' ? 'bg-secondary' : parcel.statusColor === 'error' ? 'bg-error' : 'bg-primary'}"></span>
+          ${parcel.dbtStatus}
+        </span>
+      </td>
+      <td class="py-2.5 px-3 text-center">
+        <div class="flex items-center justify-center gap-1">
+          <button class="p-1 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Inspect on Satellite Map" onclick="event.stopPropagation(); selectParcel('${parcel.id}')">
+            <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+          </button>
+          <button class="p-1 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Calculate Legal Compensation" onclick="event.stopPropagation(); selectParcel('${parcel.id}')">
+            <span class="material-symbols-outlined text-[18px]">calculate</span>
+          </button>
+        </div>
+      </td>
+    `;
+
+    tr.addEventListener('click', () => {
+      selectParcel(parcel.id);
+    });
+
+    tbody.appendChild(tr);
+  });
+}
+
+// --- STATUTORY APPROVAL QUEUE ---
+function initApprovalQueue() {
+  document.querySelectorAll('[data-queue-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const action = btn.getAttribute('data-queue-action');
+      const item = btn.closest('.approval-queue-item');
+
+      if (action === 'esign') {
+        showEsignModal(item);
+      } else if (action === 'verify-gps') {
+        verifyGpsDemarcation(item);
+      } else if (action === 'assign-slao') {
+        assignSlaoOfficer(item);
+      }
+    });
+  });
+}
+
+function showEsignModal(item) {
+  if (AppState.currentUser && AppState.currentUser.roleKey === 'officer') {
+    showToast('⚠️ View Only: Field Officers cannot authorize cash awards. Competent Authority (CALA / Admin) approval required.');
+    return;
+  }
+  const modal = document.getElementById('esignModal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+
+  const btnConfirm = document.getElementById('btnConfirmEsign');
+  btnConfirm.onclick = () => {
+    modal.classList.add('hidden');
+    if (item) {
+      item.style.transition = 'all 0.5s ease';
+      item.style.opacity = '0.3';
+      item.style.transform = 'translateX(20px)';
+      setTimeout(() => item.remove(), 500);
+    }
+    AppState.pendingApprovalsCount = Math.max(0, AppState.pendingApprovalsCount - 1);
+    updatePendingBadge();
+    showToast('✓ Section 19 Gazette Declaration digitally signed via NIC-eSign.');
+  };
+}
+
+function verifyGpsDemarcation(item) {
+  if (item) {
+    item.classList.add('bg-secondary-container/30');
+    item.innerHTML = `
+      <div class="flex items-center gap-2 p-2 text-secondary font-semibold text-xs">
+        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+        <span>DGPS Boundary Markers Verified & Synced with Bhoomi Database.</span>
+      </div>
+    `;
+    setTimeout(() => item.remove(), 2500);
+  }
+  AppState.pendingApprovalsCount = Math.max(0, AppState.pendingApprovalsCount - 1);
+  updatePendingBadge();
+  showToast('✓ 18 DGPS Markers verified and locked to satellite cadastre.');
+}
+
+function assignSlaoOfficer(item) {
+  if (item) {
+    item.innerHTML = `
+      <div class="flex items-center gap-2 p-2 text-on-surface font-semibold text-xs">
+        <span class="material-symbols-outlined text-[18px] text-primary">how_to_reg</span>
+        <span>Notice dispatched to Sub-Divisional Magistrate. Hearing scheduled.</span>
+      </div>
+    `;
+  }
+  showToast('SLAO Hearing summons issued.');
+}
+
+function updatePendingBadge() {
+  document.querySelectorAll('.badge-pending-approvals').forEach(b => {
+    b.textContent = AppState.pendingApprovalsCount;
+  });
+}
+
+// --- MOBILE SURVEY ENGINE ---
+function initSurveyModule() {
+  const btnCaptureVertex = document.getElementById('btnCaptureVertex');
+  const btnSaveSurvey = document.getElementById('btnSaveSurvey');
+  const btnPhotoCapture = document.getElementById('btnPhotoCapture');
+
+  if (btnCaptureVertex) {
+    btnCaptureVertex.addEventListener('click', () => {
+      const nextPt = AppState.surveyWaypoints.length + 1;
+      const baseLat = 20.8980;
+      const baseLng = 79.0255;
+      const randOffsetLat = (Math.random() - 0.5) * 0.0008;
+      const randOffsetLng = (Math.random() - 0.5) * 0.0008;
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+      const wp = {
+        pt: nextPt,
+        lat: (baseLat + randOffsetLat).toFixed(6),
+        lng: (baseLng + randOffsetLng).toFixed(6),
+        elev: (284.5 + Math.random() * 0.4).toFixed(2) + 'm',
+        acc: '±' + (1.2 + Math.random() * 0.6).toFixed(1) + ' cm',
+        time: timeStr
+      };
+
+      AppState.surveyWaypoints.push(wp);
+      renderWaypointsList();
+      showToast(`✓ Captured GPS Vertex #${wp.pt} (${wp.lat}, ${wp.lng}) [RTK Fixed ${wp.acc}]`);
+    });
+  }
+
+  if (btnSaveSurvey) {
+    btnSaveSurvey.addEventListener('click', () => {
+      showToast('✓ Survey Plot #MH-NGP-4029 synced to Bhoomi Government Hub with cryptographic check.');
+    });
+  }
+
+  if (btnPhotoCapture) {
+    btnPhotoCapture.addEventListener('click', () => {
+      const photoBadge = document.getElementById('surveyPhotoBadge');
+      if (photoBadge) {
+        photoBadge.textContent = '3 Landmark Photos Geo-tagged';
+        photoBadge.classList.remove('bg-surface-container');
+        photoBadge.classList.add('bg-secondary-container', 'text-on-secondary-container');
+      }
+      showToast('✓ Geo-tagged field photo attached with GPS watermark.');
+    });
+  }
+
+  const btnToggleDevice = document.getElementById('btnToggleDeviceFrame');
+  if (btnToggleDevice) {
+    btnToggleDevice.addEventListener('click', () => {
+      const container = document.getElementById('mobileSurveyContainer');
+      AppState.isMobileFrame = !AppState.isMobileFrame;
+      if (AppState.isMobileFrame) {
+        container.className = 'max-w-md mx-auto my-4 rounded-[40px] border-[10px] border-[#0f172a] shadow-2xl overflow-hidden bg-surface relative';
+        btnToggleDevice.textContent = 'View Full Screen';
+      } else {
+        container.className = 'w-full max-w-4xl mx-auto rounded-xl shadow-sm bg-surface overflow-hidden border border-surface-container';
+        btnToggleDevice.textContent = 'View Mobile Device Frame';
+      }
+    });
+  }
+
+  renderWaypointsList();
+}
+
+function renderWaypointsList() {
+  const container = document.getElementById('surveyWaypointsContainer');
+  if (!container) return;
+
+  container.innerHTML = '';
+  AppState.surveyWaypoints.forEach(wp => {
+    const item = document.createElement('div');
+    item.className = 'flex items-center justify-between p-2 bg-surface-container-low rounded font-code-num text-[11px]';
+    item.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">${wp.pt}</span>
+        <span class="text-on-surface font-semibold">${wp.lat}° N, ${wp.lng}° E</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-on-surface-variant">${wp.elev}</span>
+        <span class="text-secondary font-semibold">${wp.acc}</span>
+        <span class="text-on-surface-variant">${wp.time}</span>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+
+  const countBadge = document.getElementById('surveyVertexCount');
+  if (countBadge) {
+    countBadge.textContent = `${AppState.surveyWaypoints.length} Vertices Demarcated`;
+  }
+}
+
+// --- MODALS & NOTIFICATIONS ---
+function initModals() {
+  const btnNewProject = document.getElementById('btnNewProject');
+  const btnNewAcqProject = document.getElementById('btnNewAcqProject');
+  const btnNewProjectTab = document.getElementById('btnNewProjectTab');
+  const modalNewProject = document.getElementById('modalNewProject');
+  const btnCloseNewProject = document.getElementById('btnCloseNewProject');
+
+  [btnNewProject, btnNewAcqProject, btnNewProjectTab].forEach(btn => {
+    if (btn && modalNewProject) {
+      btn.addEventListener('click', () => modalNewProject.classList.remove('hidden'));
+    }
+  });
+
+  if (btnCloseNewProject && modalNewProject) {
+    btnCloseNewProject.addEventListener('click', () => modalNewProject.classList.add('hidden'));
+  }
+
+  const btnBulkUpload = document.getElementById('btnBulkUpload');
+  const modalBulkUpload = document.getElementById('modalBulkUpload');
+  const btnCloseBulkUpload = document.getElementById('btnCloseBulkUpload');
+
+  if (btnBulkUpload && modalBulkUpload) {
+    btnBulkUpload.addEventListener('click', () => modalBulkUpload.classList.remove('hidden'));
+    if (btnCloseBulkUpload) {
+      btnCloseBulkUpload.addEventListener('click', () => modalBulkUpload.classList.add('hidden'));
+    }
+  }
+
+  const btnCloseDrawer = document.getElementById('btnCloseDrawer');
+  if (btnCloseDrawer) {
+    btnCloseDrawer.addEventListener('click', closeParcelDossier);
+  }
+}
+
+function showToast(message) {
+  let toastContainer = document.getElementById('toastContainer');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'toastContainer';
+    toastContainer.className = 'fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none';
+    document.body.appendChild(toastContainer);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'bg-primary text-on-primary px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300';
+  toast.innerHTML = `
+    <span class="material-symbols-outlined text-[18px] text-secondary-container">check_circle</span>
+    <span>${message}</span>
+  `;
+
+  toastContainer.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.classList.remove('translate-y-2', 'opacity-0');
+  });
+
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
