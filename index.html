@@ -123,6 +123,12 @@
           </button>
         </div>
 
+        <!-- Alert / Feedback Box -->
+        <div id="loginAlertBox" class="hidden mx-6 mt-4 p-3.5 rounded-xl border text-xs flex items-start gap-2.5">
+          <span id="loginAlertIcon" class="material-symbols-outlined text-[20px] shrink-0">info</span>
+          <div id="loginAlertText" class="flex-1 font-medium leading-relaxed"></div>
+        </div>
+
         <!-- 3 Persona Tabs -->
         <div class="grid grid-cols-3 border-b border-surface-container bg-surface-container-lowest text-xs font-semibold">
           <button id="loginTabAdmin" onclick="switchLoginRole('admin')" class="py-3.5 px-3 flex flex-col sm:flex-row items-center justify-center gap-2 border-b-2 border-primary text-primary bg-surface-container-low transition-all">
@@ -154,15 +160,20 @@
             </div>
           </div>
 
-          <form id="formLoginAdmin" onsubmit="event.preventDefault(); loginAs('admin');" class="space-y-4 text-xs">
+          <form id="formLoginAdmin" onsubmit="handleFormLogin(event, 'admin')" class="space-y-4 text-xs">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-semibold text-on-surface mb-1">Official Govt Email / Username</label>
+                <label class="block font-semibold text-on-surface mb-1">Official Govt Email / Officer ID</label>
                 <input type="text" id="adminUsername" aria-label="Official Govt Email / Username" value="rajeshwar.rao.ias@ebhumi.gov.in" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
               </div>
               <div>
                 <label class="block font-semibold text-on-surface mb-1">Officer Passcode</label>
-                <input type="password" id="adminPassword" aria-label="Officer Passcode" value="GovtSecurity@2026" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                <div class="relative">
+                  <input type="password" id="adminPassword" aria-label="Officer Passcode" value="GovtSecurity@2026" class="w-full bg-surface-container-lowest pl-3 pr-8 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                  <button type="button" onclick="togglePasswordVisibility('adminPassword', 'adminPassEye')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+                    <span id="adminPassEye" class="material-symbols-outlined text-[16px]">visibility</span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -182,9 +193,17 @@
                 <span class="material-symbols-outlined text-[18px]">login</span>
                 <span>Sign In as System Admin</span>
               </button>
-              <button type="button" onclick="loginAs('admin')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <button type="button" onclick="loginAs('admin', null, true)" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
                 <span class="material-symbols-outlined text-[18px]">bolt</span>
                 <span>⚡ 1-Click Demo Login</span>
+              </button>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-[11px] text-on-surface-variant border-t border-surface-container/60">
+              <span>First time Officer / Auditor on portal?</span>
+              <button type="button" onclick="openRegisterModal('admin')" class="text-secondary font-semibold hover:underline flex items-center gap-0.5">
+                <span>Register Officer Account</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
               </button>
             </div>
           </form>
@@ -205,15 +224,20 @@
             </div>
           </div>
 
-          <form id="formLoginOfficer" onsubmit="event.preventDefault(); loginAs('officer');" class="space-y-4 text-xs">
+          <form id="formLoginOfficer" onsubmit="handleFormLogin(event, 'officer')" class="space-y-4 text-xs">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="officerIdInput" class="block font-semibold text-on-surface mb-1">Field Officer ID</label>
+                <label for="officerIdInput" class="block font-semibold text-on-surface mb-1">Field Officer ID / Email</label>
                 <input type="text" id="officerIdInput" value="SLAO-082" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
               </div>
               <div>
                 <label for="officerPinInput" class="block font-semibold text-on-surface mb-1">Field Demarcation PIN</label>
-                <input type="password" id="officerPinInput" aria-label="Field Demarcation PIN" value="8240" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                <div class="relative">
+                  <input type="password" id="officerPinInput" aria-label="Field Demarcation PIN" value="8240" class="w-full bg-surface-container-lowest pl-3 pr-8 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                  <button type="button" onclick="togglePasswordVisibility('officerPinInput', 'officerPinEye')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+                    <span id="officerPinEye" class="material-symbols-outlined text-[16px]">visibility</span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -233,9 +257,17 @@
                 <span class="material-symbols-outlined text-[18px]">login</span>
                 <span>Sign In as Field Officer</span>
               </button>
-              <button type="button" onclick="loginAs('officer')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <button type="button" onclick="loginAs('officer', null, true)" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
                 <span class="material-symbols-outlined text-[18px]">bolt</span>
                 <span>⚡ 1-Click Demo Login</span>
+              </button>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-[11px] text-on-surface-variant border-t border-surface-container/60">
+              <span>First time Field Officer on portal?</span>
+              <button type="button" onclick="openRegisterModal('officer')" class="text-secondary font-semibold hover:underline flex items-center gap-0.5">
+                <span>Register Field Officer</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
               </button>
             </div>
           </form>
@@ -251,7 +283,7 @@
             </button>
             <button id="btnClientSubViewer" type="button" onclick="switchClientSubtype('viewer')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 transition-all">
               <span class="material-symbols-outlined text-[16px]">visibility</span>
-              <span>Public Viewer</span>
+              <span>Public Citizen / Viewer</span>
             </button>
           </div>
 
@@ -270,15 +302,20 @@
               </div>
             </div>
 
-            <form onsubmit="event.preventDefault(); loginAs('landowner');" class="space-y-4">
+            <form id="formLoginLandowner" onsubmit="handleFormLogin(event, 'landowner')" class="space-y-4">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label for="landownerAadhaar" class="block font-semibold text-on-surface mb-1">Aadhaar No / Survey Khasra No</label>
-                  <input id="landownerAadhaar" type="text" value="XXXX-XXXX-8492 (Survey 142/3A)" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                  <label for="landownerAadhaar" class="block font-semibold text-on-surface mb-1">Aadhaar No / Registered Email / Phone</label>
+                  <input id="landownerAadhaar" type="text" value="849210293847" placeholder="e.g. 849210293847 or email" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
                 </div>
                 <div>
-                  <label for="landownerOtp" class="block font-semibold text-on-surface mb-1">Mobile OTP (Aadhaar Linked)</label>
-                  <input id="landownerOtp" type="text" value="4 8 2 9" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                  <label for="landownerOtp" class="block font-semibold text-on-surface mb-1">Security PIN / Password</label>
+                  <div class="relative">
+                    <input id="landownerOtp" type="password" value="4829" placeholder="Enter PIN" class="w-full bg-surface-container-lowest pl-3 pr-8 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                    <button type="button" onclick="togglePasswordVisibility('landownerOtp', 'landownerPinEye')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+                      <span id="landownerPinEye" class="material-symbols-outlined text-[16px]">visibility</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -287,46 +324,107 @@
                   <span class="material-symbols-outlined text-[18px]">login</span>
                   <span>Sign In as Landowner</span>
                 </button>
-                <button type="button" onclick="loginAs('landowner')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <button type="button" onclick="loginAs('landowner', 'landowner', true)" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
                   <span class="material-symbols-outlined text-[18px]">bolt</span>
                   <span>⚡ 1-Click Demo Login</span>
+                </button>
+              </div>
+
+              <div class="pt-2 flex items-center justify-between text-[11px] text-on-surface-variant border-t border-surface-container/60">
+                <span>First time Landowner on portal?</span>
+                <button type="button" onclick="openRegisterModal('landowner')" class="text-secondary font-semibold hover:underline flex items-center gap-0.5">
+                  <span>Register Landowner Account</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                 </button>
               </div>
             </form>
           </div>
 
-          <!-- Subtype 3B: Public Viewer -->
+          <!-- Subtype 3B: Public Citizen Phone + OTP / Call Gateway -->
           <div id="clientSubViewerPanel" class="space-y-4 text-xs hidden">
             <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container flex items-start gap-3">
-              <span class="material-symbols-outlined text-secondary text-[24px]">visibility</span>
+              <span class="material-symbols-outlined text-secondary text-[24px]">perm_phone_msg</span>
               <div>
                 <div class="font-bold text-on-surface flex items-center gap-2">
-                  <span>Public Citizen & Open Cadastre Viewer</span>
-                  <span class="text-[10px] bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-bold font-code-num">Public View Only</span>
+                  <span>Public Citizen & Open Cadastre Gateway</span>
+                  <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold font-code-num">Mobile OTP Verified</span>
                 </div>
                 <p class="text-on-surface-variant mt-1 leading-relaxed">
-                  Open access to public highway route alignments, Google Satellite cadastral imagery, official gazette notices, and submission of public inquiries. Financial audit records and administrative actions are locked.
+                  Log in securely with your 10-digit mobile phone number to receive an <strong>Instant SMS OTP</strong> or automated <strong>Voice Verification Call</strong>. Open access to cadastral maps, gazette notifications, and inquiry submission.
                 </p>
               </div>
             </div>
 
-            <form onsubmit="event.preventDefault(); loginAs('viewer');" class="space-y-4">
+            <!-- Mobile & Channel Selection Form -->
+            <div class="space-y-3">
               <div>
-                <label for="citizenGuestContact" class="block font-semibold text-on-surface mb-1">Citizen Guest Email / Mobile Number</label>
-                <input id="citizenGuestContact" type="text" value="citizen.guest@ebhumi.gov.in" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                <label for="citizenMobileInput" class="block font-semibold text-on-surface mb-1">Enter 10-Digit Mobile Phone Number</label>
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-2 bg-surface-container-low border border-surface-container rounded-lg font-code-num font-bold text-xs text-on-surface-variant select-none">+91 (India)</span>
+                  <input id="citizenMobileInput" type="tel" maxlength="10" placeholder="e.g. 9876543210" value="9876543210" class="flex-1 bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+                </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
-                <button type="submit" class="flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
-                  <span class="material-symbols-outlined text-[18px]">public</span>
-                  <span>Enter as Public Viewer</span>
-                </button>
-                <button type="button" onclick="loginAs('viewer')" class="bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
-                  <span class="material-symbols-outlined text-[18px]">bolt</span>
-                  <span>⚡ 1-Click Demo Access</span>
+              <div>
+                <label class="block font-semibold text-on-surface mb-1">Verification Delivery Method</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-container bg-surface-container-lowest cursor-pointer hover:bg-surface-container-low transition-colors">
+                    <input type="radio" name="citizenOtpChannel" value="sms" checked class="text-primary focus:ring-primary">
+                    <span class="flex items-center gap-1.5 font-semibold text-on-surface">
+                      <span class="material-symbols-outlined text-[16px] text-primary">sms</span>
+                      <span>SMS OTP</span>
+                    </span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-container bg-surface-container-lowest cursor-pointer hover:bg-surface-container-low transition-colors">
+                    <input type="radio" name="citizenOtpChannel" value="voice" class="text-secondary focus:ring-secondary">
+                    <span class="flex items-center gap-1.5 font-semibold text-on-surface">
+                      <span class="material-symbols-outlined text-[16px] text-secondary">phone_in_talk</span>
+                      <span>Voice Call</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <button type="button" id="btnSendCitizenOtp" onclick="sendCitizenOtp()" class="w-full bg-primary hover:bg-primary-container text-on-primary py-2.5 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">send</span>
+                <span id="btnSendCitizenOtpText">Get Verification OTP / Call</span>
+              </button>
+            </div>
+
+            <!-- OTP Input Card -->
+            <div id="citizenOtpContainer" class="p-3.5 bg-surface-container-low rounded-xl border border-primary/30 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-on-surface flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-[18px]">lock_clock</span>
+                  <span>Enter Received 6-Digit OTP</span>
+                </span>
+                <span id="citizenOtpTimer" class="text-[11px] font-code-num text-on-surface-variant font-semibold">Demo Code: 482901</span>
+              </div>
+              
+              <div class="flex gap-2">
+                <input id="citizenOtpInput" type="text" maxlength="6" placeholder="• • • • • •" class="flex-1 bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-sm text-center tracking-widest font-bold focus:ring-1 focus:ring-primary focus:outline-none">
+                <button type="button" onclick="verifyCitizenOtp()" class="bg-secondary hover:bg-on-secondary-container text-on-secondary px-5 py-2 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                  <span>Verify & Enter</span>
                 </button>
               </div>
-            </form>
+            </div>
+
+            <!-- 1-Click Demo & Register Option -->
+            <div class="pt-2 flex flex-col gap-2">
+              <button type="button" onclick="loginAs('viewer', 'viewer', true)" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2 px-4 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-2 shadow-sm border border-surface-container">
+                <span class="material-symbols-outlined text-[18px] text-amber-500">bolt</span>
+                <span>⚡ 1-Click Demo Citizen Access (Read-Only)</span>
+              </button>
+
+              <div class="pt-1 flex items-center justify-between text-[11px] text-on-surface-variant border-t border-surface-container/60">
+                <span>Need a permanent citizen account?</span>
+                <button type="button" onclick="openRegisterModal('viewer')" class="text-secondary font-semibold hover:underline flex items-center gap-0.5">
+                  <span>Register Citizen Profile</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -458,6 +556,18 @@
       <div class="hidden xl:flex items-center gap-1.5 bg-surface-container-high text-on-surface px-3 py-1 rounded-full text-xs font-semibold">
         <span class="material-symbols-outlined text-[16px] text-secondary">shield</span>
         <span>Special Land Acquisition Officer</span>
+      </div>
+
+      <!-- 1-Click Demo Mode Indicator Badge -->
+      <div id="demoModeBadge" class="hidden sm:flex items-center gap-1.5 bg-amber-500/20 border border-amber-500/40 text-amber-800 dark:text-amber-300 px-3 py-1 rounded-full text-xs font-bold" title="Logged in via 1-Click Demo. Database modifications are disabled.">
+        <span class="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400 animate-pulse">lock</span>
+        <span>DEMO MODE (READ-ONLY)</span>
+      </div>
+
+      <!-- MySQL Live Database Sync Status (Admin / Auditor Only) -->
+      <div id="dbStatusBadge" class="hidden sm:flex items-center gap-1.5 bg-secondary-container/80 text-on-secondary-container px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer" title="Database: e_bhumi_db on localhost:3306 via Express API :5000" onclick="checkDatabaseConnection(true)">
+        <span class="w-2 h-2 rounded-full bg-secondary inline-block animate-pulse"></span>
+        <span id="dbStatusText">MySQL: Connected (e_bhumi_db)</span>
       </div>
 
       <!-- New Project Button -->
@@ -603,7 +713,7 @@
           <div class="font-headline font-bold text-xs text-on-surface">Stage 02: Land Plots & GPS Map Tagging</div>
           <div id="stage2Desc" class="text-[11px] text-on-surface-variant mt-1">494 of 528 plot boundaries mapped</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div id="stage2Bar" class="bg-primary h-full rounded-full" style="width: 94%"></div>
+            <div id="stage2Bar" class="bg-primary h-full w-[94%] rounded-full"></div>
           </div>
         </div>
 
@@ -618,7 +728,7 @@
           <div class="font-headline font-bold text-xs text-on-surface">Stage 03: Official Land Notices & Legal Approvals</div>
           <div id="stage3Desc" class="text-[11px] text-on-surface-variant mt-1">Notices issued; remainder in final review</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div id="stage3Bar" class="bg-slate-500 h-full rounded-full" style="width: 71%"></div>
+            <div id="stage3Bar" class="stage-progress-bar bg-slate-500"></div>
           </div>
         </div>
 
@@ -633,7 +743,7 @@
           <div class="font-headline font-bold text-xs text-on-surface">Stage 04: Compensation Paid Directly to Bank Accounts</div>
           <div id="stage4Desc" class="text-[11px] text-on-surface-variant mt-1">₹362.50 Cr transferred to landowners via DBT</div>
           <div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
-            <div id="stage4Bar" class="bg-secondary h-full rounded-full" style="width: 56%"></div>
+            <div id="stage4Bar" class="stage-progress-bar bg-secondary"></div>
           </div>
         </div>
       </section>
@@ -715,9 +825,9 @@
             </div>
           </div>
           <div class="w-full bg-surface-container-high h-2 rounded-full flex overflow-hidden">
-            <div id="overviewClearPlotsBar" class="bg-secondary h-full" style="width: 56%"></div>
-            <div id="overviewProcessPlotsBar" class="bg-primary h-full" style="width: 36%"></div>
-            <div id="overviewReviewPlotsBar" class="bg-error h-full" style="width: 8%"></div>
+            <div id="overviewClearPlotsBar" class="bg-secondary h-full w-[56%]"></div>
+            <div id="overviewProcessPlotsBar" class="bg-primary h-full w-[36%]"></div>
+            <div id="overviewReviewPlotsBar" class="bg-error h-full"></div>
           </div>
         </div>
 
@@ -1199,21 +1309,145 @@
 
     <!-- ==================== VIEW 4: LAND PLOTS & RECORDS EXPANDED ==================== -->
     <div id="view-parcels" class="hidden flex flex-col gap-6">
-      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container">
-        <div class="flex items-center justify-between mb-4">
+      <!-- Master Top Card -->
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container/80 flex flex-col gap-6">
+        
+        <!-- Header & Action Buttons -->
+        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
           <div>
-            <h1 class="font-headline font-bold text-2xl text-on-surface">Land Plots & Master Records</h1>
-            <p class="text-xs text-on-surface-variant">Complete official land register for Highway Package 4B</p>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="bg-primary text-on-primary text-[10px] uppercase font-bold px-2 py-0.5 rounded font-code-num">Khasra Cadastre Register</span>
+              <span id="parcelsDbSyncTag" class="bg-secondary-container text-on-secondary-container text-[11px] font-semibold px-2 py-0.5 rounded flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block animate-pulse"></span>
+                MySQL Live Sync: e_bhumi_db.land_plots
+              </span>
+            </div>
+            <h1 class="font-headline font-bold text-2xl text-on-surface">Land Plots & Master Records Register</h1>
+            <p class="text-xs text-on-surface-variant mt-0.5">Official digital cadastre, boundary demarcations, legal valuations, and 7/12 land records</p>
           </div>
-          <button onclick="showToast('Generating official 7/12 RoR dossier...')" class="bg-primary text-on-primary px-4 py-2 rounded-lg font-semibold text-xs flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[16px]">file_download</span> Export Complete Register
-          </button>
+
+          <!-- Action Hub: Upload & Download Buttons matching Projects Tab style -->
+          <div class="flex items-center gap-2 flex-wrap text-xs">
+            <button id="btnOpenAddPlotModal" onclick="openAddPlotModal()" class="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">add_location_alt</span>
+              <span>Add Single Plot Record</span>
+            </button>
+            <button id="btnOpenUploadPlotsModal" onclick="document.getElementById('plotsFileInput').click()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors">
+              <span class="material-symbols-outlined text-[16px]">upload_file</span>
+              <span>Upload Land Plots (.csv, .geojson)</span>
+            </button>
+            <button id="btnDownloadPlotsCsv" onclick="exportPlotsToCsv()" class="bg-secondary hover:bg-on-secondary-container text-on-secondary px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors shadow-sm" title="Download all land plot records from database as CSV spreadsheet">
+              <span class="material-symbols-outlined text-[16px]">download</span>
+              <span>Download CSV Ledger</span>
+            </button>
+            <button id="btnDownloadPlotsGeoJson" onclick="exportPlotsToGeoJson()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors">
+              <span class="material-symbols-outlined text-[16px]">polyline</span>
+              <span>Export GeoJSON</span>
+            </button>
+            <button onclick="downloadCertifiedRegister()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors">
+              <span class="material-symbols-outlined text-[16px]">print</span>
+              <span>Certified 7/12 Register</span>
+            </button>
+          </div>
         </div>
-        <p class="text-xs text-on-surface-variant mb-4">Inspect any plot to view boundary details, agricultural classification, legal multiplier calculation, and bank transfer logs.</p>
-        <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container text-xs">
-          <p class="font-semibold text-on-surface mb-2">⚡ Navigation Tip:</p>
-          <p class="text-on-surface-variant">Return to the <strong>Overview</strong> tab to interact with the live Google Maps Satellite View and select any plot on the map.</p>
+
+        <!-- Land Plots File Upload Dropzone Banner (Matching Projects Tab Style) -->
+        <div id="plotsUploadDropzone" class="border-2 border-dashed border-outline-variant hover:border-primary p-6 rounded-xl text-center bg-surface-container-low/50 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors">
+          <input type="file" id="plotsFileInput" accept=".csv,.geojson,.kml,.json,.xlsx" aria-label="Upload land plots and records file" class="hidden">
+          <div class="w-12 h-12 rounded-full bg-surface-container-high text-secondary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[28px]">drive_folder_upload</span>
+          </div>
+          <div>
+            <div class="font-bold text-sm text-on-surface">Upload or Drop Land Plots & 7/12 Records</div>
+            <div class="text-xs text-on-surface-variant mt-0.5">Import CSV cadastre, RoR 7/12 ledger, or GeoJSON boundaries to automatically insert records into MySQL database</div>
+          </div>
+          <div class="flex items-center gap-3 mt-2 flex-wrap justify-center">
+            <button type="button" onclick="document.getElementById('plotsFileInput').click()" class="bg-surface-container-highest hover:bg-surface-container text-on-surface px-3.5 py-1.5 rounded-lg text-xs font-semibold">
+              Browse Computer Files (.csv, .geojson)
+            </button>
+            <button type="button" onclick="downloadSamplePlotsCsv(event)" class="text-secondary hover:underline text-xs font-semibold flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">file_download</span>
+              <span>Download Sample CSV Template</span>
+            </button>
+          </div>
         </div>
+
+        <!-- Quick KPI Summary Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-code-num">
+          <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container">
+            <div class="text-[10px] uppercase text-on-surface-variant font-semibold">Total Plots Registered</div>
+            <div id="tabPlotsTotalCount" class="text-xl font-bold text-on-surface mt-0.5">528</div>
+            <div class="text-[10px] text-secondary font-semibold">Live in MySQL database</div>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container">
+            <div class="text-[10px] uppercase text-on-surface-variant font-semibold">Acquired Area</div>
+            <div id="tabPlotsTotalArea" class="text-xl font-bold text-secondary mt-0.5">1,018.58 Ha</div>
+            <div class="text-[10px] text-on-surface-variant">Target: 1,687 Ha</div>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container">
+            <div class="text-[10px] uppercase text-on-surface-variant font-semibold">Compensation Fund</div>
+            <div id="tabPlotsTotalFund" class="text-xl font-bold text-on-surface mt-0.5">₹ 620.00 Cr</div>
+            <div class="text-[10px] text-secondary font-semibold">₹ 362.50 Cr DBT Disbursed</div>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container">
+            <div class="text-[10px] uppercase text-on-surface-variant font-semibold">Disputed / Under Review</div>
+            <div id="tabPlotsDisputedCount" class="text-xl font-bold text-error mt-0.5">12 Plots</div>
+            <div class="text-[10px] text-error font-semibold">Pending Mediation</div>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-surface-container text-xs">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1">
+            <button data-tab-parcel-filter="all" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-semibold shrink-0">
+              All Plots (<span id="filterCountAll">528</span>)
+            </button>
+            <button data-tab-parcel-filter="surveyed" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+              Demarcated via GPS (<span id="filterCountSurveyed">412</span>)
+            </button>
+            <button data-tab-parcel-filter="valuation" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+              Price Calculation (<span id="filterCountValuation">42</span>)
+            </button>
+            <button data-tab-parcel-filter="award_ready" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+              Ready for Bank Payment (<span id="filterCountAward">88</span>)
+            </button>
+            <button data-tab-parcel-filter="disbursed" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+              Payment Completed (<span id="filterCountDisbursed">18</span>)
+            </button>
+            <button data-tab-parcel-filter="disputed" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0 flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-error"></span>
+              <span>Disputed (<span id="filterCountDisputed">12</span>)</span>
+            </button>
+          </div>
+
+          <!-- Table Search Input -->
+          <div class="relative w-full sm:w-64">
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-on-surface-variant">search</span>
+            <input type="text" id="tabParcelsSearchInput" placeholder="Filter by Khasra, Owner, Village..." class="w-full bg-surface-container-low pl-8 pr-3 py-1.5 text-xs text-on-surface rounded-lg border border-surface-container focus:outline-none focus:ring-1 focus:ring-primary font-body">
+          </div>
+        </div>
+
+        <!-- Master Data Table -->
+        <div class="w-full overflow-x-auto border border-surface-container rounded-xl">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="bg-surface-container-low text-on-surface-variant uppercase tracking-wider font-code-num font-semibold text-[11px] border-b border-surface-container">
+                <th class="py-3 px-3">Plot Code & Khasra No.</th>
+                <th class="py-3 px-3">Mouza / Tehsil</th>
+                <th class="py-3 px-3 text-right">Area (Ha / Acres)</th>
+                <th class="py-3 px-3">Land Classification</th>
+                <th class="py-3 px-3">Registered Landowner</th>
+                <th class="py-3 px-3 text-right">Calculated Award (₹)</th>
+                <th class="py-3 px-3">Bank Transfer Status</th>
+                <th class="py-3 px-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tabParcelsTableBody" class="divide-y divide-surface-container">
+              <!-- Dynamically populated by app.js from MySQL API -->
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
 
@@ -1386,26 +1620,424 @@
 
     <!-- ==================== VIEW 9: PUBLIC COMPLAINTS & INQUIRIES ==================== -->
     <div id="view-complaints" class="hidden flex flex-col gap-6">
-      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container">
-        <h1 class="font-headline font-bold text-2xl text-on-surface mb-2">Public Complaints & Citizen Inquiries</h1>
-        <p class="text-xs text-on-surface-variant mb-6">Citizen grievance portal for title objections, partition disputes, and compensation inquiries</p>
-        <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container text-xs space-y-3">
-          <div class="flex items-center justify-between border-b border-surface-container pb-2">
-            <div>
-              <span class="font-bold text-on-surface">Appeal #GR-2024-88 — Survey No. 144/2 (Bhiwapur)</span>
-              <div class="text-on-surface-variant text-[11px]">Ganesh K. Thakre • Boundary overlap objection</div>
-            </div>
-            <span class="bg-error-container text-on-error-container font-bold px-2 py-0.5 rounded text-[10px]">Hearing: 24 Oct 2024</span>
+      
+      <!-- Top Banner with Help Desk Title & Action Buttons -->
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="bg-secondary-container text-on-secondary-container text-[10px] uppercase font-bold px-2 py-0.5 rounded font-code-num">Public Grievance Redressal</span>
+            <span class="bg-primary text-on-primary text-[10px] uppercase font-bold px-2 py-0.5 rounded font-code-num">C-GRAMS & MoRTH Compliant</span>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded font-code-num">MySQL Live Sync</span>
           </div>
-          <div class="flex items-center justify-between">
-            <div>
-              <span class="font-bold text-on-surface">Inquiry #INQ-2024-12 — Survey No. 146/4 (Kuhi)</span>
-              <div class="text-on-surface-variant text-[11px]">Vitthalrao S. Gaikwad • Tree asset valuation review</div>
+          <h1 class="font-headline font-bold text-2xl text-on-surface">Citizen Complaints & Help Desk Support System</h1>
+          <p class="text-xs text-on-surface-variant mt-0.5">Online dispute tracking for boundary overlaps, title succession objections, tree asset reviews, and compensation inquiries under RFCTLARR Act 2013</p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap text-xs">
+          <button id="btnToggleCitizenTracker" onclick="toggleCitizenTracker()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2.5 rounded-lg font-semibold flex items-center gap-1.5 transition-colors border border-surface-container">
+            <span class="material-symbols-outlined text-[18px] text-secondary">track_changes</span>
+            <span>Citizen Status Tracker</span>
+          </button>
+          <button id="btnOpenLodgeGrievance" onclick="openLodgeGrievanceModal()" class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">contact_support</span>
+            <span>Lodge New Complaint / Inquiry</span>
+          </button>
+          <button onclick="refreshGrievancesFromDb()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-2.5 rounded-lg font-semibold flex items-center gap-1.5 transition-colors" title="Sync with MySQL Database">
+            <span class="material-symbols-outlined text-[18px]">sync</span>
+            <span>Sync MySQL</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CITIZEN SELF-SERVICE TRACKING PORTAL (COLLAPSIBLE / SEARCH WIDGET) -->
+      <div id="citizenTrackerCard" class="bg-surface-container-lowest p-6 rounded-xl shadow-md border-2 border-primary/20 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surface-container pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold shadow-sm">
+              <span class="material-symbols-outlined text-[20px]">manage_search</span>
             </div>
-            <span class="bg-secondary-container text-on-secondary-container font-bold px-2 py-0.5 rounded text-[10px]">Resolved</span>
+            <div>
+              <h2 class="font-headline font-bold text-base text-on-surface">Citizen Self-Service Grievance & Inquiry Tracker</h2>
+              <p class="text-[11px] text-on-surface-variant">Instant real-time query directly from MySQL database (e_bhumi_db.citizen_grievances)</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-on-surface-variant font-code-num">
+            <span>Quick Query Examples:</span>
+            <button onclick="quickTrackTicket('GR-2024-88')" class="text-primary hover:underline font-semibold bg-surface-container-low px-2 py-0.5 rounded">GR-2024-88</button>
+            <button onclick="quickTrackTicket('INQ-2024-12')" class="text-primary hover:underline font-semibold bg-surface-container-low px-2 py-0.5 rounded">INQ-2024-12</button>
+            <button onclick="quickTrackTicket('GR-2024-105')" class="text-primary hover:underline font-semibold bg-surface-container-low px-2 py-0.5 rounded">GR-2024-105</button>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex flex-col sm:flex-row items-center gap-2 text-xs">
+          <div class="relative flex-1 w-full">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">badge</span>
+            <input type="text" id="citizenTrackerInput" placeholder="Enter Grievance / Inquiry Code (e.g., GR-2024-88) or 10-digit Mobile Number..." class="w-full bg-surface-container-low pl-10 pr-3 py-2.5 rounded-lg border border-surface-container text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary font-body">
+          </div>
+          <button onclick="searchCitizenTracker()" class="w-full sm:w-auto bg-secondary hover:bg-secondary-container text-on-secondary hover:text-on-secondary-container px-5 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm shrink-0">
+            <span class="material-symbols-outlined text-[18px]">search</span>
+            <span>Track Grievance Status</span>
+          </button>
+          <button onclick="clearCitizenTracker()" class="w-full sm:w-auto bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-1 transition-colors shrink-0">
+            <span class="material-symbols-outlined text-[16px]">close</span>
+            <span>Clear</span>
+          </button>
+        </div>
+
+        <!-- Tracking Results Card (Hidden by default, populated dynamically) -->
+        <div id="citizenTrackerResult" class="hidden p-5 bg-surface-container-low rounded-xl border border-surface-container space-y-4 animate-in fade-in duration-200">
+          <!-- Dynamically injected by app.js renderTrackerResult() -->
+        </div>
+      </div>
+
+      <!-- 4 Help Desk Metric Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1 -->
+        <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">TOTAL COMPLAINTS LODGED</span>
+            <span class="material-symbols-outlined text-[20px] text-primary">inbox</span>
+          </div>
+          <div class="my-2">
+            <div id="statTotalGrievances" class="font-headline text-3xl font-bold text-on-surface tracking-tight">4</div>
+            <div class="text-xs text-on-surface-variant mt-0.5">Recorded in MySQL e_bhumi_db</div>
+          </div>
+          <div class="text-[11px] text-secondary font-semibold font-code-num">100% Tracking Active</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">PENDING INITIAL REVIEW</span>
+            <span class="material-symbols-outlined text-[20px] text-amber-600">pending_actions</span>
+          </div>
+          <div class="my-2">
+            <div id="statPendingGrievances" class="font-headline text-3xl font-bold text-amber-600 tracking-tight">1</div>
+            <div class="text-xs text-on-surface-variant mt-0.5">Awaiting Patwari / SLAO Assignment</div>
+          </div>
+          <div class="text-[11px] text-amber-700 font-semibold font-code-num">SLA: Under 48 Hours</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">HEARINGS SCHEDULED</span>
+            <span class="material-symbols-outlined text-[20px] text-primary">gavel</span>
+          </div>
+          <div class="my-2">
+            <div id="statHearingGrievances" class="font-headline text-3xl font-bold text-primary tracking-tight">2</div>
+            <div class="text-xs text-on-surface-variant mt-0.5">Summons Issued for CALA Bench</div>
+          </div>
+          <div class="text-[11px] text-primary font-semibold font-code-num">Next Session: 24 Oct 2024</div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container/80 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-code-num font-semibold">RESOLVED & SETTLED</span>
+            <span class="material-symbols-outlined text-[20px] text-secondary">check_circle</span>
+          </div>
+          <div class="my-2">
+            <div id="statResolvedGrievances" class="font-headline text-3xl font-bold text-secondary tracking-tight">1</div>
+            <div class="text-xs text-on-surface-variant mt-0.5">Mutation / Award Adjusted</div>
+          </div>
+          <div class="text-[11px] text-secondary font-semibold font-code-num">Settlement Orders Issued</div>
+        </div>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1">
+          <button data-grievance-filter="all" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-semibold shrink-0">
+            All Grievances (<span id="badgeFilterAllGrievances">4</span>)
+          </button>
+          <button data-grievance-filter="Pending Review" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+            Pending Review (<span id="badgeFilterPending">1</span>)
+          </button>
+          <button data-grievance-filter="Assigned to Field Officer" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+            Field Officer Assigned (<span id="badgeFilterAssigned">1</span>)
+          </button>
+          <button data-grievance-filter="Hearing Scheduled" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+            Hearing Scheduled (<span id="badgeFilterHearing">1</span>)
+          </button>
+          <button data-grievance-filter="Resolved" class="bg-surface-container-low hover:bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-lg font-semibold shrink-0">
+            Resolved (<span id="badgeFilterResolved">1</span>)
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Type Filter -->
+          <select id="grievanceTypeFilter" title="Filter disputes by category" aria-label="Filter disputes by category" class="bg-surface-container-low border border-surface-container rounded-lg px-2.5 py-1.5 text-xs text-on-surface font-semibold focus:outline-none">
+            <option value="all">All Dispute Categories</option>
+            <option value="Boundary Overlap">Boundary Overlap</option>
+            <option value="Title Objection">Title Objection</option>
+            <option value="Partition Dispute">Partition Dispute</option>
+            <option value="Asset Valuation Review">Asset Valuation Review</option>
+            <option value="Compensation Delay">Compensation Delay</option>
+            <option value="Demarcation Issue">Demarcation Issue</option>
+            <option value="Other">Other Issues</option>
+          </select>
+
+          <!-- Search Input -->
+          <div class="relative w-full sm:w-60">
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-on-surface-variant">search</span>
+            <input type="text" id="grievanceSearchInput" placeholder="Search code, name, survey..." class="w-full bg-surface-container-low pl-8 pr-3 py-1.5 text-xs text-on-surface rounded-lg border border-surface-container focus:outline-none focus:ring-1 focus:ring-primary font-body">
           </div>
         </div>
       </div>
+
+      <!-- 2-Column Responsive Split: Left Ticket List & Right Resolution Desk -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Interactive Grievance Tickets List (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-3">
+          <div class="flex items-center justify-between px-1">
+            <span class="font-headline font-bold text-sm text-on-surface">Registered Tickets (<span id="grievancesListCount">4</span>)</span>
+            <span class="text-[11px] text-on-surface-variant font-code-num">Click ticket to inspect & resolve</span>
+          </div>
+          <div id="grievancesListContainer" class="space-y-3 max-h-[760px] overflow-y-auto pr-1">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+
+        <!-- Right: Ticket Resolution Desk & Investigation Panel (7 cols) -->
+        <div class="lg:col-span-7 bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container/80 p-6 flex flex-col justify-between min-h-[640px]">
+          <div id="grievanceDetailEmptyState" class="hidden flex-1 flex flex-col items-center justify-center py-12 text-center text-on-surface-variant">
+            <span class="material-symbols-outlined text-[48px] text-outline">support_agent</span>
+            <div class="font-bold text-sm text-on-surface mt-2">No Ticket Selected</div>
+            <p class="text-xs max-w-sm mt-1">Select a grievance ticket from the list on the left to view grounds of objection, schedule hearings, inspect audit timeline, and update settlement status.</p>
+          </div>
+
+          <div id="grievanceDetailPanel" class="space-y-5">
+            <!-- Ticket Header -->
+            <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span id="dtlGrievanceCode" class="font-code-num font-bold text-base text-on-surface">GR-2024-88</span>
+                  <span id="dtlPriorityBadge" class="bg-error-container text-on-error-container text-[10px] font-bold px-2 py-0.5 rounded font-code-num">URGENT</span>
+                  <span id="dtlStatusBadge" class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded font-code-num">Hearing Scheduled</span>
+                </div>
+                <div id="dtlAppealType" class="text-xs font-semibold text-on-surface mt-1">Boundary Overlap Objection</div>
+                <div id="dtlCreatedDate" class="text-[11px] text-on-surface-variant font-code-num mt-0.5">Lodged on 18 Sep 2024 • Stored in MySQL</div>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <button onclick="printGrievanceReceipt()" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                  <span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                  <span>Acknowledgment Slip</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Workbench Tab Switcher -->
+            <div class="flex items-center border-b border-surface-container text-xs font-semibold gap-1">
+              <button id="deskTabActionBtn" onclick="switchDeskTab('action')" class="px-3.5 py-2 border-b-2 border-primary text-primary flex items-center gap-1.5 font-bold transition-colors">
+                <span class="material-symbols-outlined text-[16px]">tune</span>
+                <span>Investigation & Action</span>
+              </button>
+              <button id="deskTabTimelineBtn" onclick="switchDeskTab('timeline')" class="px-3.5 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface flex items-center gap-1.5 transition-colors">
+                <span class="material-symbols-outlined text-[16px]">history</span>
+                <span>Chronological Audit Trail</span>
+                <span id="deskTimelineCountBadge" class="bg-surface-container-high text-on-surface text-[10px] px-1.5 py-0.2 rounded-full font-code-num">3</span>
+              </button>
+              <button id="deskTabOrdersBtn" onclick="switchDeskTab('orders')" class="px-3.5 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface flex items-center gap-1.5 transition-colors">
+                <span class="material-symbols-outlined text-[16px]">gavel</span>
+                <span>Legal Notices & Orders</span>
+              </button>
+            </div>
+
+            <!-- TAB 1: INVESTIGATION & OFFICER ACTIONS -->
+            <div id="deskTabPanelAction" class="space-y-4">
+              <!-- Complainant & Plot Profile Info Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container space-y-1">
+                  <div class="text-[10px] uppercase font-code-num text-on-surface-variant font-semibold">Complainant Information</div>
+                  <div id="dtlComplainantName" class="font-bold text-on-surface">Ganesh K. Thakre</div>
+                  <div id="dtlComplainantPhone" class="text-[11px] text-on-surface-variant flex items-center gap-1 font-code-num">
+                    <span class="material-symbols-outlined text-[14px]">call</span> +91 98223 34455
+                  </div>
+                  <div id="dtlComplainantEmail" class="text-[11px] text-on-surface-variant flex items-center gap-1 font-code-num">
+                    <span class="material-symbols-outlined text-[14px]">mail</span> ganesh.thakre@gmail.com
+                  </div>
+                </div>
+
+                <div class="p-3 bg-surface-container-low rounded-lg border border-surface-container space-y-1">
+                  <div class="text-[10px] uppercase font-code-num text-on-surface-variant font-semibold">Disputed Land Plot Coordinates</div>
+                  <div id="dtlPlotKhasra" class="font-bold text-on-surface">Survey No. 144/2</div>
+                  <div id="dtlPlotLocation" class="text-[11px] text-on-surface-variant">Mouza Bhiwapur, Nagpur Rural</div>
+                  <div class="flex items-center gap-2 pt-0.5">
+                    <button onclick="inspectPlotOnCadastre()" class="text-secondary font-semibold text-[11px] hover:underline flex items-center gap-0.5">
+                      <span>Inspect Plot in Cadastral Ledger</span>
+                      <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Citizen Statement / Description Box -->
+              <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container text-xs space-y-1.5">
+                <div class="font-semibold text-on-surface flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-secondary">description</span>
+                  <span>Grounds of Objection & Citizen Statement:</span>
+                </div>
+                <p id="dtlDescription" class="text-on-surface leading-relaxed whitespace-pre-wrap bg-surface-container-lowest p-3 rounded-lg border border-surface-container">
+                  Boundary overlap objection lodged regarding partition of Survey No. 144/2. The southern boundary overlaps with Khasra 144/1 by approx 12 meters. Competent authority hearing requested before award disbursement.
+                </p>
+              </div>
+
+              <!-- Official Resolution Desk & Settlement Controls -->
+              <div class="p-4 bg-surface-container-high/40 rounded-xl border border-surface-container space-y-3 text-xs">
+                <div class="font-headline font-bold text-sm text-on-surface flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+                    <span>Official Authority Action & Resolution Panel (CALA / SLAO)</span>
+                  </div>
+                  <span class="text-[10px] font-code-num bg-surface-container text-on-surface-variant px-2 py-0.5 rounded">Writes directly to MySQL</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label for="dtlStatusSelect" class="block font-semibold text-on-surface mb-1">Grievance Status</label>
+                    <select id="dtlStatusSelect" aria-label="Grievance Status" class="w-full bg-surface-container-lowest px-2.5 py-1.5 rounded-lg border border-surface-container text-xs font-semibold text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+                      <option value="Pending Review">Pending Review</option>
+                      <option value="Assigned to Field Officer">Assigned to Field Officer</option>
+                      <option value="Hearing Scheduled">Hearing Scheduled</option>
+                      <option value="Resolved">Resolved & Closed</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="dtlAssignedOfficerInput" class="block font-semibold text-on-surface mb-1">Assigned Officer / Bench</label>
+                    <input type="text" id="dtlAssignedOfficerInput" value="SLAO-082 Patwari Division" class="w-full bg-surface-container-lowest px-2.5 py-1.5 rounded-lg border border-surface-container text-xs font-semibold text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+                  </div>
+                  <div>
+                    <label for="dtlHearingDateInput" class="block font-semibold text-on-surface mb-1">Hearing Date</label>
+                    <input type="date" id="dtlHearingDateInput" class="w-full bg-surface-container-lowest px-2.5 py-1.5 rounded-lg border border-surface-container text-xs font-semibold text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="dtlRemarksInput" class="block font-semibold text-on-surface mb-1">Official Findings & Settlement Remarks (Saved to MySQL Database)</label>
+                  <textarea id="dtlRemarksInput" rows="2" placeholder="Enter hearing notes, survey reinspection findings, or final award mutation remarks..." class="w-full bg-surface-container-lowest p-2.5 rounded-lg border border-surface-container text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary"></textarea>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="quickScheduleHearing()" class="bg-surface-container hover:bg-surface-container-high text-on-surface px-2.5 py-1.5 rounded-lg font-semibold flex items-center gap-1 transition-colors text-[11px]">
+                      <span class="material-symbols-outlined text-[14px]">event</span>
+                      <span>Schedule Next Week</span>
+                    </button>
+                    <button type="button" onclick="quickMarkResolved()" class="bg-secondary-container hover:bg-secondary-container/80 text-on-secondary-container px-2.5 py-1.5 rounded-lg font-semibold flex items-center gap-1 transition-colors text-[11px]">
+                      <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                      <span>Mark Resolved</span>
+                    </button>
+                  </div>
+                  <button type="button" onclick="saveGrievanceResolution()" class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">save</span>
+                    <span>Update Status & Save in MySQL</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: CHRONOLOGICAL AUDIT TRAIL & ACTIVITY LOG -->
+            <div id="deskTabPanelTimeline" class="hidden space-y-4 text-xs">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="font-headline font-bold text-sm text-on-surface">Chronological Case Timeline & Audit History</h3>
+                  <p class="text-[11px] text-on-surface-variant">Stored persistently in table: <code>e_bhumi_db.grievance_timeline</code></p>
+                </div>
+                <button onclick="loadGrievanceTimeline(AppState.activeGrievanceId)" class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant" title="Reload Timeline">
+                  <span class="material-symbols-outlined text-[16px]">refresh</span>
+                </button>
+              </div>
+
+              <!-- Timeline Container -->
+              <div id="deskTimelineEventsList" class="relative pl-6 space-y-4 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-surface-container max-h-[380px] overflow-y-auto pr-2">
+                <!-- Dynamically populated from MySQL -->
+              </div>
+
+              <!-- Add Timeline Note Form -->
+              <div class="p-3 bg-surface-container-low rounded-xl border border-surface-container space-y-2">
+                <div class="font-semibold text-xs text-on-surface flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[16px] text-secondary">add_comment</span>
+                  <span>Record Official Case Activity / Inspection Note into Audit Trail</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" id="inputTimelineTitle" aria-label="Timeline activity title" title="Timeline Activity Title" placeholder="Activity Title (e.g. On-site boundary inspected)" class="bg-surface-container-lowest p-2 rounded-lg border border-surface-container text-xs">
+                  <input type="text" id="inputTimelineActor" value="Shri V. K. Deshmukh (SLAO-082)" aria-label="Timeline actor" title="Timeline Actor" placeholder="Official / Officer Name" class="bg-surface-container-lowest p-2 rounded-lg border border-surface-container text-xs">
+                </div>
+                <textarea id="inputTimelineNotes" rows="2" aria-label="Timeline notes" title="Timeline Notes" placeholder="Enter findings, document verification results, or citizen call log..." class="w-full bg-surface-container-lowest p-2 rounded-lg border border-surface-container text-xs"></textarea>
+                <div class="flex justify-end">
+                  <button type="button" onclick="submitTimelineNote()" class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[14px]">post_add</span>
+                    <span>Add to Audit Trail (MySQL)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: LEGAL NOTICES & OFFICIAL ORDERS GENERATOR -->
+            <div id="deskTabPanelOrders" class="hidden space-y-4 text-xs">
+              <div>
+                <h3 class="font-headline font-bold text-sm text-on-surface">Statutory Legal Notices & Hearing Orders</h3>
+                <p class="text-[11px] text-on-surface-variant">Electronically generated legal orders complying with RFCTLARR Act 2013 and Revenue Court rules</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <!-- Order 1 -->
+                <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container flex flex-col justify-between space-y-3">
+                  <div>
+                    <div class="flex items-center gap-1 text-primary font-bold text-xs mb-1">
+                      <span class="material-symbols-outlined text-[18px]">gavel</span>
+                      <span>Form VIII Notice</span>
+                    </div>
+                    <div class="font-bold text-on-surface">CALA Hearing Summons</div>
+                    <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">Official summons to appear before the Competent Authority with original 7/12 extract and partition deeds.</p>
+                  </div>
+                  <button onclick="generateHearingSummonsOrder()" class="w-full bg-primary hover:bg-primary-container text-on-primary py-2 rounded-lg font-semibold flex items-center justify-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">print</span>
+                    <span>Generate Summons</span>
+                  </button>
+                </div>
+
+                <!-- Order 2 -->
+                <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container flex flex-col justify-between space-y-3">
+                  <div>
+                    <div class="flex items-center gap-1 text-secondary font-bold text-xs mb-1">
+                      <span class="material-symbols-outlined text-[18px]">explore</span>
+                      <span>Field Directive</span>
+                    </div>
+                    <div class="font-bold text-on-surface">Patwari Re-Demarcation</div>
+                    <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">Executive order directing Patwari to conduct joint DGPS boundary verification with adjacent survey holders.</p>
+                  </div>
+                  <button onclick="generateDemarcationDirectiveOrder()" class="w-full bg-secondary hover:bg-on-secondary-container text-on-secondary py-2 rounded-lg font-semibold flex items-center justify-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">description</span>
+                    <span>Issue Directive</span>
+                  </button>
+                </div>
+
+                <!-- Order 3 -->
+                <div class="p-4 bg-surface-container-low rounded-xl border border-surface-container flex flex-col justify-between space-y-3">
+                  <div>
+                    <div class="flex items-center gap-1 text-emerald-700 font-bold text-xs mb-1">
+                      <span class="material-symbols-outlined text-[18px]">verified</span>
+                      <span>Disposal Order</span>
+                    </div>
+                    <div class="font-bold text-on-surface">Settlement Award Order</div>
+                    <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">Formal disposal order recording settlement terms, modified compensation, and bank disbursement authorization.</p>
+                  </div>
+                  <button onclick="generateSettlementDisposalOrder()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-1 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">assignment_turned_in</span>
+                    <span>Generate Disposal</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
   </main>
@@ -1463,7 +2095,7 @@
       <div class="bg-surface-container-low p-4 rounded-xl border border-surface-container space-y-3">
         <div class="flex items-center justify-between">
           <span class="font-semibold text-on-surface text-xs uppercase tracking-wider font-code-num">Fair Compensation Price Calculation</span>
-          <span class="text-[10px] bg-primary text-on-primary px-1.5 py-0.5 rounded font-bold">2.5x Formula</span>
+          <span class="text-[10px] bg-primary text-on-primary px-1.5 py-0.5 rounded font-bold">RFCTLARR 2013</span>
         </div>
 
         <div class="space-y-2 font-code-num">
@@ -1496,16 +2128,38 @@
             <span id="dossier-total" class="font-headline text-base text-secondary">₹ 1,42,50,000</span>
           </div>
         </div>
+
+        <!-- Editable Valuation Overrides (Saves to MySQL) -->
+        <details class="pt-2 border-t border-surface-container text-xs">
+          <summary class="font-semibold text-primary cursor-pointer hover:underline flex items-center justify-between">
+            <span>⚙️ Edit Valuation Rates (Save to MySQL)</span>
+            <span class="text-[10px] text-on-surface-variant">CALA Access</span>
+          </summary>
+          <div class="space-y-2 mt-3 p-3 bg-surface-container-lowest rounded-lg border border-surface-container">
+            <div>
+              <label for="drawerInputCircleRate" class="block font-semibold text-on-surface text-[11px] mb-0.5">Base Circle Rate (₹/Ha)</label>
+              <input type="number" id="drawerInputCircleRate" value="2000000" step="50000" class="w-full p-1.5 rounded border border-surface-container text-xs bg-surface-container-low font-code-num">
+            </div>
+            <div>
+              <label for="drawerInputAssetsVal" class="block font-semibold text-on-surface text-[11px] mb-0.5">Trees / Structural Assets Valuation (₹)</label>
+              <input type="number" id="drawerInputAssetsVal" value="1500000" step="25000" class="w-full p-1.5 rounded border border-surface-container text-xs bg-surface-container-low font-code-num">
+            </div>
+            <button type="button" onclick="saveDossierValuationAdjustment()" class="w-full bg-primary hover:bg-primary-container text-on-primary py-1.5 rounded font-semibold flex items-center justify-center gap-1 shadow-sm mt-1">
+              <span class="material-symbols-outlined text-[14px]">save</span>
+              <span>Re-calculate & Save in MySQL</span>
+            </button>
+          </div>
+        </details>
       </div>
 
       <div class="flex flex-col gap-2 pt-2">
-        <button onclick="showToast('Direct Bank Transfer (DBT) payment instruction sent to bank.')" class="w-full bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+        <button id="btnDrawerDbtTransfer" onclick="executePlotDbtTransfer()" class="w-full bg-secondary hover:bg-on-secondary-container text-on-secondary py-2.5 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm">
           <span class="material-symbols-outlined text-[18px]">payments</span>
-          <span>Transfer Directly to Bank Account</span>
+          <span>Disburse DBT Bank Payment (PFMS)</span>
         </button>
-        <button onclick="showToast('Official Form 7/12 record and compensation certificate downloaded.')" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors">
+        <button onclick="downloadCertifiedRegister()" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors">
           <span class="material-symbols-outlined text-[18px]">download</span>
-          <span>Download Certified Plot Dossier</span>
+          <span>Download Form 7/12 & Award Register</span>
         </button>
       </div>
 
@@ -1626,6 +2280,238 @@
             <span>Sign & Authorize</span>
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Single Land Plot -->
+  <div id="modalAddSinglePlot" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl border border-surface-container w-full max-w-lg overflow-hidden max-h-[92vh] flex flex-col">
+      <div class="p-5 bg-surface-container-low border-b border-surface-container flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">add_location_alt</span>
+          <div>
+            <h3 class="font-headline font-bold text-base text-on-surface">Register New Land Plot Record</h3>
+            <p class="text-[11px] text-on-surface-variant">Creates official plot record directly in MySQL database</p>
+          </div>
+        </div>
+        <button onclick="closeAddPlotModal()" class="p-1 rounded-lg hover:bg-surface-container-high text-on-surface"><span class="material-symbols-outlined text-[18px]">close</span></button>
+      </div>
+      <form id="formAddSinglePlot" onsubmit="handleFormAddSinglePlot(event)" class="p-6 space-y-3.5 text-xs overflow-y-auto">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Khasra / Survey No. *</label>
+            <input id="plotInputKhasra" type="text" required placeholder="e.g. 149/1" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Mouza / Village *</label>
+            <input id="plotInputVillage" type="text" required placeholder="e.g. Umred" value="Umred" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Area in Hectares *</label>
+            <input id="plotInputArea" type="number" step="0.001" required placeholder="e.g. 2.450" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+          <div>
+            <label for="plotInputTehsil" class="block font-semibold text-on-surface mb-1">Tehsil</label>
+            <input id="plotInputTehsil" type="text" value="Nagpur Rural" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="plotInputClass" class="block font-semibold text-on-surface mb-1">Land Classification</label>
+            <select id="plotInputClass" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+              <option value="Multi-Crop Farmland">Multi-Crop Farmland</option>
+              <option value="Single-Crop Agricultural">Single-Crop Agricultural</option>
+              <option value="Barren / Dry Land">Barren / Dry Land</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </div>
+          <div>
+            <label for="plotInputStatus" class="block font-semibold text-on-surface mb-1">Acquisition Status</label>
+            <select id="plotInputStatus" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+              <option value="Notice Intended">Notice Intended (Sec 3A)</option>
+              <option value="JMS Lock">JMS Lock (Joint Survey)</option>
+              <option value="Sec 19 Award">Sec 19 Award Proclaimed</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Disputed">Disputed / Grievance</option>
+              <option value="Acquired">Acquired</option>
+              <option value="Disbursed">Disbursed (DBT Paid)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-on-surface mb-1">Registered Landowner Name *</label>
+          <input id="plotInputOwner" type="text" required placeholder="e.g. Suresh M. Bhoyar & 2 Co-sharers" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="plotInputCircleRate" class="block font-semibold text-on-surface mb-1">Base Circle Rate (₹ / Ha)</label>
+            <input id="plotInputCircleRate" type="number" step="10000" value="2000000" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Highway Distance Marker</label>
+            <input id="plotInputMarker" type="number" step="0.1" value="141.5" placeholder="Km 141.5" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 py-1">
+          <input type="checkbox" id="plotInputAadhaar" checked class="rounded text-primary focus:ring-primary">
+          <label for="plotInputAadhaar" class="text-xs text-on-surface font-medium">Aadhaar Linked & DBT Account Verified</label>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-surface-container">
+          <button type="button" onclick="closeAddPlotModal()" class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-semibold">Cancel</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-primary text-on-primary font-semibold flex items-center gap-1 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">save</span>
+            <span>Save to MySQL Database</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Lodge Citizen Grievance / Inquiry -->
+  <div id="modalNewGrievance" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl border border-surface-container w-full max-w-lg overflow-hidden max-h-[92vh] flex flex-col">
+      <div class="p-5 bg-surface-container-low border-b border-surface-container flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">contact_support</span>
+          <div>
+            <h3 class="font-headline font-bold text-base text-on-surface">Lodge Citizen Grievance / Inquiry</h3>
+            <p class="text-[11px] text-on-surface-variant">Ticket will be registered in MySQL database with official tracking code</p>
+          </div>
+        </div>
+        <button onclick="closeLodgeGrievanceModal()" class="p-1 rounded-lg hover:bg-surface-container-high text-on-surface"><span class="material-symbols-outlined text-[18px]">close</span></button>
+      </div>
+
+      <form id="formNewGrievance" onsubmit="handleFormNewGrievance(event)" class="p-6 space-y-3.5 text-xs overflow-y-auto">
+        <div class="p-2.5 bg-secondary-container/20 border border-secondary/30 rounded-lg flex items-center justify-between font-code-num">
+          <span class="text-on-surface-variant font-semibold">Auto-Generated Tracking Code:</span>
+          <span id="newGrievanceGeneratedCode" class="font-bold text-secondary text-sm">GR-2026-XXXX</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Complainant Full Name *</label>
+            <input id="grievanceInputName" type="text" required placeholder="e.g. Rameshwar Patil" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Mobile Contact Phone *</label>
+            <input id="grievanceInputPhone" type="tel" required placeholder="e.g. 9820011223" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Email Address</label>
+            <input id="grievanceInputEmail" type="email" placeholder="e.g. citizen@gmail.com" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Aadhaar No. (Optional)</label>
+            <input id="grievanceInputAadhaar" type="text" placeholder="XXXX-XXXX-XXXX" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Linked Plot / Survey No.</label>
+            <input id="grievanceInputSurvey" type="text" placeholder="e.g. Survey 144/2" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs font-code-num">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Mouza / Village</label>
+            <input id="grievanceInputVillage" type="text" placeholder="e.g. Bhiwapur" value="Umred" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Dispute / Inquiry Category *</label>
+            <select id="grievanceInputCategory" aria-label="Dispute / Inquiry Category" title="Dispute / Inquiry Category" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+              <option value="Boundary Overlap">Boundary Overlap Objection</option>
+              <option value="Title Objection">Title Succession Objection</option>
+              <option value="Partition Dispute">Family Partition Dispute</option>
+              <option value="Asset Valuation Review">Tree / Asset Valuation Review</option>
+              <option value="Compensation Delay">Compensation Delay / DBT Inquiry</option>
+              <option value="Demarcation Issue">Demarcation Marker Dispute</option>
+              <option value="Other">Other Public Inquiry</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Priority Urgency</label>
+            <select id="grievanceInputPriority" aria-label="Priority Urgency" title="Priority Urgency" class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs">
+              <option value="Standard">Standard (7 Days SLA)</option>
+              <option value="High">High (3 Days SLA)</option>
+              <option value="Urgent">Urgent (CALA Bench Hearing)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-on-surface mb-1">Grounds of Objection / Complaint Details *</label>
+          <textarea id="grievanceInputDescription" required rows="3" placeholder="Provide full details regarding the boundary discrepancy, compensation claim, or ownership dispute..." class="w-full p-2 rounded-lg bg-surface-container-low border border-surface-container text-xs"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-on-surface mb-1" for="grievanceInputFile">Attach Supporting Document (7/12 Extract, Deed, Photo)</label>
+          <input type="file" id="grievanceInputFile" accept=".pdf,.png,.jpg,.jpeg" class="w-full p-1.5 rounded-lg bg-surface-container-low border border-surface-container text-xs" aria-label="Attach Supporting Document (7/12 Extract, Deed, Photo)" title="Attach Supporting Document (7/12 Extract, Deed, Photo)">
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-surface-container">
+          <button type="button" onclick="closeLodgeGrievanceModal()" class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-semibold">Cancel</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-primary text-on-primary font-semibold flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">send</span>
+            <span>Submit Ticket & Save to MySQL</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Citizen Grievance Lodged Confirmation -->
+  <div id="modalGrievanceSuccess" class="fixed inset-0 bg-primary/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 animate-in fade-in duration-200">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl border border-surface-container w-full max-w-md overflow-hidden text-center p-6 space-y-4">
+      <div class="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mx-auto shadow-inner">
+        <span class="material-symbols-outlined text-[32px] text-secondary">task_alt</span>
+      </div>
+      <div>
+        <span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded font-code-num uppercase">Registered in MySQL</span>
+        <h3 class="font-headline font-bold text-lg text-on-surface mt-1.5">Grievance Ticket Successfully Lodged!</h3>
+        <p class="text-xs text-on-surface-variant mt-1">Your complaint has been entered into the government registry under RFCTLARR Act 2013 and C-GRAMS protocol.</p>
+      </div>
+
+      <div class="p-3.5 bg-surface-container-low rounded-xl border border-surface-container text-xs space-y-2">
+        <div class="text-on-surface-variant text-[11px]">Official Tracking Reference Token:</div>
+        <div class="flex items-center justify-center gap-2">
+          <span id="succGrievanceCode" class="font-code-num font-bold text-xl text-primary tracking-wider">GR-2026-4179</span>
+          <button onclick="copyGrievanceCode()" class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface transition-colors" title="Copy Ticket Code">
+            <span class="material-symbols-outlined text-[18px]">content_copy</span>
+          </button>
+        </div>
+        <div class="text-[11px] text-on-surface-variant flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-[13px] text-secondary">database</span>
+          <span>Stored in Table: <code>e_bhumi_db.citizen_grievances</code></span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 pt-1 text-xs">
+        <button onclick="printCurrentSuccessSlip()" class="w-full bg-primary hover:bg-primary-container text-on-primary py-2.5 rounded-lg font-semibold flex items-center justify-center gap-1.5 shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">print</span>
+          <span>Download / Print Official Acknowledgment Slip</span>
+        </button>
+        <button onclick="trackNewlyLodgedTicket()" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">track_changes</span>
+          <span>Track Status in Citizen Tracker</span>
+        </button>
+        <button onclick="closeGrievanceSuccessModal()" class="w-full py-1 text-on-surface-variant hover:text-on-surface font-semibold text-[11px]">
+          Close Window
+        </button>
       </div>
     </div>
   </div>
@@ -1754,6 +2640,100 @@
           Close Matrix
         </button>
       </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== FIRST TIME USER REGISTRATION MODAL ==================== -->
+  <div id="modalFirstTimeRegister" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest text-on-surface rounded-2xl shadow-2xl border border-surface-container max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="bg-surface-container-low p-5 border-b border-surface-container flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">person_add</span>
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-base text-on-surface">First-Time User Registration</h3>
+            <p class="text-xs text-on-surface-variant">Create a secure verified profile on E-Bhumi Portal</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeRegisterModal()" class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="formFirstTimeRegister" onsubmit="handleFirstTimeRegister(event)" class="p-6 space-y-4 text-xs">
+        <div id="registerAlertBox" class="hidden p-3 rounded-xl border text-xs flex items-start gap-2">
+          <span id="registerAlertIcon" class="material-symbols-outlined text-[18px] shrink-0">info</span>
+          <div id="registerAlertText" class="flex-1 font-medium"></div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-on-surface mb-1">Select Portal Role / Persona <span class="text-error">*</span></label>
+          <select id="regRoleSelect" onchange="onRegisterRoleChange()" title="Select Portal Role / Persona" aria-label="Select Portal Role / Persona" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-semibold text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+            <option value="viewer">Public Citizen / Open Cadastre Viewer</option>
+            <option value="landowner">Personal Landowner / Awardee</option>
+            <option value="officer">Field Acquisition Officer / Surveyor</option>
+            <option value="admin">System Admin / CALA Government Auditor</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Full Legal Name <span class="text-error">*</span></label>
+            <input type="text" id="regName" required placeholder="e.g. Anand Sharma" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">10-Digit Mobile Number <span class="text-error">*</span></label>
+            <input type="tel" id="regPhone" required maxlength="10" placeholder="e.g. 9812345678" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Official Email Address <span class="text-error">*</span></label>
+            <input type="email" id="regEmail" required placeholder="e.g. name@domain.gov.in" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+          </div>
+          <div id="regExtraFieldContainer">
+            <label id="regExtraFieldLabel" class="block font-semibold text-on-surface mb-1">Aadhaar No / Khasra No</label>
+            <input type="text" id="regExtraField" placeholder="12-digit Aadhaar / Plot ID" class="w-full bg-surface-container-lowest px-3 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Create Password / Security PIN <span class="text-error">*</span></label>
+            <div class="relative">
+              <input type="password" id="regPassword" required placeholder="Min 4 characters" class="w-full bg-surface-container-lowest pl-3 pr-8 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              <button type="button" onclick="togglePasswordVisibility('regPassword', 'regPassEye')" class="absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+                <span id="regPassEye" class="material-symbols-outlined text-[16px]">visibility</span>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="block font-semibold text-on-surface mb-1">Confirm Password / PIN <span class="text-error">*</span></label>
+            <div class="relative">
+              <input type="password" id="regConfirmPassword" required placeholder="Confirm match" class="w-full bg-surface-container-lowest pl-3 pr-8 py-2 rounded-lg border border-surface-container font-code-num text-xs focus:ring-1 focus:ring-primary focus:outline-none">
+              <button type="button" onclick="togglePasswordVisibility('regConfirmPassword', 'regConfPassEye')" class="absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+                <span id="regConfPassEye" class="material-symbols-outlined text-[16px]">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeRegisterModal()" class="px-4 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-semibold transition-colors">
+            Cancel
+          </button>
+          <button type="submit" id="btnSubmitRegister" class="bg-primary hover:bg-primary-container text-on-primary px-5 py-2 rounded-xl font-bold transition-colors flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+            <span id="btnSubmitRegisterText">Complete Registration & Sign In</span>
+          </button>
+        </div>
+      </form>
 
     </div>
   </div>
