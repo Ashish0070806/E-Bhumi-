@@ -1,3 +1,57 @@
+
+// --- RESPONSIVE RETRACTABLE SIDEBAR CONTROLLER ---
+function toggleSidebar(forceState) {
+  const sidebar = document.getElementById('appSidebar');
+  const header = document.getElementById('appHeader');
+  const main = document.getElementById('appMain');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (!sidebar) return;
+
+  const isMobile = window.innerWidth < 1024;
+
+  if (isMobile) {
+    // Mobile / Tablet overlay slide-in
+    const isOpen = sidebar.classList.contains('translate-x-0');
+    const shouldOpen = forceState !== undefined ? forceState : !isOpen;
+
+    if (shouldOpen) {
+      sidebar.classList.remove('-translate-x-full');
+      sidebar.classList.add('translate-x-0');
+      if (backdrop) backdrop.classList.remove('hidden');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+      sidebar.classList.remove('translate-x-0');
+      if (backdrop) backdrop.classList.add('hidden');
+    }
+  } else {
+    // Desktop: collapse / expand
+    const isCollapsed = sidebar.classList.contains('lg:-translate-x-full');
+    const shouldCollapse = forceState !== undefined ? !forceState : !isCollapsed;
+
+    if (shouldCollapse) {
+      sidebar.classList.add('lg:-translate-x-full');
+      if (header) {
+        header.classList.remove('lg:left-72');
+        header.classList.add('lg:left-0');
+      }
+      if (main) {
+        main.classList.remove('lg:pl-72');
+        main.classList.add('lg:pl-0');
+      }
+    } else {
+      sidebar.classList.remove('lg:-translate-x-full');
+      if (header) {
+        header.classList.add('lg:left-72');
+        header.classList.remove('lg:left-0');
+      }
+      if (main) {
+        main.classList.add('lg:pl-72');
+        main.classList.remove('lg:pl-0');
+      }
+    }
+  }
+}
+
 /**
  * E-Bhumi - National Land & Citizen Portal
  * Application Controller, Interactive Google Satellite GIS Engine & Workflow Manager
@@ -749,7 +803,7 @@ async function sendCitizenOtp() {
   const channel = selectedChannelEl ? selectedChannelEl.value : 'sms';
 
   if (btn) btn.disabled = true;
-  if (btnText) btnText.textContent = channel === 'voice' ? 'Placing Voice Call...' : 'Sending SMS OTP...';
+  if (btnText) btnText.textContent = channel === 'voice' ? 'Placing Real Voice Call via 2Factor...' : 'Dispatching Real SMS via 2Factor...';
 
   try {
     const res = await fetch(`${AppState.apiBase}/auth/send-otp`, {
@@ -760,20 +814,29 @@ async function sendCitizenOtp() {
 
     const data = await res.json();
     if (res.ok && data.success) {
-      const channelLabel = channel === 'voice' ? 'Automated Voice Call' : 'Instant SMS';
-      showLoginAlert(`✓ Verification code dispatched via ${channelLabel} to +91 ${phone}! <strong>Code: ${data.otp}</strong>`, 'success');
-      if (timerEl) timerEl.textContent = `Code: ${data.otp} (Valid 5m)`;
-      if (otpInput) {
-        otpInput.value = data.otp; // Prefill for smooth demo / convenience
-        otpInput.focus();
+      const channelLabel = channel === 'voice' ? 'Automated Voice Call' : 'Cellular SMS';
+      if (data.telephonyStatus && data.telephonyStatus.includes('dispatched')) {
+        showLoginAlert(`✓ Real ${channelLabel} successfully dispatched to <strong>+91 ${phone}</strong>! Please check your phone for the 6-digit code.`, 'success');
+        if (timerEl) timerEl.textContent = `Real ${channel === 'voice' ? 'Call' : 'SMS'} Sent (Valid 10m)`;
+        if (otpInput) {
+          otpInput.value = '';
+          otpInput.focus();
+        }
+      } else {
+        showLoginAlert(`✓ Code generated for +91 ${phone}! Code: <strong>${data.otp || '482901'}</strong>`, 'success');
+        if (timerEl) timerEl.textContent = `Code: ${data.otp || '482901'}`;
+        if (otpInput && data.otp) {
+          otpInput.value = data.otp;
+          otpInput.focus();
+        }
       }
     } else {
-      showLoginAlert(`Failed to send verification code: ${data.message || 'Server error'}`, 'error');
+      showLoginAlert(`Failed to dispatch verification code: ${data.message || data.error || 'Gateway error'}`, 'error');
     }
   } catch (err) {
-    console.warn('OTP API offline, generating local OTP fallback:', err);
+    console.warn('OTP API offline, fallback to demo code:', err);
     const demoCode = '482901';
-    showLoginAlert(`✓ Verification OTP generated: <strong>${demoCode}</strong> (Sent to +91 ${phone})`, 'success');
+    showLoginAlert(`✓ Demo verification code: <strong>${demoCode}</strong> (Sent to +91 ${phone})`, 'success');
     if (timerEl) timerEl.textContent = `Code: ${demoCode}`;
     if (otpInput) {
       otpInput.value = demoCode;
@@ -816,6 +879,8 @@ async function verifyCitizenOtp() {
         avatarText: 'PC'
       };
       loginAs('viewer', 'viewer', false, customProfile);
+      // Post-Login: Redirect user to dedicated new browser tab to display inspect data
+      window.open('/inspector.html?plot_id=MH-NGP-4029&phone=' + encodeURIComponent(phone), '_blank');
     } else {
       showLoginAlert(`Verification Failed: ${data.message || 'Incorrect OTP'}`, 'error');
     }
@@ -1038,80 +1103,98 @@ function updateHeaderUserProfile(user) {
 }
 
 function applyRolePermissions(roleKey) {
+
   const user = AppState.currentUser || USER_PROFILES[roleKey] || USER_PROFILES.admin;
   const isAdmin = (roleKey === 'admin');
   const isOfficer = (roleKey === 'officer');
   const isLandowner = (roleKey === 'landowner');
   const isViewer = (roleKey === 'viewer');
 
+  // PUBLIC VIEW: Read-Only, strictly can only view projects
+  if (isViewer) {
+    if (AppState.currentView !== 'projects') {
+      switchView('projects');
+    }
+  }
+
   // 1. MySQL Live DB Status & Sync Buttons (STRICTLY Admin / Auditor ONLY)
   const dbStatusBadge = document.getElementById('dbStatusBadge');
-  if (dbStatusBadge) {
-    dbStatusBadge.style.display = isAdmin ? 'flex' : 'none';
-  }
+  if (dbStatusBadge) dbStatusBadge.style.display = isAdmin ? 'flex' : 'none';
+
   const parcelsDbSyncTag = document.getElementById('parcelsDbSyncTag');
-  if (parcelsDbSyncTag) {
-    parcelsDbSyncTag.style.display = isAdmin ? 'inline-flex' : 'none';
-  }
+  if (parcelsDbSyncTag) parcelsDbSyncTag.style.display = isAdmin ? 'inline-flex' : 'none';
+
   const btnSyncPlots = document.getElementById('btnSyncPlots');
-  if (btnSyncPlots) {
-    btnSyncPlots.style.display = isAdmin ? '' : 'none';
-  }
+  if (btnSyncPlots) btnSyncPlots.style.display = isAdmin ? '' : 'none';
 
   // 2. System Settings & Financial Reports (Admin ONLY)
   const navReports = document.querySelector('[data-nav-view="reports"]');
-  if (navReports) {
-    navReports.style.display = isAdmin ? 'flex' : 'none';
-  }
+  if (navReports) navReports.style.display = 'none'; // Globally removed
 
-  // 3. Workflows & Approvals (Admin: Full, Field Officer: ⚠️ View Only, Landowner/Viewer: Hidden)
+  // 3. Workflows & Approvals (Admin ONLY: Full. Field Officer, Landowner & Viewer: STRICTLY HIDDEN)
   const navWorkflows = document.querySelector('[data-nav-view="workflows"]');
   if (navWorkflows) {
-    navWorkflows.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
+    navWorkflows.style.display = isAdmin ? 'flex' : 'none';
   }
 
-  // Update E-Sign buttons in approval queue
+  // Hide Urgent Approval Queue and Workflow section on Overview for non-admin
+  const overviewWorkflow = document.getElementById('overviewWorkflowSection');
+  if (overviewWorkflow) {
+    overviewWorkflow.style.display = isAdmin ? '' : 'none';
+  }
+
+  // Hide E-Sign and Approval controls from Field Officer, Landowner, and Viewer
   const esignButtons = document.querySelectorAll('[data-queue-action="esign"]');
   esignButtons.forEach(btn => {
-    if (isOfficer) {
-      btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">visibility</span><span>⚠️ View Only</span>';
-      btn.className = 'px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 font-semibold text-xs flex items-center gap-1 cursor-not-allowed';
-      btn.title = 'View Only: Competent Authority (CALA / Admin) Approval Required';
-    } else {
-      btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">draw</span><span>Review & E-Sign</span>';
-      btn.className = 'px-3 py-1.5 rounded-lg bg-primary text-on-primary font-semibold text-xs hover:bg-primary-container transition-colors flex items-center gap-1 shadow-sm';
-      btn.title = 'Authorize Section 19 with Class-3 DSC';
-    }
+    btn.style.display = isAdmin ? 'flex' : 'none';
   });
 
-  // 4. Field Survey Tab (Admin & Officer only)
+  const esignModal = document.getElementById('esignModal');
+  if (!isAdmin && esignModal) {
+    esignModal.classList.add('hidden');
+  }
+
+  // 4. Field Survey Tab (Admin & Field Officer only)
   const navSurvey = document.querySelector('[data-nav-view="survey"]');
   if (navSurvey) {
     navSurvey.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
   }
 
-  // 5. Submit Bulk Land Portfolios (CSV / Boundary File) (Admin & Officer only)
-  const bulkControls = [
-    document.getElementById('btnBulkUpload'),
-    document.getElementById('btnNewProject'),
-    document.getElementById('btnNewAcqProject'),
-    document.getElementById('btnNewProjectTab')
-  ];
-  bulkControls.forEach(el => {
-    if (el) el.style.display = (isAdmin || isOfficer) ? '' : 'none';
-  });
-
-  // 6. Pending approvals badge in header
-  const pendingHeaderBtn = document.querySelector('button[title="Statutory Approvals Queue"]');
-  if (pendingHeaderBtn) {
-    pendingHeaderBtn.style.display = (isAdmin || isOfficer) ? 'flex' : 'none';
+  // 5. Compensation Module & Valuation Overrides: Admin ONLY (Field Officer & Landowners Restricted)
+  const drawerValuationDetails = document.querySelector('#parcelDossierDrawer details');
+  if (drawerValuationDetails) {
+    drawerValuationDetails.style.display = isAdmin ? '' : 'none';
   }
 
-  // 7. Land Parcels Table Filtering
+  const drawerDbtBtn = document.getElementById('btnDrawerDbtTransfer');
+  if (drawerDbtBtn) {
+    drawerDbtBtn.style.display = isAdmin ? 'flex' : 'none';
+  }
+
+  // 6. Bulk upload and new project creation: Admin ONLY
+  const bulkControls = [
+    document.getElementById('btnBulkUpload'),
+    document.getElementById('btnNewAcqProject'),
+    document.getElementById('btnNewProjectTab'),
+    document.getElementById('btnOpenAddPlotModal'),
+    document.getElementById('btnOpenUploadPlotsModal')
+  ];
+  bulkControls.forEach(el => {
+    if (el) el.style.display = isAdmin ? '' : 'none';
+  });
+
+  // 7. Pending approvals badge in header (Admin ONLY)
+  const pendingHeaderBtn = document.querySelector('button[title="Statutory Approvals Queue"]');
+  if (pendingHeaderBtn) {
+    pendingHeaderBtn.style.display = isAdmin ? 'flex' : 'none';
+  }
+
+  // 8. Land Parcels Table Filtering
   renderParcelsTable();
 
-  // 8. Inject Contextual Role Banner on Overview Dashboard
+  // 9. Inject Contextual Role Banner on Overview Dashboard
   renderOverviewRoleBanner(user);
+
 }
 
 function renderOverviewRoleBanner(user) {
@@ -1500,6 +1583,7 @@ function initNavigation() {
       e.preventDefault();
       const targetView = link.getAttribute('data-nav-view');
       switchView(targetView);
+      if (window.innerWidth < 1024) toggleSidebar(false);
     });
   });
 
@@ -2127,6 +2211,28 @@ function openParcelDossier(parcel) {
   const drawer = document.getElementById('parcelDossierDrawer');
   if (!drawer) return;
 
+  // Demo Mode Protection: Ensure no land information is visible or accessible in Demo mode
+  if (AppState.isDemoMode) {
+    document.getElementById('dossier-id').textContent = '#MH-NGP-•••• (DEMO PROTECTED)';
+    document.getElementById('dossier-survey').textContent = 'Survey No. •••/•• • Mouza Protected (Demo Mode)';
+    document.getElementById('dossier-owner').textContent = '•••••••••••• (Confidential - Demo Mode)';
+    document.getElementById('dossier-aadhaar').textContent = 'Aadhaar Protected 🔒';
+    document.getElementById('dossier-area').textContent = '•.••• Hectares (Restricted)';
+    document.getElementById('dossier-class').textContent = 'Restricted in Demo Mode';
+    document.getElementById('dossier-chainage').textContent = 'Km •••.••';
+    document.getElementById('dossier-coords').textContent = '••.••••° N, ••.••••° E';
+    document.getElementById('dossier-base-rate').textContent = '₹ ••,••,••• / Ha';
+    document.getElementById('dossier-market-val').textContent = '₹ ••,••,•••';
+    document.getElementById('dossier-solatium').textContent = '₹ ••,••,•••';
+    document.getElementById('dossier-interest').textContent = '₹ ••,••,•••';
+    document.getElementById('dossier-assets').textContent = '₹ ••,••,•••';
+    document.getElementById('dossier-total').textContent = '₹ ••,••,••• (Demo View)';
+    drawer.classList.remove('translate-x-full');
+    showToast('🔒 Land and valuation information is restricted in Demo mode.');
+    return;
+  }
+
+
   document.getElementById('dossier-id').textContent = `#${parcel.id}`;
   document.getElementById('dossier-survey').textContent = `Survey No. ${parcel.surveyNo} • Mouza ${parcel.mouza}, ${parcel.tehsil}`;
   document.getElementById('dossier-owner').textContent = parcel.owner;
@@ -2354,7 +2460,7 @@ function verifyGpsDemarcation(item) {
     item.innerHTML = `
       <div class="flex items-center gap-2 p-2 text-secondary font-semibold text-xs">
         <span class="material-symbols-outlined text-[18px]">check_circle</span>
-        <span>DGPS Boundary Markers Verified & Synced with Bhoomi Database.</span>
+        <span>DGPS Boundary Markers Verified & Synced with Bhumi Database.</span>
       </div>
     `;
     setTimeout(() => item.remove(), 2500);
@@ -2429,7 +2535,7 @@ function initSurveyModule() {
           const data = await res.json();
           showToast(`✓ ${data.message}`);
         } else {
-          showToast('✓ Survey Plot #MH-NGP-4029 synced to Bhoomi Hub.');
+          showToast('✓ Survey Plot #MH-NGP-4029 synced to Bhumi Hub.');
         }
       } catch (err) {
         showToast('✓ Survey Plot #MH-NGP-4029 synced locally.');
