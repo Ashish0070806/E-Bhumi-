@@ -1102,6 +1102,20 @@ function updateHeaderUserProfile(user) {
   if (ddRole) ddRole.textContent = user.badge;
 }
 
+function isClientUser() {
+  if (!AppState.currentUser) return false;
+  const k = AppState.currentUser.roleKey;
+  return k === 'landowner' || k === 'viewer' || k === 'client';
+}
+
+function approveCompensationInspector() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot authorize or approve compensation.');
+    return;
+  }
+  showToast('Section 19 Award Approved & Ready for Bank Transfer for #MH-NGP-4029');
+}
+
 function applyRolePermissions(roleKey) {
 
   const user = AppState.currentUser || USER_PROFILES[roleKey] || USER_PROFILES.admin;
@@ -1109,6 +1123,7 @@ function applyRolePermissions(roleKey) {
   const isOfficer = (roleKey === 'officer');
   const isLandowner = (roleKey === 'landowner');
   const isViewer = (roleKey === 'viewer');
+  const isClient = (isLandowner || isViewer);
 
   // PUBLIC VIEW: Read-Only, strictly can only view projects
   if (isViewer) {
@@ -1143,11 +1158,71 @@ function applyRolePermissions(roleKey) {
     overviewWorkflow.style.display = isAdmin ? '' : 'none';
   }
 
-  // Hide E-Sign and Approval controls from Field Officer, Landowner, and Viewer
-  const esignButtons = document.querySelectorAll('[data-queue-action="esign"]');
-  esignButtons.forEach(btn => {
-    btn.style.display = isAdmin ? 'flex' : 'none';
+  // Client Restrictions: Client accounts CANNOT approve any approvals or assign anything
+  // A. Hide "Pending Approvals" button on Overview banner for clients
+  const btnOverviewPending = document.getElementById('overviewBtnPendingApprovals');
+  if (btnOverviewPending) {
+    btnOverviewPending.style.display = isClient ? 'none' : 'flex';
+  }
+
+  // B. Hide "Approve Compensation" button on Overview map inspector for clients
+  const btnInspectorApprove = document.getElementById('btnInspectorApproveCompensation');
+  if (btnInspectorApprove) {
+    btnInspectorApprove.style.display = isClient ? 'none' : 'flex';
+  }
+
+  // C. Statutory queue actions (E-Sign, Verify GPS, Assign Field Officer)
+  const queueActionButtons = document.querySelectorAll('[data-queue-action]');
+  queueActionButtons.forEach(btn => {
+    const action = btn.getAttribute('data-queue-action');
+    if (isClient) {
+      btn.style.display = 'none';
+    } else if (isOfficer) {
+      btn.style.display = (action === 'verify-gps') ? 'flex' : 'none';
+    } else {
+      btn.style.display = 'flex';
+    }
   });
+
+  // D. Read-only badge for client on approval queue items
+  document.querySelectorAll('.approval-queue-item').forEach(item => {
+    let clientBadge = item.querySelector('.client-queue-restricted');
+    if (isClient) {
+      if (!clientBadge) {
+        clientBadge = document.createElement('div');
+        clientBadge.className = 'client-queue-restricted text-[10px] text-on-surface-variant font-code-num bg-surface-container px-2 py-0.5 rounded w-fit mt-1';
+        clientBadge.innerHTML = '🔒 Official Authority Action (Restricted)';
+        item.appendChild(clientBadge);
+      }
+      clientBadge.style.display = 'block';
+    } else if (clientBadge) {
+      clientBadge.style.display = 'none';
+    }
+  });
+
+  // E. Hide DSC Key Active on Authorized Seat card for client
+  const dscKeyBadge = document.getElementById('overviewDscKeyBadge');
+  if (dscKeyBadge) {
+    dscKeyBadge.style.display = isClient ? 'none' : 'inline-block';
+  }
+
+  // F. Grievance / Complaints: Hide Official Resolution & Settlement Controls for client
+  const grievanceActionPanel = document.getElementById('grievanceOfficialResolutionPanel');
+  if (grievanceActionPanel) {
+    grievanceActionPanel.style.display = isClient ? 'none' : 'block';
+  }
+  const grievanceClientNotice = document.getElementById('grievanceClientRestrictedNotice');
+  if (grievanceClientNotice) {
+    grievanceClientNotice.style.display = isClient ? 'block' : 'none';
+  }
+  const grievanceAddTimeline = document.getElementById('grievanceAddTimelineNoteContainer');
+  if (grievanceAddTimeline) {
+    grievanceAddTimeline.style.display = isClient ? 'none' : 'block';
+  }
+  const deskOrdersTab = document.getElementById('deskTabOrdersBtn');
+  if (deskOrdersTab) {
+    deskOrdersTab.style.display = isClient ? 'none' : 'block';
+  }
 
   const esignModal = document.getElementById('esignModal');
   if (!isAdmin && esignModal) {
@@ -2416,6 +2491,10 @@ function initApprovalQueue() {
   document.querySelectorAll('[data-queue-action]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (isClientUser()) {
+        showToast('⚠️ Access Restricted: Client accounts cannot approve actions or assign officers.');
+        return;
+      }
       const action = btn.getAttribute('data-queue-action');
       const item = btn.closest('.approval-queue-item');
 
@@ -2431,6 +2510,10 @@ function initApprovalQueue() {
 }
 
 function showEsignModal(item) {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot authorize cash awards or statutory approvals.');
+    return;
+  }
   if (AppState.currentUser && AppState.currentUser.roleKey === 'officer') {
     showToast('⚠️ View Only: Field Officers cannot authorize cash awards. Competent Authority (CALA / Admin) approval required.');
     return;
@@ -2455,6 +2538,10 @@ function showEsignModal(item) {
 }
 
 function verifyGpsDemarcation(item) {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot verify or approve statutory demarcations.');
+    return;
+  }
   if (item) {
     item.classList.add('bg-secondary-container/30');
     item.innerHTML = `
@@ -2471,6 +2558,10 @@ function verifyGpsDemarcation(item) {
 }
 
 function assignSlaoOfficer(item) {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot assign officers.');
+    return;
+  }
   if (item) {
     item.innerHTML = `
       <div class="flex items-center gap-2 p-2 text-on-surface font-semibold text-xs">
@@ -3950,6 +4041,10 @@ function renderLocalTimelineFallback() {
 
 // Submit a new timeline note into MySQL
 async function submitTimelineNote() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot submit official inspection notes or audit entries.');
+    return;
+  }
   if (checkDemoRestriction('post timeline activities or inspection notes')) return;
   const activeTicket = AppState.grievances.find(g => g.grievance_code === AppState.activeGrievanceId);
   if (!activeTicket) return;
@@ -3980,7 +4075,8 @@ async function submitTimelineNote() {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {})
+        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {}),
+        'x-user-role': AppState.currentUser ? AppState.currentUser.roleKey : ''
       },
       body: JSON.stringify(payload)
     });
@@ -4000,6 +4096,10 @@ async function submitTimelineNote() {
 
 // Quick resolution action helpers
 function quickScheduleHearing() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot schedule hearings or assign officers.');
+    return;
+  }
   const dateInput = document.getElementById('dtlHearingDateInput');
   const statusSel = document.getElementById('dtlStatusSelect');
   const remarks = document.getElementById('dtlRemarksInput');
@@ -4019,6 +4119,10 @@ function quickScheduleHearing() {
 }
 
 function quickMarkResolved() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot approve or resolve grievances.');
+    return;
+  }
   const statusSel = document.getElementById('dtlStatusSelect');
   const remarks = document.getElementById('dtlRemarksInput');
 
@@ -4226,6 +4330,10 @@ function clearCitizenTracker() {
 
 // LEGAL NOTICES & OFFICIAL ORDERS GENERATOR
 function generateHearingSummonsOrder() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot generate or issue official hearing summons.');
+    return;
+  }
   const activeTicket = AppState.grievances.find(g => g.grievance_code === AppState.activeGrievanceId);
   if (!activeTicket) return;
 
@@ -4303,6 +4411,10 @@ function generateHearingSummonsOrder() {
 }
 
 function generateDemarcationDirectiveOrder() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot issue field demarcation directives.');
+    return;
+  }
   const activeTicket = AppState.grievances.find(g => g.grievance_code === AppState.activeGrievanceId);
   if (!activeTicket) return;
 
@@ -4340,6 +4452,10 @@ function generateDemarcationDirectiveOrder() {
 }
 
 function generateSettlementDisposalOrder() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot issue settlement award orders.');
+    return;
+  }
   const activeTicket = AppState.grievances.find(g => g.grievance_code === AppState.activeGrievanceId);
   if (!activeTicket) return;
 
@@ -4482,6 +4598,10 @@ async function saveDossierValuationAdjustment() {
 
 // EXECUTE REAL DBT BANK TRANSFER (SAVES TO MYSQL dbt_payments)
 async function executePlotDbtTransfer() {
+  if (isClientUser() || (AppState.currentUser && AppState.currentUser.roleKey !== 'admin')) {
+    showToast('⚠️ Access Restricted: Only Competent Authority (CALA / Admin) can authorize DBT bank transfers.');
+    return;
+  }
   if (checkDemoRestriction('authorize Direct Benefit Transfer disbursals')) return;
   const activeParcel = AppState.parcels.find(p => p.id === AppState.activeParcelId);
   if (!activeParcel) return;
@@ -4505,7 +4625,8 @@ async function executePlotDbtTransfer() {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {})
+        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {}),
+        'x-user-role': AppState.currentUser ? AppState.currentUser.roleKey : ''
       },
       body: JSON.stringify(payload)
     });
@@ -4520,6 +4641,7 @@ async function executePlotDbtTransfer() {
     } else {
       showToast(`✓ DBT payment authorized for ${activeParcel.owner}.`);
       activeParcel.status = 'Disbursed';
+      activeParcel.stage = 'disbursed';
       activeParcel.dbtStatus = 'Paid via Bank Transfer (PFMS)';
     }
   } catch (err) {
@@ -4550,6 +4672,10 @@ function inspectPlotOnCadastre() {
 }
 
 async function saveGrievanceResolution() {
+  if (isClientUser()) {
+    showToast('⚠️ Access Restricted: Client accounts cannot assign officers or update grievance status.');
+    return;
+  }
   if (checkDemoRestriction('update grievance resolution in database')) return;
   const activeTicket = AppState.grievances.find(g => g.grievance_code === AppState.activeGrievanceId);
   if (!activeTicket) return;
@@ -4571,7 +4697,8 @@ async function saveGrievanceResolution() {
       method: 'PATCH',
       headers: { 
         'Content-Type': 'application/json',
-        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {})
+        ...(AppState.isDemoMode ? { 'x-demo-mode': 'true' } : {}),
+        'x-user-role': AppState.currentUser ? AppState.currentUser.roleKey : ''
       },
       body: JSON.stringify(updatePayload)
     });
