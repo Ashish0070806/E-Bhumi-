@@ -74,6 +74,14 @@
     #overviewClearPlotsBar { width: 56%; }
     #overviewProcessPlotsBar { width: 36%; }
     #overviewReviewPlotsBar { width: 8%; }
+    #appMain {
+      padding-top: calc(4rem + 1rem);
+    }
+    @media (min-width: 640px) {
+      #appMain {
+        padding-top: calc(4rem + 1.5rem);
+      }
+    }
   </style>
 </head>
 <body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-secondary-container selection:text-on-secondary-container">
@@ -625,7 +633,7 @@
   </header>
 
   <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
-  <main id="appMain" class="relative pt-16 pl-0 lg:pl-72 w-full flex-1 bg-surface p-4 sm:p-6 transition-all duration-300">
+  <main id="appMain" class="relative pl-0 lg:pl-72 w-full flex-1 bg-surface px-4 sm:px-6 pb-4 sm:pb-6 pt-20 sm:pt-[88px] transition-all duration-300">
 
     <!-- ==================== VIEW 1: OVERVIEW DASHBOARD ==================== -->
     <div id="view-overview" class="flex flex-col gap-6">
@@ -663,7 +671,7 @@
             <span class="material-symbols-outlined text-[16px]">download</span>
             <span>Download Report</span>
           </button>
-          <button onclick="switchView('workflows')" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors">
+          <button id="overviewBtnPendingApprovals" onclick="switchView('workflows')" class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-colors">
             <span class="material-symbols-outlined text-[16px]">schedule</span>
             <span>Pending Approvals</span>
             <span class="w-4 h-4 rounded-full bg-error text-on-error text-[10px] font-bold flex items-center justify-center badge-pending-approvals">6</span>
@@ -998,7 +1006,7 @@
                 <button onclick="selectParcel(AppState.activeParcelId)" class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-semibold py-1.5 px-3 rounded transition-colors text-center">
                   Open Plot Dossier
                 </button>
-                <button onclick="showToast('Section 19 Award Approved & Ready for Bank Transfer for #MH-NGP-4029')" class="flex-1 bg-secondary hover:bg-on-secondary-container text-on-secondary font-semibold py-1.5 px-3 rounded transition-colors text-center">
+                <button id="btnInspectorApproveCompensation" onclick="approveCompensationInspector()" class="flex-1 bg-secondary hover:bg-on-secondary-container text-on-secondary font-semibold py-1.5 px-3 rounded transition-colors text-center">
                   Approve Compensation
                 </button>
               </div>
@@ -1020,7 +1028,7 @@
         </div>
 
         <!-- Right Pane: Statutory Approvals Queue (5 cols) -->
-        <div class="lg:col-span-5 flex flex-col gap-4">
+        <div id="overviewApprovalsQueueContainer" class="lg:col-span-5 flex flex-col gap-4">
           <!-- Authorized Seat Card -->
           <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-surface-container/80 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -1033,7 +1041,7 @@
                 <span class="text-[11px] text-secondary font-semibold">Competent Authority Land Acquisition (NHAI)</span>
               </div>
             </div>
-            <span class="text-[11px] bg-secondary-container text-on-secondary-container px-2.5 py-1 rounded-full font-code-num font-bold">DSC Key Active</span>
+            <span id="overviewDscKeyBadge" class="text-[11px] bg-secondary-container text-on-secondary-container px-2.5 py-1 rounded-full font-code-num font-bold">DSC Key Active</span>
           </div>
 
           <!-- Urgent Approval Queue -->
@@ -1823,7 +1831,7 @@
               </div>
 
               <!-- Official Resolution Desk & Settlement Controls -->
-              <div class="p-4 bg-surface-container-high/40 rounded-xl border border-surface-container space-y-3 text-xs">
+              <div id="grievanceOfficialResolutionPanel" class="p-4 bg-surface-container-high/40 rounded-xl border border-surface-container space-y-3 text-xs">
                 <div class="font-headline font-bold text-sm text-on-surface flex items-center justify-between">
                   <div class="flex items-center gap-1.5">
                     <span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
@@ -1874,6 +1882,17 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Client Notice: Restrict official actions / assigning from client accounts -->
+              <div id="grievanceClientRestrictedNotice" class="hidden p-4 bg-surface-container-low rounded-xl border border-surface-container space-y-2 text-xs">
+                <div class="font-headline font-bold text-sm text-on-surface flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+                  <span>Official Resolution Desk Status (CALA Authority Bench)</span>
+                </div>
+                <p class="text-on-surface-variant leading-relaxed">
+                  Statutory officer assignments, hearing schedules, and dispute disposals are authorized exclusively by the Special Land Acquisition Officer (CALA / SLAO). Complainants and citizens can monitor real-time audit updates in the Chronological Timeline tab.
+                </p>
+              </div>
             </div>
 
             <!-- TAB 2: CHRONOLOGICAL AUDIT TRAIL & ACTIVITY LOG -->
@@ -1894,7 +1913,7 @@
               </div>
 
               <!-- Add Timeline Note Form -->
-              <div class="p-3 bg-surface-container-low rounded-xl border border-surface-container space-y-2">
+              <div id="grievanceAddTimelineNoteContainer" class="p-3 bg-surface-container-low rounded-xl border border-surface-container space-y-2">
                 <div class="font-semibold text-xs text-on-surface flex items-center gap-1">
                   <span class="material-symbols-outlined text-[16px] text-secondary">add_comment</span>
                   <span>Record Official Case Activity / Inspection Note into Audit Trail</span>
